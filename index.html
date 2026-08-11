@@ -3,598 +3,861 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>智能 CRM - AI Native & RevOps 架构</title>
-    
-    <!-- Tailwind CSS -->
+    <title>财务数据核数器 - 毕马威</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Vue 3 -->
-    <script src="https://cdn.staticfile.net/vue/3.3.4/vue.global.prod.min.js"></script>
-    <!-- ECharts -->
-    <script src="https://cdn.staticfile.net/echarts/5.5.0/echarts.min.js"></script>
-    
     <style>
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif; 
-            background-color: #F3F4F6; 
-        }
-        [v-cloak] { display: none !important; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .chart-card {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .chart-card:hover { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
-        .fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease, transform 0.3s ease; }
-        .fade-enter-from, .fade-leave-to { opacity: 0; transform: translateY(10px); }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         
-        .stage-shape { clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%, 20px 50%); }
-        .stage-shape-first { clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%); }
-        .stage-shape-last { clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 20px 50%); }
+        .tb-ma-group:hover td { background-color: #f8fafc; }
+
+        /* Dashboard 状态指示圆点 */
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        .status-grey { background-color: #BDBDBD; }
+        .status-green { background-color: #4CAF50; }
+        .status-red { background-color: #F44336; }
     </style>
 </head>
-<body class="text-gray-800 antialiased h-screen flex flex-col">
-    <div id="app" v-cloak class="flex flex-col h-full overflow-hidden">
-        
-        <!-- 顶部导航栏 -->
-        <header class="bg-white border-b border-gray-200 px-6 py-3 flex justify-between items-center shrink-0 z-20 shadow-sm">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg flex items-center justify-center shadow-inner transition-colors duration-300" :class="currentView === 'manager' ? 'bg-blue-600' : 'bg-emerald-600'">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-                </div>
-                <h1 class="text-xl font-bold tracking-tight text-gray-900 transition-all">{{ currentView === 'manager' ? 'Lucky RevOps Center' : 'My Workspace (销售工作台)' }}</h1>
+<body class="bg-gray-50 flex h-screen overflow-hidden text-[13px] text-gray-800 font-sans">
+
+    <!-- 左侧边栏 (Sidebar) 完全以 upload.html 为准 -->
+    <aside class="w-[60px] bg-white border-r border-gray-200 flex flex-col items-center py-4 flex-shrink-0 z-20 shadow-sm relative">
+        <div class="mb-6 cursor-pointer text-gray-400 hover:text-blue-600 transition-colors" onclick="toggleView('dashboard')">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </div>
+        <div class="space-y-6 w-full flex flex-col items-center">
+            <!-- 第 1 个按钮 (三横线) -> 绑定为 Dashboard -->
+            <div id="nav-btn-dashboard" onclick="toggleView('dashboard')" class="cursor-pointer p-2 rounded-md hover:bg-gray-100 text-gray-500 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
             </div>
-            <div class="flex items-center gap-4 text-sm">
-                <div class="relative">
-                    <input type="text" placeholder="全局搜索..." class="bg-gray-100 border-transparent rounded-lg pl-10 pr-4 py-2 w-72 focus:bg-white focus:ring-2 outline-none transition-all text-sm" :class="currentView === 'manager' ? 'focus:border-blue-400 focus:ring-blue-100' : 'focus:border-emerald-400 focus:ring-emerald-100'">
-                    <svg class="w-4 h-4 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                </div>
-                <button class="text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm" :class="currentView === 'manager' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-emerald-600 hover:bg-emerald-700'">
-                    + 快速新建
-                </button>
+            <!-- 第 2 个按钮 -->
+            <div class="cursor-pointer p-2 rounded-md hover:bg-gray-100 text-gray-500 transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></div>
+            <!-- 第 3 个按钮 -->
+            <div class="cursor-pointer p-2 rounded-md hover:bg-gray-100 text-gray-500 transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg></div>
+            <!-- 第 4 个按钮 -> 默认绑定为 Upload (高亮状态) -->
+            <div id="nav-btn-upload" onclick="toggleView('upload')" class="cursor-pointer p-2 rounded-md bg-blue-50 text-[#00338D] border-l-2 border-[#00338D] w-full flex justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+            </div>
+            <!-- 第 5 个按钮 -->
+            <div class="cursor-pointer p-2 rounded-md hover:bg-gray-100 text-gray-500 transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg></div>
+            <!-- 第 6 个按钮 -->
+            <div class="cursor-pointer p-2 rounded-md hover:bg-gray-100 text-gray-500 transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg></div>
+        </div>
+    </aside>
+
+    <!-- 右侧主要区域 -->
+    <div class="flex-1 flex flex-col min-w-0 bg-[#f8fafc]">
+        
+        <!-- 顶部蓝底导航栏 -->
+        <header class="h-12 bg-[#00338D] text-white flex justify-between items-center px-8 flex-shrink-0 z-20">
+            <div class="flex items-center space-x-2 font-medium text-sm">
+                <span class="font-bold text-lg tracking-wider">KPMG</span>
+                <span class="mx-2 opacity-50">|</span>
+                <span>毕马威飞轮 <span class="opacity-80 font-normal">(财务数据核数器)</span></span>
+            </div>
+            <div class="flex items-center space-x-5 text-xs opacity-90">
+                <a href="#" class="hover:opacity-100 transition-opacity">EN</a>
+                <a href="#" class="hover:opacity-100 transition-opacity">消息中心</a>
+                <span class="text-white/30">|</span>
+                <a href="#" class="hover:opacity-100 flex items-center transition-opacity">导航页 <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></a>
+                <span class="text-white/30">|</span>
+                <a href="#" class="hover:opacity-100 transition-opacity">用户手册</a>
+                <span class="text-white/30">|</span>
+                <a href="#" class="hover:opacity-100 transition-opacity">登出</a>
             </div>
         </header>
 
-        <!-- 主内容区域 -->
-        <main class="flex-1 overflow-y-auto px-6 py-6 md:px-8 no-scrollbar relative">
-            <div class="max-w-[1600px] mx-auto">
-                
-                <div class="mb-10">
-                    <div class="flex justify-between items-end mb-4">
-                        <div>
-                            <h2 class="text-2xl font-bold text-gray-900 transition-all">{{ dashboardTitle }}</h2>
-                            <p class="text-gray-500 text-sm mt-1 transition-all">{{ dashboardDesc }}</p>
-                        </div>
-                        
-                        <!-- 核心功能：视角切换 Toggle -->
-                        <div class="flex items-center bg-gray-200/60 p-1 rounded-lg border border-gray-200 shadow-inner">
-                            <button @click="switchView('manager')" 
-                                :class="{'bg-white shadow-sm text-blue-600 font-bold': currentView === 'manager', 'text-gray-500 hover:text-gray-700': currentView !== 'manager'}" 
-                                class="px-5 py-1.5 text-sm rounded-md transition-all duration-200 flex items-center gap-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                                管理控制台
-                            </button>
-                            <button @click="switchView('sales')" 
-                                :class="{'bg-white shadow-sm text-emerald-600 font-bold': currentView === 'sales', 'text-gray-500 hover:text-gray-700': currentView !== 'sales'}" 
-                                class="px-5 py-1.5 text-sm rounded-md transition-all duration-200 flex items-center gap-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                                销售工作台
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- ================= 管理视角：全局动态面板 ================= -->
-                    <div v-show="currentView === 'manager'" class="mb-6">
-                        
-                        <!-- 筛选器下拉组合 -->
-                        <div class="flex flex-wrap items-center gap-3 mb-4">
-                            <h3 class="text-sm font-bold text-gray-700 mr-1">全局筛选</h3>
-                            <div class="relative w-28" v-for="(label, idx) in ['所属大区', '所属省份', '所属城市', '产品线', '销售团队', '销售专员']" :key="idx">
-                                <select class="w-full appearance-none bg-white border border-gray-200 text-gray-500 text-xs font-semibold px-3 py-2 rounded shadow-sm outline-none cursor-pointer focus:ring-1 focus:ring-blue-400">
-                                    <option>{{ label }}</option><option>华东大区</option><option>华南大区</option>
+        <!-- ======================= 双视图容器 ======================= -->
+        <div class="flex-1 overflow-hidden relative flex flex-col min-h-0 w-full">
+            
+            <!-- ====== 视图 1: UPLOAD (默认显示，完整保留原版) ====== -->
+            <div id="view-upload" class="absolute inset-0 flex flex-col w-full h-full overflow-hidden">
+                <!-- 统一基础信息与步骤质量总览模块 -->
+                <div class="bg-white border-b border-gray-200 px-8 py-6 flex-shrink-0 z-10 shadow-sm w-full relative">
+                    <!-- 上半部：项目基础信息 -->
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-4">
+                            <h2 class="text-[17px] font-bold text-gray-900 tracking-tight">00000023 - KDC Caseview Test</h2>
+                            <div class="h-4 w-px bg-gray-200"></div>
+                            
+                            <div class="relative">
+                                <select class="appearance-none bg-gray-50 border border-gray-200 text-gray-700 hover:bg-gray-100 hover:border-gray-300 rounded-md pl-3 pr-8 py-1.5 text-xs font-medium focus:outline-none focus:border-[#00338D] focus:ring-1 focus:ring-[#00338D] transition-all cursor-pointer">
+                                    <option>KDC Caseview Test_1</option>
                                 </select>
-                                <svg class="w-3 h-3 text-gray-400 absolute right-2.5 top-2.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                <svg class="w-3.5 h-3.5 absolute right-2.5 top-[7px] text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </div>
-                        </div>
-
-                        <!-- 漏斗分析面板 -->
-                        <div class="bg-white p-5 rounded-2xl chart-card border border-gray-100 flex flex-col xl:flex-row gap-6 mb-8">
-                            <div class="flex-1 flex flex-col min-w-0">
-                                <div class="flex justify-between items-center mb-5">
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-1.5 h-4 bg-blue-600 rounded"></div>
-                                        <h3 class="font-bold text-gray-800 text-sm tracking-wide">本年度销售阶段转化分析</h3>
-                                        <span class="text-[10px] text-gray-500 font-bold uppercase tracking-wider bg-gray-100 px-2 py-0.5 rounded ml-1 hidden sm:inline-block">Pipeline Conversion</span>
-                                    </div>
-                                    <div class="text-[11px] font-medium text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-100 flex items-center gap-1.5">
-                                        点击阶段与AI展开洞察
-                                    </div>
-                                </div>
-                                
-                                <div class="flex w-full h-28 mt-2 shrink-0">
-                                    <div v-for="(stage, index) in managerStages" :key="index" 
-                                         @click="selectedStageIndex = index"
-                                         class="flex-1 relative transition-all cursor-pointer group" 
-                                         :class="index > 0 ? '-ml-5' : ''" 
-                                         :style="{ zIndex: 10 - index }">
-                                        <div class="absolute inset-0 border-y border-transparent transition-colors duration-200"
-                                             :class="[
-                                                 index === 0 ? 'stage-shape-first' : '',
-                                                 index === managerStages.length - 1 ? 'stage-shape-last' : '',
-                                                 index > 0 && index < managerStages.length - 1 ? 'stage-shape' : '',
-                                                 selectedStageIndex === index ? 'bg-blue-100/80 shadow-inner' : 'bg-gray-100/80 group-hover:bg-blue-50'
-                                             ]">
-                                        </div>
-                                        <div class="relative h-full flex flex-col items-center justify-center px-4 text-center z-10">
-                                            <span class="text-[14px] font-bold tracking-widest" :class="selectedStageIndex === index ? 'text-blue-800' : 'text-gray-700'">{{ stage.name }}</span>
-                                            <span class="text-[9px] uppercase tracking-widest font-bold opacity-80 mt-0.5" :class="selectedStageIndex === index ? 'text-blue-500' : 'text-gray-400'">{{ stage.enName }}</span>
-                                            <span class="text-xl font-black tracking-tight mt-1" :class="selectedStageIndex === index ? 'text-blue-900' : 'text-gray-800'">{{ stage.value }}</span>
-                                        </div>
-                                        <div v-if="stage.conv" class="absolute top-1/2 -right-[15px] transform -translate-y-1/2 z-20 bg-gray-400 text-white text-[10px] font-medium px-1.5 py-0.5 rounded shadow-sm border border-white">
-                                            {{ stage.conv }}
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <transition name="fade" mode="out-in">
-                                    <div v-if="selectedStageIndex !== null && funnelDrillDownData[selectedStageIndex]" class="mt-6 bg-blue-50/50 border border-blue-100 rounded-xl p-5 shadow-sm min-w-0">
-                                        <div class="flex items-center gap-2 mb-4">
-                                            <div class="w-1.5 h-4 bg-blue-500 rounded"></div>
-                                            <h4 class="font-bold text-gray-800 text-sm">{{ managerStages[selectedStageIndex].name }} - 业务结构树</h4>
-                                        </div>
-                                        <div class="flex flex-nowrap w-full gap-4 overflow-x-auto pb-1">
-                                            <div v-for="(group, gIndex) in funnelDrillDownData[selectedStageIndex]" :key="gIndex" 
-                                                 class="flex-1 min-w-[150px] bg-white rounded-lg border border-gray-100 p-4 shadow-sm shrink-0">
-                                                <h5 class="text-blue-800 font-bold text-xs mb-3 flex items-center gap-2 border-b border-gray-50 pb-2">
-                                                    <svg class="w-4 h-4 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" v-html="group.icon"></svg>
-                                                    {{ group.title }}
-                                                </h5>
-                                                <ul class="space-y-1.5 pl-1">
-                                                    <li v-for="(item, iIndex) in group.items" :key="iIndex" class="text-xs text-gray-600 flex items-center gap-2">
-                                                        <span class="w-1 h-1 bg-gray-300 rounded-full shrink-0"></span>{{ item }}
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </transition>
+                            
+                            <div class="flex items-center bg-[#F0F4F8] text-[#00338D] px-2.5 py-1.5 rounded-md text-xs font-medium border border-[#D9E2EC]">
+                                <svg class="w-3.5 h-3.5 mr-1.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
+                                a7132a368992422aa0952ea38cc5a44b <span class="mx-1.5 text-blue-300">|</span> 年报审计
                             </div>
-
-                            <!-- AI Agents 互动舱 -->
-                            <div class="w-full xl:w-[260px] shrink-0 bg-gradient-to-br from-[#dcfce7] to-[#d1fae5] rounded-xl p-4 flex flex-col relative border border-[#bbf7d0] shadow-sm overflow-hidden">
-                                <div class="absolute -right-6 -top-6 w-24 h-24 rounded-full bg-green-200/40 pointer-events-none"></div>
-                                <div class="relative z-10 flex justify-between items-start">
-                                    <div>
-                                        <h4 class="text-[12px] font-bold text-green-800 uppercase tracking-wide leading-tight mb-1">平均赢单率</h4>
-                                        <div class="text-4xl font-light text-green-700 tracking-tight leading-none">23<span class="text-xl font-normal ml-0.5">%</span></div>
-                                    </div>
-                                    <div class="flex flex-col items-end pt-1">
-                                        <div class="text-[11px] font-bold text-green-800 mb-1">目标 22%</div>
-                                        <div class="text-[10px] text-green-700 bg-green-200/80 px-1.5 py-0.5 rounded font-medium">环比 -2.6%</div>
-                                    </div>
-                                </div>
-                                <div class="border-t border-green-300/40 my-3 relative z-10"></div>
-                                <div class="relative z-10 flex flex-col flex-1">
-                                    <div class="text-[11px] font-bold text-green-800 mb-2 flex items-center gap-1.5">RevOps AI Agents</div>
-                                    <div class="flex-1 bg-white/80 rounded-lg p-3 border border-green-200 shadow-sm flex flex-col">
-                                        <div class="flex items-center gap-2 mb-2 pb-1.5 border-b border-green-100/80">
-                                            <span class="text-[11px] font-black text-emerald-800 uppercase tracking-wider">{{ aiAgents[selectedStageIndex].name }} Agent</span>
-                                        </div>
-                                        <p class="text-[11px] text-green-900 leading-relaxed font-medium">{{ aiAgents[selectedStageIndex].message }}</p>
-                                        <div class="mt-auto pt-2.5">
-                                            <button class="w-full bg-emerald-100/60 hover:bg-emerald-200 text-emerald-800 text-[10px] font-bold py-1.5 rounded transition-colors flex items-center justify-center gap-1">
-                                                一键执行策略
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 收入深度洞察 -->
-                        <div class="mt-2 mb-4 flex items-center gap-2">
-                            <h3 class="text-lg font-bold text-gray-900">全局收入深度洞察与预测</h3>
-                            <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">AI Revenue Intelligence</span>
                         </div>
                         
-                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-                            <div class="lg:col-span-2 bg-white p-6 rounded-2xl chart-card border border-gray-100 flex flex-col min-w-0 overflow-hidden">
-                                <h3 class="font-bold text-gray-900 text-base">收入趋势分析与 AI 预测</h3>
-                                <p class="text-[11px] text-gray-400 mt-1">历史确认收入结合未来6个月的管线预测与留存推演</p>
-                                <div class="flex-1 w-full relative min-h-[300px] mt-2">
-                                    <div id="chart-rev-forecast-main" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
-                                </div>
-                            </div>
-
-                            <div class="lg:col-span-1 bg-white p-5 rounded-2xl chart-card border border-gray-100 flex flex-col min-w-0 overflow-hidden">
-                                <h3 class="font-bold text-gray-800 text-sm">全局收入结构与来源</h3>
-                                <p class="text-[10px] text-gray-400 mt-0.5">本年度确认营收的业务属性拆解</p>
-                                <div class="flex-1 w-full relative min-h-[300px]">
-                                    <div id="chart-rev-source" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
-                                </div>
-                            </div>
-
-                            <div class="lg:col-span-1 bg-white p-5 rounded-2xl chart-card border border-gray-100 flex flex-col min-w-0 overflow-hidden">
-                                <h3 class="font-bold text-gray-800 text-sm">全链路收入转化洞察</h3>
-                                <p class="text-[10px] text-gray-400 mt-0.5">从商机储备到最终现金回款的损耗率模型</p>
-                                <div class="flex-1 w-full relative min-h-[260px]">
-                                    <div id="chart-rev-conversion" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
-                                </div>
-                            </div>
-
-                            <div class="lg:col-span-2 bg-white p-6 rounded-2xl chart-card border border-gray-100 flex flex-col min-w-0 overflow-hidden">
-                                <h3 class="font-bold text-gray-800 text-sm">重点客户价值矩阵 (Key Accounts Mining)</h3>
-                                <p class="text-[10px] text-gray-400 mt-0.5">基于客户合作周期与当前 ARR 分析，气泡大小代表潜在增购空间</p>
-                                <div class="flex-1 w-full relative min-h-[260px]">
-                                    <div id="chart-rev-accounts" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
-                                </div>
-                            </div>
-                        </div>
+                        <button class="flex items-center text-gray-500 hover:text-[#00338D] transition-colors cursor-pointer text-xs font-medium bg-white hover:bg-blue-50 px-3 py-1.5 rounded-md border border-gray-200 hover:border-blue-200 shadow-sm">
+                            <span class="mr-1.5">Ticket no</span>
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        </button>
                     </div>
 
-                    <!-- ================= 销售工作台 (改用 v-if 确保切换时重新分配 DOM 容器宽高) ================= -->
-                    <div v-if="currentView === 'sales'" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="bg-white p-5 rounded-2xl chart-card border border-gray-100 flex flex-col min-w-0 overflow-hidden">
-                            <div class="flex justify-between items-center mb-2 shrink-0">
-                                <h3 class="font-bold text-gray-800">{{ chart1Title }}</h3>
-                                <span class="text-xs text-gray-400">本年度</span>
-                            </div>
-                            <div class="flex-1 w-full relative min-h-[260px]">
-                                <div id="chart-funnel" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-5 rounded-2xl chart-card border border-gray-100 flex flex-col min-w-0 overflow-hidden">
-                            <div class="flex justify-between items-center mb-2 shrink-0">
-                                <h3 class="font-bold text-gray-800">{{ chart2Title }}</h3>
-                                <span class="text-xs text-gray-400">滚动周期</span>
-                            </div>
-                            <div class="flex-1 w-full relative min-h-[260px]">
-                                <div id="chart-revenue" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-5 rounded-2xl chart-card border border-gray-100 flex flex-col min-w-0 overflow-hidden">
-                            <div class="flex justify-between items-center mb-2 shrink-0">
-                                <h3 class="font-bold text-gray-800">{{ chart3Title }}</h3>
-                                <span class="text-xs text-gray-400">今日耗时</span>
-                            </div>
-                            <div class="flex-1 w-full relative min-h-[260px]">
-                                <div id="chart-health" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ================= 功能集群卡片区域 ================= -->
-                    <transition name="fade" mode="out-in">
-                        <div :key="currentView" class="space-y-10 mt-10">
-                            <div v-for="(cluster, clusterIndex) in activeClusters" :key="clusterIndex">
-                                <div class="flex items-center gap-2 mb-5">
-                                    <div class="flex items-center justify-center w-7 h-7 rounded-full text-white font-bold text-sm shadow-sm" :class="cluster.headerColor">
-                                        {{ currentView === 'manager' ? clusterIndex + 1 : cluster.iconText }}
+                    <!-- 下半部：数据质量与流程总览 -->
+                    <div class="w-full pt-4">
+                        <div class="flex justify-between w-full">
+                            <!-- 01 数据上传 -->
+                            <div class="flex flex-col relative flex-1 pr-6">
+                                <div class="flex items-center mb-3">
+                                    <span class="text-[#00338D] font-bold text-sm mr-3">01 数据上传</span>
+                                    <div class="h-px bg-blue-100 flex-1"></div>
+                                </div>
+                                <div class="border-l-2 border-[#00338D]/20 ml-2.5 pl-4 py-1 space-y-2 min-h-[48px]">
+                                    <div class="flex items-center text-xs text-emerald-600 font-medium">
+                                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                        TB完成
                                     </div>
-                                    <h2 class="text-xl font-bold text-gray-900">{{ cluster.name }}</h2>
-                                    <span class="text-sm text-gray-400 ml-2 tracking-wide uppercase">{{ cluster.enName }}</span>
+                                    <div class="flex items-center text-xs text-emerald-600 font-medium">
+                                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                        MA完成
+                                    </div>
                                 </div>
+                            </div>
+                            <!-- 02 自动质检 -->
+                            <div class="flex flex-col relative flex-1 pr-6">
+                                <div class="flex items-center mb-3">
+                                    <span class="text-[#00338D] font-bold text-sm mr-3">02 自动质检</span>
+                                    <div class="h-px bg-rose-100 flex-1"></div>
+                                </div>
+                                <div class="border-l-2 border-rose-300 ml-2.5 pl-4 py-1 space-y-2 min-h-[48px]">
+                                    <div class="flex items-center text-xs text-rose-600 font-bold bg-rose-50 inline-flex px-2 py-0.5 rounded border border-rose-100 shadow-sm">
+                                        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                        3个异常
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 03 数据核对 -->
+                            <div class="flex flex-col relative flex-1 pr-6">
+                                <div class="flex items-center mb-3">
+                                    <span class="text-gray-400 font-bold text-sm mr-3">03 数据核对</span>
+                                    <div class="h-px bg-gray-200 flex-1"></div>
+                                </div>
+                                <div class="border-l-2 border-gray-200 ml-2.5 pl-4 py-1 space-y-2 min-h-[48px]">
+                                    <div class="flex items-center text-xs text-blue-600 font-medium">
+                                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        12/15完成
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 04 调整分录 -->
+                            <div class="flex flex-col relative flex-1 pr-6">
+                                <div class="flex items-center mb-3">
+                                    <span class="text-gray-400 font-bold text-sm mr-3">04 调整分录</span>
+                                    <div class="h-px bg-gray-200 flex-1"></div>
+                                </div>
+                                <div class="border-l-2 border-gray-200 ml-2.5 pl-4 py-1 space-y-2 min-h-[48px]">
+                                    <div class="flex items-center text-xs text-amber-500 font-medium">
+                                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        待审批
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 05 交付 -->
+                            <div class="flex flex-col relative flex-1">
+                                <div class="flex items-center mb-3">
+                                    <span class="text-gray-400 font-bold text-sm mr-3">05 交付</span>
+                                </div>
+                                <div class="border-l-2 border-transparent ml-2.5 pl-4 py-1 min-h-[48px]">
+                                    <!-- 未开始/空白 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 pl-2 border-l-2 border-gray-100 ml-3">
-                                    <div v-for="(module, index) in cluster.modules" :key="index" 
-                                        class="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col group overflow-hidden">
-                                        <div class="p-5 border-b border-gray-100 pb-4 relative overflow-hidden">
-                                            <div class="absolute -right-6 -top-6 w-20 h-20 rounded-full opacity-10" :class="module.themeColor"></div>
-                                            <div class="flex justify-between items-start mb-3 relative z-10">
-                                                <div>
-                                                    <h3 class="font-bold text-gray-900 text-lg">{{ module.title }}</h3>
-                                                    <p class="text-xs text-gray-500 mt-0.5">{{ module.enTitle }}</p>
-                                                </div>
-                                                <div :class="`p-2 rounded-lg text-white ${module.themeColor}`">
-                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" v-html="module.iconSvg"></svg>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-baseline gap-2 mt-2 relative z-10">
-                                                <span class="text-2xl font-black tracking-tight text-gray-900">{{ module.metric }}</span>
-                                                <span v-if="module.trend" class="text-xs font-semibold" :class="module.trendUp ? 'text-green-600' : 'text-red-500'">{{ module.trend }}</span>
-                                            </div>
-                                            <p class="text-xs text-gray-500 mt-1 relative z-10">{{ module.metricLabel }}</p>
+                <!-- 滚动主内容区域 (完整表格) -->
+                <main class="flex-1 overflow-auto p-8 relative w-full">
+                    <!-- 面包屑与操作按钮 -->
+                    <div class="flex justify-between items-end mb-6">
+                        <div class="flex items-center space-x-2 text-gray-500 text-sm">
+                            <a href="#" class="flex items-center text-[#00338D] hover:text-blue-700 hover:underline font-medium transition-colors">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>返回
+                            </a>
+                            <span class="text-gray-300">/</span>
+                            <span class="text-gray-600 bg-white px-2 py-0.5 rounded shadow-sm border border-gray-200 text-xs">数据源</span>
+                        </div>
+
+                        <div class="flex space-x-3">
+                            <button class="bg-[#00338D] hover:bg-blue-800 text-white px-5 py-1.5 rounded shadow-sm text-sm transition-colors flex items-center font-medium border border-transparent">
+                                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>上传
+                            </button>
+                            <div class="relative group">
+                                <button class="bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 px-4 py-1.5 rounded shadow-sm text-sm transition-colors flex items-center">
+                                    更多
+                                    <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+                                <div class="absolute right-0 mt-1 w-[160px] bg-white border border-gray-200 rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 overflow-hidden">
+                                    <a href="#" class="flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-[#00338D] text-sm transition-colors border-b border-gray-100"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>查看解析结果</a>
+                                    <a href="#" class="flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-[#00338D] text-sm transition-colors border-b border-gray-100"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>原始文件管理</a>
+                                    <a href="#" class="flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-[#00338D] text-sm transition-colors"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>操作记录</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 【表格 1 - 科目基础数据】 -->
+                    <div class="flex items-center mb-4">
+                        <div class="w-1 h-4 bg-[#00338D] mr-2.5 rounded-sm"></div>
+                        <h1 class="text-[17px] font-bold text-gray-900 tracking-wide">科目基础数据</h1>
+                    </div>
+                    <div class="mb-8 bg-white border border-gray-200 rounded-lg shadow-sm overflow-x-auto">
+                        <div class="bg-gray-50/80 px-5 py-3 border-b border-gray-200 flex justify-between items-center sticky left-0">
+                            <h2 class="font-bold text-gray-800 text-sm flex items-center">
+                                科目基础数据 
+                                <span class="text-xs font-normal text-gray-500 ml-3 bg-white px-2 py-0.5 rounded border border-gray-200 shadow-sm">展示文件流入系统后的标准质控流程</span>
+                            </h2>
+                        </div>
+                        <table class="w-full text-left border-collapse min-w-[1200px]">
+                            <thead class="bg-white text-[12px] tracking-wider whitespace-nowrap">
+                                <tr class="text-gray-500 uppercase border-b border-gray-200 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+                                    <th class="py-3 px-4 font-semibold w-[5%] text-center border-r border-gray-100">序号</th>
+                                    <th class="py-3 px-4 font-semibold w-[12%] border-r border-gray-100">数据采集项</th>
+                                    <th class="py-3 px-4 font-semibold w-[8%] text-center border-r border-gray-200">所属年度</th>
+                                    <th class="py-3 px-4 font-semibold w-[10%] text-center border-r border-gray-200 bg-slate-50/30">文件验证</th>
+                                    <th class="py-3 px-4 font-semibold w-[50%] border-r border-gray-200 bg-slate-50/30">数据质检</th>
+                                    <th class="py-3 px-5 font-semibold w-[15%]">创建信息</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100 text-[13px] tb-ma-group">
+                                <!-- 第一行：TB -->
+                                <tr class="hover:bg-gray-50/50 transition-colors bg-white">
+                                    <td class="py-4 px-4 text-center text-gray-400 border-r border-gray-50">1</td>
+                                    <td class="py-4 px-4 font-medium text-gray-900 border-r border-gray-50">科目余额表 (TB)</td>
+                                    <td class="py-4 px-4 text-center text-gray-600 border-r border-gray-50">2026</td>
+                                    <td class="py-4 px-4 text-center border-r border-gray-50">
+                                        <div class="inline-flex items-center space-x-2">
+                                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm border border-emerald-600/20"></span>
+                                            <span class="text-gray-700 font-medium">验证通过</span>
                                         </div>
-                                        <div class="p-3 flex-1 bg-gray-50/50">
-                                            <ul class="space-y-1">
-                                                <li v-for="(feature, fIndex) in module.features" :key="fIndex" class="flex flex-col py-1.5 px-2 rounded hover:bg-white hover:shadow-sm transition-all cursor-pointer">
-                                                    <div class="flex items-center gap-2">
-                                                        <div class="w-1 h-1 rounded-full bg-gray-300"></div>
-                                                        <span class="text-sm font-medium text-gray-700">{{ feature.name }}</span>
+                                    </td>
+                                    <td class="p-3 border-r border-gray-50 align-top">
+                                        <div class="flex space-x-3 w-full h-full">
+                                            <!-- ① 完整性 -->
+                                            <div class="flex-1 bg-[#f8fafc] border border-gray-100 rounded-lg p-3 flex flex-col justify-between">
+                                                <div class="flex justify-between items-center mb-3">
+                                                    <span class="font-bold text-gray-700 text-xs">① 完整性</span>
+                                                    <span class="text-emerald-700 font-medium text-[11px] bg-emerald-100/50 px-1.5 py-0.5 rounded border border-emerald-200/50">12/12个月</span>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <div class="text-[10px] text-gray-500 mb-1 flex items-center justify-between">
+                                                        <span>当期 (2026)</span>
                                                     </div>
-                                                    <span class="text-xs text-gray-400 pl-3 mt-0.5 truncate">{{ feature.desc }}</span>
-                                                </li>
-                                            </ul>
+                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
+                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
+                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="text-[10px] text-gray-500 mb-1 flex items-center justify-between">
+                                                        <span>比较期 (2025)</span>
+                                                    </div>
+                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
+                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
+                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- ② 有效性 -->
+                                            <div class="flex-1 bg-[#f8fafc] border border-gray-100 rounded-lg p-3 flex flex-col">
+                                                <div class="font-bold text-gray-700 text-xs mb-3">② 有效性</div>
+                                                <div class="space-y-1.5 text-[11px] text-gray-600 flex-1 flex flex-col justify-center">
+                                                    <div class="flex justify-between items-center bg-white px-2.5 py-1.5 rounded border border-gray-100 shadow-sm">
+                                                        <span class="font-medium text-gray-700">借贷平衡</span>
+                                                        <span class="text-emerald-500 font-bold text-[13px] leading-none">✓</span>
+                                                    </div>
+                                                    <div class="flex justify-between items-center bg-white px-2.5 py-1.5 rounded border border-gray-100 shadow-sm">
+                                                        <span class="font-medium text-gray-700">借方金额异常</span>
+                                                        <span class="font-semibold text-gray-800">0</span>
+                                                    </div>
+                                                    <div class="flex justify-between items-center bg-white px-2.5 py-1.5 rounded border border-gray-100 shadow-sm">
+                                                        <span class="font-medium text-gray-700">空值科目</span>
+                                                        <span class="font-semibold text-gray-800">0</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- ③ 一致性 -->
+                                            <div class="flex-1 bg-rose-50/50 border border-rose-100 rounded-lg p-3 flex flex-col relative overflow-hidden">
+                                                <div class="flex justify-between items-start mb-2 relative z-10">
+                                                    <div class="font-bold text-gray-700 text-xs">③ 一致性</div>
+                                                    <div class="text-[10px] font-medium text-gray-500 bg-white px-1.5 py-0.5 rounded shadow-sm border border-gray-200">TB vs MA</div>
+                                                </div>
+                                                <div class="flex-1 flex flex-col justify-center my-1 relative z-10">
+                                                    <div class="bg-white rounded p-2.5 border border-rose-200 shadow-sm text-center">
+                                                        <div class="text-[10px] text-gray-500 mb-0.5">差异金额</div>
+                                                        <div class="text-rose-600 font-bold text-sm tracking-wide">￥3,245,000</div>
+                                                    </div>
+                                                </div>
+                                                <a href="#" class="text-[#00338D] text-[11px] hover:underline flex items-center justify-end font-medium mt-1 relative z-10">
+                                                    查看差异原因 
+                                                    <svg class="w-3 h-3 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </td>
+                                    <td class="py-4 px-5">
+                                        <div class="flex flex-col">
+                                            <span class="text-gray-900 font-medium">Shen, Austen</span>
+                                            <span class="text-gray-400 text-xs mt-1">2026-07-14 11:45</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- 第二行：MA -->
+                                <tr class="hover:bg-gray-50/50 transition-colors bg-white">
+                                    <td class="py-4 px-4 text-center text-gray-400 border-r border-gray-50">2</td>
+                                    <td class="py-4 px-4 font-medium text-gray-900 border-r border-gray-50">管理层报表 (MA)</td>
+                                    <td class="py-4 px-4 text-center text-gray-600 border-r border-gray-50">2026</td>
+                                    <td class="py-4 px-4 text-center border-r border-gray-50">
+                                        <div class="inline-flex items-center space-x-2">
+                                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm border border-emerald-600/20"></span>
+                                            <span class="text-gray-700 font-medium">验证通过</span>
+                                        </div>
+                                    </td>
+                                    <td class="p-3 border-r border-gray-50 align-top">
+                                        <div class="flex space-x-3 w-full h-full">
+                                            <!-- ① 完整性 -->
+                                            <div class="flex-1 bg-[#f8fafc] border border-gray-100 rounded-lg p-3 flex flex-col justify-between">
+                                                <div class="flex justify-between items-center mb-3">
+                                                    <span class="font-bold text-gray-700 text-xs">① 完整性</span>
+                                                    <span class="text-emerald-700 font-medium text-[11px] bg-emerald-100/50 px-1.5 py-0.5 rounded border border-emerald-200/50">12/12个月</span>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <div class="text-[10px] text-gray-500 mb-1 flex items-center justify-between">
+                                                        <span>当期 (2026)</span>
+                                                    </div>
+                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
+                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
+                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="text-[10px] text-gray-500 mb-1 flex items-center justify-between">
+                                                        <span>比较期 (2025)</span>
+                                                    </div>
+                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
+                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
+                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- ② 有效性 -->
+                                            <div class="flex-1 bg-[#f8fafc] border border-gray-100 rounded-lg p-3 flex flex-col">
+                                                <div class="font-bold text-gray-700 text-xs mb-3">② 有效性</div>
+                                                <div class="space-y-1.5 text-[11px] text-gray-600 flex-1 flex flex-col justify-center">
+                                                    <div class="flex justify-between items-center bg-white px-2.5 py-1.5 rounded border border-gray-100 shadow-sm">
+                                                        <span class="font-medium text-gray-700">借贷平衡</span>
+                                                        <span class="text-emerald-500 font-bold text-[13px] leading-none">✓</span>
+                                                    </div>
+                                                    <div class="flex justify-between items-center bg-white px-2.5 py-1.5 rounded border border-gray-100 shadow-sm">
+                                                        <span class="font-medium text-gray-700">借方金额异常</span>
+                                                        <span class="font-semibold text-gray-800">0</span>
+                                                    </div>
+                                                    <div class="flex justify-between items-center bg-white px-2.5 py-1.5 rounded border border-gray-100 shadow-sm">
+                                                        <span class="font-medium text-gray-700">空值科目</span>
+                                                        <span class="font-semibold text-gray-800">0</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- ③ 一致性 -->
+                                            <div class="flex-1 bg-rose-50/50 border border-rose-100 rounded-lg p-3 flex flex-col relative overflow-hidden">
+                                                <div class="flex justify-between items-start mb-2 relative z-10">
+                                                    <div class="font-bold text-gray-700 text-xs">③ 一致性</div>
+                                                    <div class="text-[10px] font-medium text-gray-500 bg-white px-1.5 py-0.5 rounded shadow-sm border border-gray-200">TB vs MA</div>
+                                                </div>
+                                                <div class="flex-1 flex flex-col justify-center my-1 relative z-10">
+                                                    <div class="bg-white rounded p-2.5 border border-rose-200 shadow-sm text-center">
+                                                        <div class="text-[10px] text-gray-500 mb-0.5">差异金额</div>
+                                                        <div class="text-rose-600 font-bold text-sm tracking-wide">￥3,245,000</div>
+                                                    </div>
+                                                </div>
+                                                <a href="#" class="text-[#00338D] text-[11px] hover:underline flex items-center justify-end font-medium mt-1 relative z-10">
+                                                    查看差异原因 
+                                                    <svg class="w-3 h-3 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-5">
+                                        <div class="flex flex-col">
+                                            <span class="text-gray-900 font-medium">Shen, Austen</span>
+                                            <span class="text-gray-400 text-xs mt-1">2026-07-14 15:02</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 【表格 2 - 辅助信息】 -->
+                    <div class="mb-10">
+                        <div class="flex items-center mb-3">
+                            <h2 class="font-bold text-gray-800 text-sm">辅助信息</h2>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg shadow-sm overflow-hidden bg-white">
+                            <table class="w-full text-left">
+                                <thead class="bg-white text-gray-500 border-b border-gray-200 text-[12px] uppercase tracking-wider">
+                                    <tr>
+                                        <th class="py-3 px-5 font-semibold w-[5%] text-center border-r border-gray-100">序号</th>
+                                        <th class="py-3 px-5 font-semibold w-[25%] border-r border-gray-100">数据采集项</th>
+                                        <th class="py-3 px-5 font-semibold w-[10%] text-center border-r border-gray-100">所属年度</th>
+                                        <th class="py-3 px-5 font-semibold w-[20%] text-center border-r border-gray-100">
+                                            <div class="flex items-center justify-center space-x-1.5">
+                                                <span>采集状态</span>
+                                                <select class="bg-gray-50 border border-gray-200 text-gray-600 text-[11px] rounded px-1.5 py-0.5 outline-none focus:border-[#00338D] focus:ring-1 focus:ring-[#00338D] cursor-pointer">
+                                                    <option value="all">全部</option>
+                                                    <option value="collected">已收集</option>
+                                                    <option value="uncollected">未收集</option>
+                                                    <option value="na">不适用</option>
+                                                </select>
+                                            </div>
+                                        </th>
+                                        <th class="py-3 px-5 font-semibold w-[15%] text-center border-r border-gray-100">leedsheet状态</th>
+                                        <th class="py-3 px-5 font-semibold w-[25%]">创建信息</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100 text-[13px]">
+                                    <tr class="hover:bg-gray-50/50 transition-colors">
+                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50">1</td>
+                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50">固定资产台账</td>
+                                        <td class="py-3.5 px-5 text-center text-gray-600 border-r border-gray-50">2026</td>
+                                        <td class="py-3.5 px-5 text-center border-r border-gray-50">
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">已收集</span>
+                                        </td>
+                                        <td class="py-3.5 px-5 text-center border-r border-gray-50">
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">已生成</span>
+                                        </td>
+                                        <td class="py-3.5 px-5">
+                                            <div class="flex flex-col">
+                                                <span class="text-gray-900 font-medium">Shen, Austen</span>
+                                                <span class="text-gray-400 text-xs mt-1">2026-07-14 11:50</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/50 transition-colors">
+                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50">2</td>
+                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50">应收账款明细</td>
+                                        <td class="py-3.5 px-5 text-center text-gray-600 border-r border-gray-50">2026</td>
+                                        <td class="py-3.5 px-5 text-center border-r border-gray-50">
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200">未收集</span>
+                                        </td>
+                                        <td class="py-3.5 px-5 text-center text-gray-400 border-r border-gray-50">-</td>
+                                        <td class="py-3.5 px-5 text-gray-400">-</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/50 transition-colors">
+                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50">3</td>
+                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50">应付账款明细</td>
+                                        <td class="py-3.5 px-5 text-center text-gray-600 border-r border-gray-50">2026</td>
+                                        <td class="py-3.5 px-5 text-center border-r border-gray-50">
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">不适用</span>
+                                        </td>
+                                        <td class="py-3.5 px-5 text-center text-gray-400 border-r border-gray-50">-</td>
+                                        <td class="py-3.5 px-5 text-gray-400">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 【表格 3 - 报表源数据】 -->
+                    <div class="flex items-center mb-4 mt-8">
+                        <div class="w-1 h-4 bg-[#00338D] mr-2.5 rounded-sm"></div>
+                        <h1 class="text-[17px] font-bold text-gray-900 tracking-wide">报表源数据</h1>
+                    </div>
+                    <div class="mb-10">
+                        <div class="border border-gray-200 rounded-lg shadow-sm overflow-hidden bg-white">
+                            <table class="w-full text-left">
+                                <thead class="bg-white text-gray-500 border-b border-gray-200 text-[12px] uppercase tracking-wider">
+                                    <tr>
+                                        <th class="py-3 px-5 font-semibold w-[5%] text-center border-r border-gray-100">序号</th>
+                                        <th class="py-3 px-5 font-semibold w-[30%] border-r border-gray-100">数据采集项</th>
+                                        <th class="py-3 px-5 font-semibold w-[15%] text-center border-r border-gray-100">所属年度</th>
+                                        <th class="py-3 px-5 font-semibold w-[20%] text-center border-r border-gray-100">处理状态</th>
+                                        <th class="py-3 px-5 font-semibold w-[30%]">创建信息</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100 text-[13px]">
+                                    <tr class="hover:bg-gray-50/50 transition-colors">
+                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50">1</td>
+                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50">久其</td>
+                                        <td class="py-3.5 px-5 text-center text-gray-600 border-r border-gray-50">2026</td>
+                                        <td class="py-3.5 px-5 text-center border-r border-gray-50">
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">处理完成</span>
+                                        </td>
+                                        <td class="py-3.5 px-5">
+                                            <div class="flex flex-col">
+                                                <span class="text-gray-900 font-medium">Zhang, Christie (CD/AQPP)</span>
+                                                <span class="text-gray-400 text-xs mt-1">2026-08-14 09:43</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/50 transition-colors">
+                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50">2</td>
+                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50">Excel package</td>
+                                        <td class="py-3.5 px-5 text-center text-gray-600 border-r border-gray-50">2026</td>
+                                        <td class="py-3.5 px-5 text-center border-r border-gray-50">
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">处理完成</span>
+                                        </td>
+                                        <td class="py-3.5 px-5">
+                                            <div class="flex flex-col">
+                                                <span class="text-gray-900 font-medium">Gao, Gina (KDC/AST)</span>
+                                                <span class="text-gray-400 text-xs mt-1">2026-06-10 17:32</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 【表格 4 - 客户报告】 -->
+                    <div class="flex items-center mb-4 mt-8">
+                        <div class="w-1 h-4 bg-[#00338D] mr-2.5 rounded-sm"></div>
+                        <h1 class="text-[17px] font-bold text-gray-900 tracking-wide">客户报告</h1>
+                    </div>
+                    <div class="mb-10">
+                        <div class="border border-gray-200 rounded-lg shadow-sm overflow-hidden bg-white">
+                            <table class="w-full text-left">
+                                <thead class="bg-white text-gray-500 border-b border-gray-200 text-[12px] uppercase tracking-wider">
+                                    <tr>
+                                        <th class="py-3 px-5 font-semibold w-[5%] text-center border-r border-gray-100">序号</th>
+                                        <th class="py-3 px-5 font-semibold w-[30%] border-r border-gray-100">数据采集项</th>
+                                        <th class="py-3 px-5 font-semibold w-[15%] text-center border-r border-gray-100">所属年度</th>
+                                        <th class="py-3 px-5 font-semibold w-[20%] text-center border-r border-gray-100">处理状态</th>
+                                        <th class="py-3 px-5 font-semibold w-[30%]">创建信息</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100 text-[13px]">
+                                    <tr class="hover:bg-gray-50/50 transition-colors">
+                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50">1</td>
+                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50">审计报告 (Audit Report)</td>
+                                        <td class="py-3.5 px-5 text-center text-gray-600 border-r border-gray-50">2026</td>
+                                        <td class="py-3.5 px-5 text-center border-r border-gray-50">
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">处理中</span>
+                                        </td>
+                                        <td class="py-3.5 px-5">
+                                            <div class="flex flex-col">
+                                                <span class="text-gray-900 font-medium">System Auto</span>
+                                                <span class="text-gray-400 text-xs mt-1">2026-08-10 10:15</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/50 transition-colors">
+                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50">2</td>
+                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50">管理建议书 (Management Letter)</td>
+                                        <td class="py-3.5 px-5 text-center text-gray-600 border-r border-gray-50">2026</td>
+                                        <td class="py-3.5 px-5 text-center border-r border-gray-50">
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">未开始</span>
+                                        </td>
+                                        <td class="py-3.5 px-5 text-gray-400">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </main>
+            </div>
+
+
+            <!-- ====== 视图 2: DASHBOARD (默认隐藏，完整保留原版 6 条数据) ====== -->
+            <div id="view-dashboard" class="absolute inset-0 flex flex-col w-full h-full overflow-hidden hidden bg-[#f8fafc]">
+                
+                <!-- 页面标题 -->
+                <div class="bg-white px-8 py-3 border-b border-gray-200 flex items-center shrink-0">
+                    <a href="#" onclick="toggleView('upload')" class="text-[#00338D] text-sm mr-4 flex items-center hover:underline">← 返回</a>
+                    <span class="text-base font-medium text-gray-800">报告任务列表 (审计合伙人控制台)</span>
+                </div>
+
+                <div class="flex-1 overflow-auto p-8 relative">
+                    <!-- 进度条 -->
+                    <div class="flex justify-between items-center bg-white p-4 rounded-md mb-6 shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-gray-100">
+                        <div class="flex-1 text-center bg-[#00338D] text-white py-2.5 rounded-md relative z-10">
+                            <span class="font-bold text-sm block">任务分配及执行</span>
+                            <span class="text-xs text-white/80 block mt-1">由各项目组自行认领任务、上传数据源及执行其他操作</span>
+                        </div>
+                        <div class="flex-1 text-center relative z-10 opacity-70">
+                            <span class="inline-flex w-6 h-6 leading-6 justify-center items-center rounded-full bg-gray-200 text-gray-700 font-bold text-xs mr-1">2</span>
+                            <span class="font-bold text-sm text-gray-700">已上传文件列表</span>
+                        </div>
+                        <div class="flex-1 text-center relative z-10 opacity-70">
+                            <span class="inline-flex w-6 h-6 leading-6 justify-center items-center rounded-full bg-gray-200 text-gray-700 font-bold text-xs mr-1">3</span>
+                            <span class="font-bold text-sm text-gray-700">编辑</span>
+                        </div>
+                        <div class="flex-1 text-center relative z-10 opacity-70">
+                            <span class="inline-flex w-6 h-6 leading-6 justify-center items-center rounded-full bg-gray-200 text-gray-700 font-bold text-xs mr-1">4</span>
+                            <span class="font-bold text-sm text-gray-700">发布</span>
+                        </div>
+                        <div class="flex-1 text-center relative z-10 opacity-70">
+                            <span class="inline-flex w-6 h-6 leading-6 justify-center items-center rounded-full bg-gray-200 text-gray-700 font-bold text-xs mr-1">5</span>
+                            <span class="font-bold text-sm text-gray-700">定稿</span>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard 卡片区 -->
+                    <div class="grid grid-cols-4 gap-5 mb-6">
+                        <!-- 卡片 1 -->
+                        <div class="bg-white rounded-lg p-5 shadow-sm border border-gray-200 flex items-center hover:-translate-y-0.5 hover:shadow-md transition-all">
+                            <div class="w-12 h-12 rounded-full flex justify-center items-center mr-4 shrink-0 bg-blue-50 text-blue-600">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            </div>
+                            <div>
+                                <div class="text-[13px] text-gray-500 mb-1 font-medium">基础数据上传进度</div>
+                                <div class="text-2xl font-bold text-gray-800 flex items-baseline gap-2">75% <span class="text-xs text-gray-500 font-normal">(9/12 家)</span></div>
                             </div>
                         </div>
-                    </transition>
+                        <!-- 卡片 2 -->
+                        <div class="bg-white rounded-lg p-5 shadow-sm border border-gray-200 flex items-center hover:-translate-y-0.5 hover:shadow-md transition-all">
+                            <div class="w-12 h-12 rounded-full flex justify-center items-center mr-4 shrink-0 bg-red-50 text-red-600">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                            </div>
+                            <div>
+                                <div class="text-[13px] text-gray-500 mb-1 font-medium">待处理调整分录</div>
+                                <div class="text-2xl font-bold text-red-600 flex items-baseline gap-2">18 <span class="text-xs text-gray-500 font-normal">条需关注</span></div>
+                            </div>
+                        </div>
+                        <!-- 卡片 3 -->
+                        <div class="bg-white rounded-lg p-5 shadow-sm border border-gray-200 flex items-center hover:-translate-y-0.5 hover:shadow-md transition-all">
+                            <div class="w-12 h-12 rounded-full flex justify-center items-center mr-4 shrink-0 bg-indigo-50 text-indigo-600">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                            </div>
+                            <div>
+                                <div class="text-[13px] text-gray-500 mb-1 font-medium">辅助信息关联 Lead Entity</div>
+                                <div class="text-2xl font-bold text-gray-800 flex items-baseline gap-2">24 <span class="text-xs text-gray-500 font-normal">个实体</span></div>
+                            </div>
+                        </div>
+                        <!-- 卡片 4 -->
+                        <div class="bg-white rounded-lg p-5 shadow-sm border border-gray-200 flex items-center hover:-translate-y-0.5 hover:shadow-md transition-all">
+                            <div class="w-12 h-12 rounded-full flex justify-center items-center mr-4 shrink-0 bg-green-50 text-green-600">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                            </div>
+                            <div>
+                                <div class="text-[13px] text-gray-500 mb-1 font-medium">账表核对完成率</div>
+                                <div class="text-2xl font-bold text-gray-800 flex items-baseline gap-2">83% <span class="text-xs text-gray-500 font-normal">(10/12 已核对)</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 操作栏 -->
+                    <div class="flex justify-between items-center mb-4 bg-white p-2.5 rounded-md border border-gray-200 shadow-sm">
+                        <div class="flex gap-2.5 items-center">
+                            <input type="text" class="px-3 py-1.5 border border-gray-200 rounded-md text-[13px] outline-none w-[200px]" placeholder="存在报告 v">
+                            <button class="px-4 py-1.5 rounded-md text-[13px] font-medium border border-[#00338D] text-[#00338D] bg-white hover:bg-blue-50">上传公司查询清单</button>
+                            <button class="px-4 py-1.5 rounded-md text-[13px] font-medium border border-[#00338D] text-[#00338D] bg-white hover:bg-blue-50">汇总信息</button>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="px-4 py-1.5 rounded-md text-[13px] font-medium bg-[#00338D] hover:bg-blue-800 text-white shadow-sm">认领任务</button>
+                            <button class="px-4 py-1.5 rounded-md text-[13px] font-medium bg-[#00338D] hover:bg-blue-800 text-white shadow-sm">上传文件</button>
+                            <div class="flex shadow-sm rounded-md">
+                                <button class="px-4 py-1.5 text-[13px] font-medium bg-[#00338D] hover:bg-blue-800 text-white border-r border-white/20 rounded-l-md">操作 v</button>
+                                <button class="px-4 py-1.5 text-[13px] font-medium bg-[#00338D] hover:bg-blue-800 text-white rounded-r-md">更多 v</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 数据表格 (完整 6 条数据) -->
+                    <div class="bg-white border border-gray-200 rounded-md overflow-x-auto shadow-sm mb-4">
+                        <table class="w-full border-collapse text-left text-[12px]">
+                            <thead>
+                                <tr class="bg-gray-50 text-gray-500 font-semibold whitespace-nowrap">
+                                    <th class="p-3 border-b border-gray-200"><input type="checkbox" checked></th>
+                                    <th class="p-3 border-b border-gray-200">序号</th>
+                                    <th class="p-3 border-b border-gray-200">公司编码</th>
+                                    <th class="p-3 border-b border-gray-200">公司名称</th>
+                                    <th class="p-3 border-b border-gray-200">负责人</th>
+                                    <th class="p-3 border-b border-gray-200">报告名称</th>
+                                    <th class="p-3 border-b border-gray-200">报告状态</th>
+                                    <th class="p-3 border-b border-gray-200">语种</th>
+                                    <th class="p-3 border-b border-gray-200">版本</th>
+                                    <th class="p-3 border-b border-gray-200">认领情况</th>
+                                    <th class="p-3 border-b border-gray-200">自动化处理</th>
+                                    <th class="p-3 border-b border-gray-200">财报校验状态</th>
+                                    <th class="p-3 border-b border-gray-200">账表核对</th>
+                                    <th class="p-3 border-b border-gray-200">数据源</th>
+                                    <th class="p-3 border-b border-gray-200">Ticket no.</th>
+                                    <th class="p-3 border-b border-gray-200">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100 text-gray-700">
+                                <tr class="hover:bg-gray-50/80 transition-colors">
+                                    <td class="p-3"><input type="checkbox" checked></td>
+                                    <td class="p-3 text-gray-500">1</td>
+                                    <td class="p-3 font-medium">XXX0000.AAAA0...</td>
+                                    <td class="p-3">KDC Caseview Test_18</td>
+                                    <td class="p-3">a</td>
+                                    <td class="p-3">KDC Caseview Test_18</td>
+                                    <td class="p-3">已填数</td>
+                                    <td class="p-3 text-gray-500">中文</td>
+                                    <td class="p-3 text-gray-500">v2</td>
+                                    <td class="p-3">已认领</td>
+                                    <td class="p-3"><span class="status-dot status-green"></span>已处理</td>
+                                    <td class="p-3"><span class="status-dot status-grey"></span>未校验</td>
+                                    <td class="p-3"><span class="status-dot status-grey"></span>未核对</td>
+                                    <td class="p-3 truncate max-w-[120px]" title="Excel package (including r...">Excel package (including r...</td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3 text-[#00338D] space-x-1.5"><span class="cursor-pointer hover:opacity-70">👁</span><span class="cursor-pointer hover:opacity-70">✏️</span><span class="cursor-pointer hover:opacity-70">📎</span></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50/80 transition-colors">
+                                    <td class="p-3"><input type="checkbox"></td>
+                                    <td class="p-3 text-gray-500">2</td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3">KDC Caseview test_102</td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3">未开始</td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3">已认领(仅自己)</td>
+                                    <td class="p-3"><span class="status-dot status-grey"></span>未处理</td>
+                                    <td class="p-3"><span class="status-dot status-grey"></span>未校验</td>
+                                    <td class="p-3"><span class="status-dot status-grey"></span>未核对</td>
+                                    <td class="p-3">科目余额表/管理层报表</td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3 text-[#00338D] space-x-1.5"><span class="cursor-pointer hover:opacity-70">👁</span><span class="cursor-pointer hover:opacity-70">✏️</span><span class="cursor-pointer hover:opacity-70">📎</span></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50/80 transition-colors">
+                                    <td class="p-3"><input type="checkbox"></td>
+                                    <td class="p-3 text-gray-500">3</td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3">KDC Caseview test_103</td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3">KDC Caseview test_103</td>
+                                    <td class="p-3">已填数</td>
+                                    <td class="p-3 text-gray-500">中文</td>
+                                    <td class="p-3 text-gray-500">v1</td>
+                                    <td class="p-3">已认领(仅自己)</td>
+                                    <td class="p-3"><span class="status-dot status-green"></span>已处理</td>
+                                    <td class="p-3"><span class="status-dot status-grey"></span>未校验</td>
+                                    <td class="p-3"><span class="status-dot status-grey"></span>未核对</td>
+                                    <td class="p-3">科目余额表/管理层报表</td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3 text-[#00338D] space-x-1.5"><span class="cursor-pointer hover:opacity-70">👁</span><span class="cursor-pointer hover:opacity-70">✏️</span><span class="cursor-pointer hover:opacity-70">📎</span></td>
+                                </tr>
+                                <!-- 异常高亮行 -->
+                                <tr class="bg-amber-50/50 hover:bg-amber-100/60 transition-colors">
+                                    <td class="p-3"><input type="checkbox"></td>
+                                    <td class="p-3 text-gray-500">4</td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3">KDC Caseview test_105</td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3">KDC Caseview test_105</td>
+                                    <td class="p-3">已填数</td>
+                                    <td class="p-3 text-gray-500">中文</td>
+                                    <td class="p-3 text-gray-500">v5</td>
+                                    <td class="p-3">已认领(仅自己)</td>
+                                    <td class="p-3"><span class="status-dot status-green"></span>已处理</td>
+                                    <td class="p-3"><span class="status-dot status-grey"></span>未校验</td>
+                                    <td class="p-3">
+                                        <span class="status-dot status-red"></span>已核对
+                                        <span class="block text-red-500 text-[11px] mt-0.5 font-medium tracking-tight">差异金额: 395,956,852.11</span>
+                                    </td>
+                                    <td class="p-3 truncate max-w-[120px]" title="Excel package (including r...">Excel package (including r...</td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3 text-[#00338D] space-x-1.5"><span class="cursor-pointer hover:opacity-70">👁</span><span class="cursor-pointer hover:opacity-70">✏️</span><span class="cursor-pointer hover:opacity-70">📎</span></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50/80 transition-colors">
+                                    <td class="p-3"><input type="checkbox"></td>
+                                    <td class="p-3 text-gray-500">5</td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3">KDC Caseview test_127</td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3">未开始</td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3">已认领(仅自己)</td>
+                                    <td class="p-3"><span class="status-dot status-grey"></span>未处理</td>
+                                    <td class="p-3"><span class="status-dot status-grey"></span>未校验</td>
+                                    <td class="p-3"><span class="status-dot status-grey"></span>未核对</td>
+                                    <td class="p-3">科目余额表/管理层报表</td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3 text-[#00338D] space-x-1.5"><span class="cursor-pointer hover:opacity-70">👁</span><span class="cursor-pointer hover:opacity-70">✏️</span><span class="cursor-pointer hover:opacity-70">📎</span></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50/80 transition-colors">
+                                    <td class="p-3"><input type="checkbox"></td>
+                                    <td class="p-3 text-gray-500">6</td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3">KDC Caseview test_128</td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3">已上传...</td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3">已认领(仅自己)</td>
+                                    <td class="p-3"><span class="status-dot status-grey"></span>未处理</td>
+                                    <td class="p-3"><span class="status-dot status-grey"></span>未校验</td>
+                                    <td class="p-3"><span class="status-dot status-grey"></span>未核对</td>
+                                    <td class="p-3 truncate max-w-[120px]" title="Excel package (including r...">Excel package (including r...</td>
+                                    <td class="p-3"></td>
+                                    <td class="p-3 text-[#00338D] space-x-1.5"><span class="cursor-pointer hover:opacity-70">👁</span><span class="cursor-pointer hover:opacity-70">✏️</span><span class="cursor-pointer hover:opacity-70">📎</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     
-                    <div class="h-12"></div>
+                    <!-- Dashboard 底部页码工具栏 -->
+                    <div class="flex justify-end items-center py-2 text-xs text-gray-500 gap-4">
+                        <span>共 12 条</span>
+                        <select class="border border-gray-200 rounded px-1.5 py-1 text-gray-600 outline-none"><option>20条/页</option></select>
+                        <div class="flex items-center gap-2">
+                            <button class="px-2 hover:text-gray-800 transition-colors">&lt;</button>
+                            <span class="text-[#00338D] font-bold">1</span>
+                            <button class="px-2 hover:text-gray-800 transition-colors">&gt;</button>
+                            <div class="flex items-center gap-1">
+                                前往 <input type="text" value="1" class="w-8 text-center border border-gray-200 rounded px-1 py-0.5 outline-none focus:border-[#00338D]"> 页
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </main>
-    </div>
+
+        </div> <!-- 双视图容器结束 -->
+    </div> <!-- 右侧结束 -->
 
     <script>
-        const { createApp } = Vue
+        function toggleView(viewName) {
+            const uploadView = document.getElementById('view-upload');
+            const dashboardView = document.getElementById('view-dashboard');
+            const btnUpload = document.getElementById('nav-btn-upload');
+            const btnDashboard = document.getElementById('nav-btn-dashboard');
 
-        createApp({
-            data() {
-                return {
-                    currentView: 'manager', 
-                    selectedStageIndex: 0, 
-                    
-                    chartFunnel: null,
-                    chartRevenue: null,
-                    chartHealth: null,
-                    chartRevForecastMain: null,
-                    chartRevSource: null,
-                    chartRevConversion: null,
-                    chartRevAccounts: null,
-
-                    managerStages: [
-                        { name: '市场', enName: 'Marketing', value: '50,000', conv: '10.0%' },
-                        { name: '线索', enName: 'Lead', value: '5,000', conv: '24.0%' },
-                        { name: '商机', enName: 'Opportunity', value: '1,200', conv: '41.7%' },
-                        { name: '成单', enName: 'Deal', value: '500', conv: '40.0%' },
-                        { name: '客户', enName: 'Customer', value: '200', conv: '40.0%' },
-                        { name: '续约', enName: 'Renewal', value: '80', conv: '' }
-                    ],
-
-                    aiAgents: [
-                        { name: 'Market', message: '华东区“业财一体化”搜索指数激增 15%，建议将 Q3 线上投放预算向该区域倾斜。' },
-                        { name: 'Lead', message: '当前线索池有 120 条高分线索停留超过 48 小时，建议触发自动化分配规则并提醒直销一部跟进。' },
-                        { name: 'Opportunity', message: '发现 3 个总价值 120 万的商机停滞在“方案报价”阶段超 15 天，存在极高流失风险，立刻安排高层介入。' },
-                        { name: 'Deal', message: '本月成单平均折扣率为 18.5%, 已触及利润安全红线，建议在 CPQ 模块强制开启总监级以上特批。' },
-                        { name: 'Customer', message: '近期“合并报表”模块工单量环比上涨 30%，建议下发针对性的客户成功最佳实践文档以降低实施阻力。' },
-                        { name: 'Renewal', message: '下季度有 15 家头部客户面临续约，其中 3 家近期系统活跃度极低。系统已为您自动生成防流失触达邮件。' }
-                    ],
-                    
-                    funnelDrillDownData: [
-                        [
-                            { title: '市场分析', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>', items: ['市场规模', '市场增长', '行业趋势', '竞争分析', '舆情分析'] },
-                            { title: '市场机会', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>', items: ['行业机会', '区域机会', '产品机会', '客户需求机会'] },
-                            { title: '市场覆盖', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>', items: ['目标客户数量', '已覆盖客户', '市场覆盖率', '市场渗透率', '增长空间'] },
-                            { title: '营销活动', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path>', items: ['广告投放', '展会活动', '线上活动', '内容营销', '邮件营销', '产品推广'] }
-                        ],
-                        [
-                            { title: '客户画像', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>', items: ['客户画像', '企业信息', '购买信号', '需求痛点', '客户评分', '进入策略'] },
-                            { title: '线索管理', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>', items: ['线索池', '来源渠道', '线索审核', '线索评分', '线索分级', '跟进状态'] },
-                            { title: '客户转化', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>', items: ['关联客户', '转商机'] }
-                        ],
-                        [
-                            { title: '商机Pipeline', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>', items: ['商机阶段', '商机金额', '成交概率', '预计成交时间'] },
-                            { title: '销售过程', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>', items: ['跟进记录', '会议', '任务', '下一步计划'] },
-                            { title: '竞争分析', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>', items: ['竞争对手', '优势比较'] },
-                            { title: '赢单分析', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>', items: ['赢单原因', '丢单原因'] }
-                        ],
-                        [
-                            { title: '方案', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>', items: ['客户需求', '业务场景', '解决方案', '产品组合'] },
-                            { title: '报价', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>', items: ['报价单', '产品明细', '折扣管理', '价格审批', '报价版本'] },
-                            { title: '合同', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>', items: ['合同生成', '合同审批', '合同签署'] },
-                            { title: '订单', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>', items: ['产品数量', '服务周期'] },
-                            { title: '回款', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>', items: ['回款计划', '回款状态'] }
-                        ],
-                        [
-                            { title: '客户360', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>', items: ['企业信息', '联系人', '组织关系', '客户等级', '客户标签'] },
-                            { title: '客户资产', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>', items: ['合同', '产品', '套餐', '权限'] },
-                            { title: '交付情况', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>', items: ['项目管理', '实施计划', '任务', '里程碑', '验收'] },
-                            { title: '客户关系', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>', items: ['决策链', '关键联系人', '沟通记录'] },
-                            { title: '售后服务', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636l3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>', items: ['工单', '服务请求', '满意度'] }
-                        ],
-                        [
-                            { title: '合同周期', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>', items: ['到期提醒', '合同周期', '自动续约'] },
-                            { title: '续约机会', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>', items: ['续约商机', '增购机会', '升级机会'] },
-                            { title: '续约评估', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>', items: ['使用活跃度', '产品满意度', '服务质量', '风险评分'] },
-                            { title: '拓展', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>', items: ['Cross-sell', 'Up-sell', '新产品推荐'] }
-                        ]
-                    ],
-
-                    managerClusters: [],
-
-                    salesClusters: [
-                        {
-                            name: '我的工作台', enName: 'My Workspace', headerColor: 'bg-emerald-500', iconText: '效',
-                            modules: [
-                                {
-                                    title: '今日待办', enTitle: 'To-Do Tasks', themeColor: 'bg-emerald-500', metric: '12', trend: '4 个紧急', trendUp: false, metricLabel: '待跟进电话与拜访',
-                                    iconSvg: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>',
-                                    features: [{ name: '今日跟进任务', desc: '日历自动同步' }, { name: '逾期与掉落警告', desc: '长期未联系商机超期预警' }]
-                                },
-                                {
-                                    title: '快捷审批', enTitle: 'Approvals', themeColor: 'bg-orange-500', metric: '3', trend: '进行中', trendUp: true, metricLabel: '我发起的待批流程',
-                                    iconSvg: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>',
-                                    features: [{ name: '特批折扣跟进', desc: '查看领导审批进度' }, { name: '合同红线审核', desc: '法务批注修改意见' }]
-                                }
-                            ]
-                        },
-                        {
-                            name: '客户主数据', enName: 'Customer Master Data', headerColor: 'bg-blue-600', iconText: '数',
-                            modules: [
-                                {
-                                    title: '我的客户', enTitle: 'My Accounts', themeColor: 'bg-blue-600', metric: '86', trend: '↑ 3', trendUp: true, metricLabel: '名下私海跟进客户',
-                                    iconSvg: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>',
-                                    features: [{ name: '完善工商资料', desc: '一键拉取外部工商API' }, { name: '客户标签维护', desc: '分级与画像记录' }]
-                                },
-                                {
-                                    title: '决策人与关系', enTitle: 'Contacts', themeColor: 'bg-cyan-500', metric: '315', trend: '', trendUp: true, metricLabel: '名下录入联系人',
-                                    iconSvg: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>',
-                                    features: [{ name: '名片快速录入', desc: 'OCR扫描进件' }, { name: '内部权力结构支持树', desc: '锁定真正拍板人' }]
-                                },
-                                {
-                                    title: '资产与合同', enTitle: 'Assets', themeColor: 'bg-violet-500', metric: '124', trend: '2 即将到期', trendUp: false, metricLabel: '名下客户已购明细',
-                                    iconSvg: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>',
-                                    features: [{ name: '在保状态台账', desc: '查询客户历史购买履历' }]
-                                }
-                            ]
-                        },
-                        {
-                            name: '销售业务单据', enName: 'Sales Deals & Forms', headerColor: 'bg-amber-600', iconText: '单',
-                            modules: [
-                                {
-                                    title: '线索与转化', enTitle: 'Leads', themeColor: 'bg-indigo-400', metric: '25', trend: '待首联', trendUp: true, metricLabel: '最新分配跟进线索',
-                                    iconSvg: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path>',
-                                    features: [{ name: '公海捞取抢单', desc: '主动从无主池认领客户' }, { name: '资格初筛转商机', desc: '确认后一键建立漏斗' }]
-                                },
-                                {
-                                    title: '商机跟进', enTitle: 'Opportunities', themeColor: 'bg-amber-500', metric: '18', trend: '预计 ¥ 85万', trendUp: true, metricLabel: '正在攻单中的项目',
-                                    iconSvg: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>',
-                                    features: [{ name: '推进阶段与赢率', desc: '录入每次拜访和推进日志' }, { name: '售前组建', desc: '邀请技术人员做单协作' }]
-                                },
-                                {
-                                    title: '报价与签单', enTitle: 'Quotes & Contracts', themeColor: 'bg-pink-500', metric: '6', trend: '法务中', trendUp: true, metricLabel: '流转中交易文书',
-                                    iconSvg: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>',
-                                    features: [{ name: 'CPQ 拉取价格', desc: '产品选配测算利润' }, { name: '在线电子签', desc: '生成定稿发送客户签署' }]
-                                }
-                            ]
-                        }
-                    ]
-                }
-            },
-            computed: {
-                activeClusters() {
-                    return this.currentView === 'manager' ? this.managerClusters : this.salesClusters;
-                },
-                dashboardTitle() {
-                    return this.currentView === 'manager' ? 'Dashboard (全局仪表盘)' : 'My Dashboard (个人业绩板)';
-                },
-                dashboardDesc() {
-                    return this.currentView === 'manager' ? '企业级流水线监控，从线索到回款的全链路洞察' : '我本月的业绩达成情况与跟进任务执行度';
-                },
-                chart1Title() { return '我的个人销售漏斗'; },
-                chart2Title() { return '我的回款目标达成 (万)'; },
-                chart3Title() { return '今日待办耗时分布'; }
-            },
-            mounted() {
-                this.$nextTick(() => {
-                    // 默认先初始化管理端的图表
-                    this.initManagerCharts();
-                });
-            },
-            methods: {
-                switchView(view) {
-                    this.currentView = view;
-                    this.$nextTick(() => {
-                        requestAnimationFrame(() => {
-                            if (view === 'sales') {
-                                // 切换到销售端时再按需初始化销售端图表，完美解决缩在一起的问题
-                                this.initSalesCharts();
-                            } else {
-                                this.initManagerCharts();
-                            }
-                        });
-                    });
-                },
-                initManagerCharts() {
-                    const els = {
-                        chartRevForecastMain: document.getElementById('chart-rev-forecast-main'),
-                        chartRevSource: document.getElementById('chart-rev-source'),
-                        chartRevConversion: document.getElementById('chart-rev-conversion'),
-                        chartRevAccounts: document.getElementById('chart-rev-accounts'),
-                    };
-
-                    if (els.chartRevForecastMain && !this.chartRevForecastMain) {
-                        this.chartRevForecastMain = echarts.init(els.chartRevForecastMain);
-                        this.chartRevForecastMain.setOption({
-                            tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
-                            legend: { data: ['历史实际收入', 'AI管线预测值', '目标线'], bottom: 0, textStyle: { fontSize: 11 } },
-                            grid: { left: '3%', right: '3%', bottom: '12%', top: '8%', containLabel: true },
-                            xAxis: { type: 'category', data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'], axisLabel: { fontSize: 11 } },
-                            yAxis: { type: 'value', name: '金额 (万)', splitLine: { lineStyle: { type: 'dashed', color: '#f1f5f9' } } },
-                            series: [
-                                { name: '历史实际收入', type: 'bar', barWidth: '45%', data: [120, 150, 180, 210, 250, 310, '-', '-', '-', '-', '-', '-'], itemStyle: { color: '#3b82f6', borderRadius: [4,4,0,0] } },
-                                { name: 'AI管线预测值', type: 'bar', barWidth: '45%', data: ['-', '-', '-', '-', '-', '-', 380, 420, 480, 550, 610, 700], itemStyle: { color: 'rgba(59, 130, 246, 0.3)', borderType: 'dashed', borderColor: '#3b82f6', borderWidth: 1, borderRadius: [4,4,0,0] } },
-                                { name: '目标线', type: 'line', smooth: true, data: [150, 150, 200, 200, 280, 280, 400, 400, 500, 500, 650, 650], itemStyle: { color: '#f59e0b' }, lineStyle: { width: 2, type: 'dashed' }, symbol: 'none' }
-                            ]
-                        }, true);
-                    }
-                    if (els.chartRevSource && !this.chartRevSource) {
-                        this.chartRevSource = echarts.init(els.chartRevSource);
-                        this.chartRevSource.setOption({
-                            tooltip: { trigger: 'item', formatter: '{b}: {c}%' },
-                            legend: { bottom: 0, icon: 'circle', itemWidth: 10, itemHeight: 10, textStyle: { fontSize: 10 } },
-                            series: [{ type: 'pie', radius: ['45%', '75%'], center: ['50%', '42%'], itemStyle: { borderRadius: 5, borderColor: '#fff', borderWidth: 2 }, label: { show: false }, emphasis: { label: { show: true, fontSize: 12, fontWeight: 'bold' } }, data: [ { value: 45, name: '新客签单', itemStyle: { color: '#3b82f6' } }, { value: 30, name: '存量续约', itemStyle: { color: '#10b981' } }, { value: 15, name: '交叉销售', itemStyle: { color: '#f59e0b' } }, { value: 10, name: '向上营销', itemStyle: { color: '#8b5cf6' } } ] }]
-                        }, true);
-                    }
-                    if (els.chartRevConversion && !this.chartRevConversion) {
-                        this.chartRevConversion = echarts.init(els.chartRevConversion);
-                        this.chartRevConversion.setOption({
-                            tooltip: { trigger: 'item', formatter: '{b} : {c}万' },
-                            color: ['#6366f1', '#818cf8', '#a5b4fc', '#c7d2fe', '#e0e7ff'],
-                            series: [{ type: 'funnel', left: '10%', top: 5, bottom: 5, width: '80%', sort: 'descending', gap: 2, label: { show: true, position: 'inside', fontSize: 11, formatter: '{c}万' }, data: [ { value: 1000, name: '商机Pipeline' }, { value: 650, name: '已定案报价' }, { value: 400, name: '签署合同额' }, { value: 350, name: '已开票金额' }, { value: 280, name: '实际到账回款' } ] }]
-                        }, true);
-                    }
-                    if (els.chartRevAccounts && !this.chartRevAccounts) {
-                        this.chartRevAccounts = echarts.init(els.chartRevAccounts);
-                        this.chartRevAccounts.setOption({
-                            tooltip: { formatter: function (obj) { return `<strong>${obj.seriesName}</strong><br/>合作时长: ${obj.value[0]} 月<br/>当前ARR: ${obj.value[1]} 万`; } },
-                            legend: { data: ['高优潜力客户', '稳健产出客户'], bottom: 0, textStyle: { fontSize: 11 }, icon: 'circle' },
-                            grid: { left: '5%', right: '5%', bottom: '15%', top: '5%', containLabel: true },
-                            xAxis: { name: '合作时长(月)', splitLine: { lineStyle: { type: 'dashed', color: '#f1f5f9' } } },
-                            yAxis: { name: '当前ARR(万)', splitLine: { lineStyle: { type: 'dashed', color: '#f1f5f9' } } },
-                            series: [
-                                { name: '高优潜力客户', type: 'scatter', itemStyle: { color: 'rgba(59, 130, 246, 0.6)', borderColor: '#2563eb', borderWidth: 1 }, symbolSize: function (data) { return data[2]; }, data: [ [6, 50, 25], [12, 120, 40], [18, 180, 50], [24, 250, 60] ] },
-                                { name: '稳健产出客户', type: 'scatter', itemStyle: { color: 'rgba(16, 185, 129, 0.6)', borderColor: '#059669', borderWidth: 1 }, symbolSize: function (data) { return data[2]; }, data: [ [36, 150, 15], [48, 200, 20], [60, 300, 25] ] }
-                            ]
-                        }, true);
-                    }
-
-                    // 触发自适应
-                    if(this.chartRevForecastMain) this.chartRevForecastMain.resize();
-                    if(this.chartRevSource) this.chartRevSource.resize();
-                    if(this.chartRevConversion) this.chartRevConversion.resize();
-                    if(this.chartRevAccounts) this.chartRevAccounts.resize();
-                },
-                initSalesCharts() {
-                    const els = {
-                        chartFunnel: document.getElementById('chart-funnel'),
-                        chartRevenue: document.getElementById('chart-revenue'),
-                        chartHealth: document.getElementById('chart-health'),
-                    };
-
-                    if (els.chartFunnel && !this.chartFunnel) {
-                        this.chartFunnel = echarts.init(els.chartFunnel);
-                        this.chartFunnel.setOption({
-                            color: ['#10b981', '#34d399', '#6ee7b7', '#a7f3d0', '#d1fae5'],
-                            tooltip: { trigger: 'item', formatter: '{b} : {c}' },
-                            series: [{ type: 'funnel', left: '10%', top: 10, bottom: 10, width: '80%', sort: 'descending', gap: 2, label: { show: true, position: 'inside', fontSize: 12 }, data: [ { value: 200, name: '分配线索' }, { value: 80, name: '跟进中' }, { value: 30, name: '已出方案' }, { value: 15, name: '待签合同' }, { value: 6, name: '本月成单' } ] }]
-                        }, true);
-                    }
-                    if (els.chartRevenue && !this.chartRevenue) {
-                        this.chartRevenue = echarts.init(els.chartRevenue);
-                        this.chartRevenue.setOption({
-                            tooltip: { trigger: 'axis' },
-                            legend: { data: ['实际回款金额', '个人承诺目标'], top: 0, right: 0 },
-                            grid: { left: '3%', right: '4%', bottom: '5%', top: '15%', containLabel: true },
-                            xAxis: [{ type: 'category', data: ['1月', '2月', '3月', '4月', '5月', '6月'] }],
-                            yAxis: [{ type: 'value' }],
-                            series: [
-                                { name: '实际回款金额', type: 'bar', barWidth: '40%', itemStyle: { color: '#10b981', borderRadius: [4,4,0,0] }, data: [12, 18, 15, 22, 0, 0] },
-                                { name: '个人承诺目标', type: 'line', smooth: true, lineStyle: { width: 3, type: 'dashed' }, itemStyle: { color: '#f59e0b' }, data: [20, 20, 20, 25, 25, 30] }
-                            ]
-                        }, true);
-                    }
-                    if (els.chartHealth && !this.chartHealth) {
-                        this.chartHealth = echarts.init(els.chartHealth);
-                        this.chartHealth.setOption({
-                            tooltip: { trigger: 'item', formatter: '{b}: {c}h ({d}%)' },
-                            legend: { type: 'scroll', orient: 'vertical', top: 'middle', right: '5%', icon: 'circle', itemWidth: 10, itemHeight: 10, textStyle: { fontSize: 11, color: '#4b5563' } },
-                            series: [{ type: 'pie', radius: ['45%', '70%'], center: ['35%', '50%'], itemStyle: { borderRadius: 5, borderColor: '#fff', borderWidth: 2 }, label: { show: false }, data: [ { value: 8, name: '拜访核心商机', itemStyle: { color: '#8b5cf6' } }, { value: 5, name: '线索初筛电话', itemStyle: { color: '#3b82f6' } }, { value: 2, name: '协助售后问题', itemStyle: { color: '#f59e0b' } }, { value: 1, name: '报表与审批', itemStyle: { color: '#64748b' } } ] }]
-                        }, true);
-                    }
-
-                    // 触发自适应
-                    if(this.chartFunnel) this.chartFunnel.resize();
-                    if(this.chartRevenue) this.chartRevenue.resize();
-                    if(this.chartHealth) this.chartHealth.resize();
-                }
+            if (viewName === 'dashboard') {
+                uploadView.classList.add('hidden');
+                dashboardView.classList.remove('hidden');
+                
+                // Sidebar active state update for Dashboard
+                btnDashboard.classList.add('bg-blue-50', 'text-[#00338D]', 'border-l-2', 'border-[#00338D]');
+                btnDashboard.classList.remove('hover:bg-gray-100', 'text-gray-500');
+                
+                btnUpload.classList.remove('bg-blue-50', 'text-[#00338D]', 'border-l-2', 'border-[#00338D]');
+                btnUpload.classList.add('hover:bg-gray-100', 'text-gray-500');
+            } else {
+                dashboardView.classList.add('hidden');
+                uploadView.classList.remove('hidden');
+                
+                // Sidebar active state update for Upload
+                btnUpload.classList.add('bg-blue-50', 'text-[#00338D]', 'border-l-2', 'border-[#00338D]');
+                btnUpload.classList.remove('hover:bg-gray-100', 'text-gray-500');
+                
+                btnDashboard.classList.remove('bg-blue-50', 'text-[#00338D]', 'border-l-2', 'border-[#00338D]');
+                btnDashboard.classList.add('hover:bg-gray-100', 'text-gray-500');
             }
-        }).mount('#app')
+        }
     </script>
 </body>
 </html>
