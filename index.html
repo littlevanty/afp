@@ -254,20 +254,19 @@
             
             <!-- ================= UPLOAD 视图 (默认显示) ================= -->
             <div id="view-upload" class="absolute inset-0 flex flex-col w-full h-full">
-                <!-- 统一基础信息与步骤质量总览模块 -->
-                <div class="bg-white border-b border-gray-200 px-8 py-6 flex-shrink-0 z-10 shadow-sm w-full relative">
-                    <!-- 上半部：项目基础信息 -->
-                    <div class="flex items-center justify-between mb-4">
+                <!-- 统一基础信息与步骤质量总览模块 (高度压缩 20%~25%) -->
+                <div class="bg-white border-b border-gray-200 px-6 py-4 flex-shrink-0 z-10 shadow-sm w-full relative">
+                    <div class="flex items-center justify-between mb-2">
                         <div class="flex items-center space-x-4">
                             <h2 class="text-[17px] font-bold text-gray-900 tracking-tight">00000023 - KDC Caseview Test</h2>
                             <div class="h-4 w-px bg-gray-200"></div>
                             <div class="relative">
-                                <select class="appearance-none bg-gray-50 border border-gray-200 text-gray-700 hover:bg-gray-100 hover:border-gray-300 rounded-md pl-3 pr-8 py-1.5 text-xs font-medium focus:outline-none focus:border-[#00338D] focus:ring-1 focus:ring-[#00338D] transition-all cursor-pointer">
+                                <select class="appearance-none bg-gray-50 border border-gray-200 text-gray-700 hover:bg-gray-100 hover:border-gray-300 rounded-md pl-3 pr-8 py-1 text-xs font-medium focus:outline-none focus:border-[#00338D] focus:ring-1 focus:ring-[#00338D] transition-all cursor-pointer">
                                     <option>KDC Caseview Test_1</option>
                                 </select>
-                                <svg class="w-3.5 h-3.5 absolute right-2.5 top-[7px] text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                <svg class="w-3.5 h-3.5 absolute right-2.5 top-[6px] text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </div>
-                            <div class="flex items-center bg-[#F0F4F8] text-[#00338D] px-2.5 py-1.5 rounded-md text-xs font-medium border border-[#D9E2EC]">
+                            <div class="flex items-center bg-[#F0F4F8] text-[#00338D] px-2.5 py-1 rounded-md text-xs font-medium border border-[#D9E2EC]">
                                 <svg class="w-3.5 h-3.5 mr-1.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
                                 a7132a368992422aa0952ea38cc5a44b <span class="mx-1.5 text-blue-300">|</span> 年报审计
                             </div>
@@ -277,412 +276,426 @@
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                         </button>
                     </div>
-
+            
                     <!-- 下半部：数据质量与流程总览 -->
-                    <div class="w-full pt-4">
+                    <div class="w-full pt-1">
                         <div class="flex justify-between w-full">
-                            <!-- 01 数据上传 -->
                             <div class="flex flex-col relative flex-1 pr-6">
-                                <div class="flex items-center mb-3">
-                                    <span class="text-[#00338D] font-bold text-sm mr-3">01 数据上传</span>
+                                <div class="flex items-center mb-1.5">
+                                    <span class="text-[#00338D] font-bold text-[13px] mr-3">01 数据上传</span>
                                     <div class="h-px bg-blue-100 flex-1"></div>
                                 </div>
-                                <div class="border-l-2 border-[#00338D]/20 ml-2.5 pl-4 py-1 space-y-2 min-h-[48px]">
+                                <div class="border-l-2 border-[#00338D]/20 ml-2.5 pl-4 py-0.5 space-y-1 min-h-[36px] flex flex-col justify-center">
                                     <div class="flex items-center text-xs text-emerald-600 font-medium">
-                                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                        TB完成
+                                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>TB完成
                                     </div>
                                     <div class="flex items-center text-xs text-emerald-600 font-medium">
-                                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                        MA完成
+                                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>MA完成
                                     </div>
                                 </div>
                             </div>
-        
-                            <!-- 02 自动质检 -->
+            
                             <div class="flex flex-col relative flex-1 pr-6">
-                                <div class="flex items-center mb-3">
-                                    <span class="text-[#00338D] font-bold text-sm mr-3">02 自动质检</span>
+                                <div class="flex items-center mb-1.5">
+                                    <span class="text-[#00338D] font-bold text-[13px] mr-3">02 自动质检</span>
                                     <div class="h-px bg-rose-100 flex-1"></div>
                                 </div>
-                                <div class="border-l-2 border-rose-300 ml-2.5 pl-4 py-1 space-y-2 min-h-[48px]">
-                                    <div class="flex items-center text-xs text-rose-600 font-bold bg-rose-50 inline-flex px-2 py-0.5 rounded border border-rose-100 shadow-sm">
-                                        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                                        3个异常
+                                <div class="border-l-2 border-rose-300 ml-2.5 pl-4 py-0.5 space-y-1 min-h-[36px] flex flex-col justify-center">
+                                    <div class="flex items-center text-xs text-rose-600 font-bold bg-rose-50 inline-flex px-2 py-0.5 rounded border border-rose-100 shadow-sm self-start">
+                                        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>3个异常
                                     </div>
                                 </div>
                             </div>
-        
-                            <!-- 03 数据核对 -->
+            
                             <div class="flex flex-col relative flex-1 pr-6">
-                                <div class="flex items-center mb-3">
-                                    <span class="text-gray-400 font-bold text-sm mr-3">03 数据核对</span>
+                                <div class="flex items-center mb-1.5">
+                                    <span class="text-gray-400 font-bold text-[13px] mr-3">03 数据核对</span>
                                     <div class="h-px bg-gray-200 flex-1"></div>
                                 </div>
-                                <div class="border-l-2 border-gray-200 ml-2.5 pl-4 py-1 space-y-2 min-h-[48px]">
+                                <div class="border-l-2 border-gray-200 ml-2.5 pl-4 py-0.5 min-h-[36px] flex flex-col justify-center">
                                     <div class="flex items-center text-xs text-blue-600 font-medium">
-                                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                        12/15完成
+                                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>12/15完成
                                     </div>
                                 </div>
                             </div>
-        
-                            <!-- 04 调整分录 -->
+            
                             <div class="flex flex-col relative flex-1 pr-6">
-                                <div class="flex items-center mb-3">
-                                    <span class="text-gray-400 font-bold text-sm mr-3">04 调整分录</span>
+                                <div class="flex items-center mb-1.5">
+                                    <span class="text-gray-400 font-bold text-[13px] mr-3">04 调整分录</span>
                                     <div class="h-px bg-gray-200 flex-1"></div>
                                 </div>
-                                <div class="border-l-2 border-gray-200 ml-2.5 pl-4 py-1 space-y-2 min-h-[48px]">
+                                <div class="border-l-2 border-gray-200 ml-2.5 pl-4 py-0.5 min-h-[36px] flex flex-col justify-center">
                                     <div class="flex items-center text-xs text-amber-500 font-medium">
-                                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                        待审批
+                                        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>待审批
                                     </div>
                                 </div>
                             </div>
-        
-                            <!-- 05 交付 -->
+            
                             <div class="flex flex-col relative flex-1">
-                                <div class="flex items-center mb-3">
-                                    <span class="text-gray-400 font-bold text-sm mr-3">05 交付</span>
+                                <div class="flex items-center mb-1.5">
+                                    <span class="text-gray-400 font-bold text-[13px] mr-3">05 交付</span>
                                 </div>
-                                <div class="border-l-2 border-transparent ml-2.5 pl-4 py-1 min-h-[48px]">
-                                    <!-- 未开始/空白 -->
-                                </div>
+                                <div class="border-l-2 border-transparent ml-2.5 pl-4 py-0.5 min-h-[36px]"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-        
+            
                 <!-- 滚动主内容区域 -->
-                <main class="flex-1 overflow-auto p-8 relative w-full">
+                <main class="flex-1 overflow-auto px-10 py-6 relative w-full bg-[#F8FAFC]">
+                    
                     <!-- 面包屑与操作按钮 -->
-                    <div class="flex justify-between items-end mb-6">
+                    <div class="flex justify-between items-end mb-8">
                         <div class="flex items-center space-x-2 text-gray-500 text-sm">
                             <a href="#" class="flex items-center text-[#00338D] hover:text-blue-700 hover:underline font-medium transition-colors">
-                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                                返回
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>返回
                             </a>
                             <span class="text-gray-300">/</span>
                             <span class="text-gray-600 bg-white px-2 py-0.5 rounded shadow-sm border border-gray-200 text-xs">数据源</span>
                         </div>
-        
+            
                         <div class="flex space-x-3">
-                            <button class="bg-[#00338D] hover:bg-blue-800 text-white px-5 py-1.5 rounded shadow-sm text-sm transition-colors flex items-center font-medium border border-transparent">
-                                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                                上传
+                            <button class="bg-[#00338D] hover:bg-blue-800 text-white px-5 py-1.5 rounded-md shadow-sm text-sm transition-colors flex items-center font-medium border border-transparent">
+                                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>上传文件
                             </button>
-                            
-                            <div class="relative group">
-                                <button class="bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 px-4 py-1.5 rounded shadow-sm text-sm transition-colors flex items-center">
-                                    更多
-                                    <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            <div class="relative group/more">
+                                <button class="bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 px-4 py-1.5 rounded-md shadow-sm text-sm transition-colors flex items-center">
+                                    更多<svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                                 </button>
-                                <div class="absolute right-0 mt-1 w-[160px] bg-white border border-gray-200 rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 overflow-hidden">
-                                    <a href="#" class="flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-[#00338D] text-sm transition-colors border-b border-gray-100"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>查看解析结果</a>
-                                    <a href="#" class="flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-[#00338D] text-sm transition-colors border-b border-gray-100"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>原始文件管理</a>
+                                <div class="absolute right-0 mt-1 w-[160px] bg-white border border-gray-200 rounded-md shadow-lg opacity-0 invisible group-hover/more:opacity-100 group-hover/more:visible transition-all z-50 overflow-hidden">
                                     <a href="#" class="flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-[#00338D] text-sm transition-colors"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>操作记录</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-        
-                    <!-- 表格区域 1 - 科目基础数据 -->
-                    <div class="flex items-center mb-4">
-                        <div class="w-1 h-4 bg-[#00338D] mr-2.5 rounded-sm"></div>
-                        <h1 class="text-[17px] font-bold text-gray-900 tracking-wide">科目基础数据</h1>
-                    </div>
-        
-                    <div class="mb-8 bg-white border border-gray-200 rounded-lg shadow-sm overflow-x-auto">
-                        <div class="bg-gray-50/80 px-5 py-3 border-b border-gray-200 flex justify-between items-center sticky left-0">
-                            <h2 class="font-bold text-gray-800 text-sm flex items-center">
-                                科目基础数据 
-                                <span class="text-xs font-normal text-gray-500 ml-3 bg-white px-2 py-0.5 rounded border border-gray-200 shadow-sm">展示文件流入系统后的标准质控流程</span>
-                            </h2>
-                        </div>
-                        
-                        <table class="w-full text-left border-collapse min-w-[1300px]">
-                            <thead class="bg-white text-[12px] tracking-wider whitespace-nowrap">
-                                <tr class="text-gray-500 uppercase border-b border-gray-200 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-                                    <th class="py-3 px-4 font-semibold w-[4%] text-center border-r border-gray-100">序号</th>
-                                    <th class="py-3 px-4 font-semibold w-[12%] border-r border-gray-100">数据采集项</th>
-                                    <th class="py-3 px-4 font-semibold w-[7%] text-center border-r border-gray-200">所属年度</th>
-                                    <th class="py-3 px-4 font-semibold w-[9%] text-center border-r border-gray-200 bg-slate-50/30">文件验证</th>
-                                    <!-- 跨3列的数据质检 -->
-                                    <th colspan="3" class="py-3 px-4 font-semibold text-center border-r border-gray-200 bg-slate-50/30 w-[54%]">数据质检</th>
-                                    <th class="py-3 px-5 font-semibold w-[14%]">创建信息</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-100 text-[13px] tb-ma-group">
-                                <!-- 第一行：TB -->
-                                <tr class="hover:bg-gray-50/50 transition-colors bg-white group">
-                                    <td class="py-4 px-4 text-center text-gray-400 border-r border-gray-50">1</td>
-                                    <td class="py-4 px-4 font-medium text-gray-900 border-r border-gray-50">科目余额表 (TB)</td>
-                                    <td class="py-4 px-4 text-center text-gray-600 border-r border-gray-50">2026</td>
-                                    <td class="py-4 px-4 text-center border-r border-gray-50">
-                                        <div class="inline-flex items-center space-x-2">
-                                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm border border-emerald-600/20"></span>
-                                            <span class="text-gray-700 font-medium">验证通过</span>
-                                        </div>
-                                    </td>
-                                    <!-- ① 完整性 -->
-                                    <td class="w-[25%] p-2.5 border-r border-gray-50 align-top">
-                                        <div class="h-full bg-[#f8fafc] border border-gray-100 rounded-lg p-3 flex flex-col">
-                                            <div class="flex justify-between items-center mb-4">
-                                                <span class="font-bold text-gray-700 text-xs">① 完整性</span>
-                                                <span class="text-emerald-700 font-medium text-[11px] bg-emerald-100/50 px-1.5 py-0.5 rounded border border-emerald-200/50">12/12个月</span>
-                                            </div>
-                                            <!-- 当期与比较期左右并列 -->
-                                            <div class="flex space-x-4 w-full">
-                                                <!-- 当期 -->
-                                                <div class="flex-1">
-                                                    <div class="text-[10px] text-gray-500 mb-1.5">当期 (2026)</div>
-                                                    <div class="flex w-full h-[14px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
-                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
-                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
-                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
-                                                    </div>
-                                                </div>
-                                                <!-- 比较期 -->
-                                                <div class="flex-1">
-                                                    <div class="text-[10px] text-gray-500 mb-1.5">比较期 (2025)</div>
-                                                    <div class="flex w-full h-[14px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
-                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
-                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
-                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <!-- ② 有效性 -->
-                                    <td class="w-[15%] p-2.5 border-r border-gray-50 align-top">
-                                        <div class="h-full bg-[#f8fafc] border border-gray-100 rounded-lg p-3 flex flex-col">
-                                            <div class="font-bold text-gray-700 text-xs mb-4">② 有效性</div>
-                                            <div class="space-y-1.5 text-[11px] text-gray-600 flex-1 flex flex-col justify-center">
-                                                <div class="flex justify-between items-center bg-white px-2.5 py-1.5 rounded border border-gray-100 shadow-sm">
-                                                    <span class="font-medium text-gray-700">借贷平衡</span>
-                                                    <span class="text-emerald-500 font-bold text-[13px] leading-none">✓</span>
-                                                </div>
-                                                <div class="flex justify-between items-center bg-white px-2.5 py-1.5 rounded border border-gray-100 shadow-sm">
-                                                    <span class="font-medium text-gray-700">借方金额异常</span>
-                                                    <span class="font-semibold text-gray-800">0</span>
-                                                </div>
-                                                <div class="flex justify-between items-center bg-white px-2.5 py-1.5 rounded border border-gray-100 shadow-sm">
-                                                    <span class="font-medium text-gray-700">空值科目</span>
-                                                    <span class="font-semibold text-gray-800">0</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <!-- ③ 一致性 -->
-                                    <td rowspan="2" class="relative w-[14%] p-2.5 border-r border-gray-50">
-                                        <div class="absolute inset-2.5 bg-rose-50/50 border border-rose-200 shadow-[0_2px_10px_-3px_rgba(225,29,72,0.1)] rounded-lg p-3 flex flex-col group">
-                                            <div class="font-bold text-gray-700 text-xs mb-4">③ 一致性</div>
-                                            <div class="flex-1 flex flex-col justify-center items-center">
-                                                <div class="text-[11px] font-bold text-[#00338D] bg-white px-3 py-1 rounded-full shadow-sm border border-blue-100 mb-4">
-                                                    TB <span class="text-gray-400 mx-1">vs</span> MA
-                                                </div>
-                                                <div class="bg-white rounded-md p-4 border border-rose-200 shadow-sm text-center w-full mb-5">
-                                                    <div class="text-xs text-gray-500">差异金额</div>
-                                                    <div class="text-rose-600 font-bold text-lg">￥3,245,000</div>
-                                                </div>
-                                                <a class="text-[#00338D] text-xs font-medium cursor-pointer hover:underline" onclick="toggleView('reconcile')">查看差异原因 →</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-4 px-5 align-top">
-                                        <div class="flex flex-col mt-2">
-                                            <span class="text-gray-900 font-medium">Shen, Austen</span>
-                                            <span class="text-gray-400 text-xs mt-1">2026-07-14 11:45</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <!-- 第二行：MA -->
-                                <tr class="hover:bg-gray-50/50 transition-colors bg-white group">
-                                    <td class="py-4 px-4 text-center text-gray-400 border-r border-gray-50">2</td>
-                                    <td class="py-4 px-4 font-medium text-gray-900 border-r border-gray-50">管理层报表 (MA)</td>
-                                    <td class="py-4 px-4 text-center text-gray-600 border-r border-gray-50">2026</td>
-                                    <td class="py-4 px-4 text-center border-r border-gray-50">
-                                        <div class="inline-flex items-center space-x-2">
-                                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm border border-emerald-600/20"></span>
-                                            <span class="text-gray-700 font-medium">验证通过</span>
-                                        </div>
-                                    </td>
-                                    <!-- ① 完整性 -->
-                                    <td class="p-2.5 border-r border-gray-50 align-top">
-                                        <div class="h-full bg-[#f8fafc] border border-gray-100 rounded-lg p-3 flex flex-col">
-                                            <div class="flex justify-between items-center mb-4">
-                                                <span class="font-bold text-gray-700 text-xs">① 完整性</span>
-                                                <span class="text-emerald-700 font-medium text-[11px] bg-emerald-100/50 px-1.5 py-0.5 rounded border border-emerald-200/50">12/12个月</span>
-                                            </div>
-                                            <!-- 当期与比较期左右并列 -->
-                                            <div class="flex space-x-4 w-full">
-                                                <!-- 当期 -->
-                                                <div class="flex-1">
-                                                    <div class="text-[10px] text-gray-500 mb-1.5">当期 (2026)</div>
-                                                    <div class="flex w-full h-[14px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
-                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
-                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
-                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
-                                                    </div>
-                                                </div>
-                                                <!-- 比较期 -->
-                                                <div class="flex-1">
-                                                    <div class="text-[10px] text-gray-500 mb-1.5">比较期 (2025)</div>
-                                                    <div class="flex w-full h-[14px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
-                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
-                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
-                                                        <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <!-- ② 有效性 -->
-                                    <td class="p-2.5 border-r border-gray-50 align-top">
-                                        <div class="h-full bg-[#f8fafc] border border-gray-100 rounded-lg p-3 flex flex-col">
-                                            <div class="font-bold text-gray-700 text-xs mb-4">② 有效性</div>
-                                            <div class="space-y-1.5 text-[11px] text-gray-600 flex-1 flex flex-col justify-center">
-                                                <div class="flex justify-between items-center bg-white px-2.5 py-1.5 rounded border border-gray-100 shadow-sm">
-                                                    <span class="font-medium text-gray-700">借贷平衡</span>
-                                                    <span class="text-emerald-500 font-bold text-[13px] leading-none">✓</span>
-                                                </div>
-                                                <div class="flex justify-between items-center bg-white px-2.5 py-1.5 rounded border border-gray-100 shadow-sm">
-                                                    <span class="font-medium text-gray-700">借方金额异常</span>
-                                                    <span class="font-semibold text-gray-800">0</span>
-                                                </div>
-                                                <div class="flex justify-between items-center bg-white px-2.5 py-1.5 rounded border border-gray-100 shadow-sm">
-                                                    <span class="font-medium text-gray-700">空值科目</span>
-                                                    <span class="font-semibold text-gray-800">0</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-4 px-5 align-top">
-                                        <div class="flex flex-col mt-2">
-                                            <span class="text-gray-900 font-medium">Shen, Austen</span>
-                                            <span class="text-gray-400 text-xs mt-1">2026-07-14 15:02</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-        
-                    <!-- 辅助信息表格 -->
+            
+                    <!-- ================= 大类 1：科目明细数据 ================= -->
                     <div class="mb-10">
-                        <div class="flex items-center mb-3">
-                            <h2 class="font-bold text-gray-800 text-sm">辅助信息</h2>
+                        <div class="flex items-center mb-5">
+                            <div class="w-1.5 h-5 bg-[#00338D] rounded-full mr-3"></div>
+                            <h2 class="text-xl font-bold text-gray-900 tracking-tight">科目明细数据</h2>
                         </div>
-                        <div class="border border-gray-200 rounded-lg shadow-sm overflow-hidden bg-white">
-                            <table class="w-full text-left">
-                                <thead class="bg-white text-gray-500 border-b border-gray-200 text-[12px] uppercase tracking-wider">
-                                    <tr>
-                                        <th class="py-3 px-5 font-semibold w-[5%] text-center border-r border-gray-100">序号</th>
-                                        <th class="py-3 px-5 font-semibold w-[25%] border-r border-gray-100">数据采集项</th>
-                                        <th class="py-3 px-5 font-semibold w-[10%] text-center border-r border-gray-100">所属年度</th>
-                                        <th class="py-3 px-5 font-semibold w-[20%] text-center border-r border-gray-100">
-                                            <div class="flex items-center justify-center space-x-1.5">
-                                                <span>采集状态</span>
-                                                <select class="bg-gray-50 border border-gray-200 text-gray-600 text-[11px] rounded px-1.5 py-0.5 outline-none focus:border-[#00338D] focus:ring-1 focus:ring-[#00338D] cursor-pointer">
-                                                    <option value="all">全部</option>
-                                                    <option value="collected">已收集</option>
-                                                    <option value="uncollected">未收集</option>
-                                                    <option value="na">不适用</option>
-                                                </select>
-                                            </div>
-                                        </th>
-                                        <th class="py-3 px-5 font-semibold w-[15%] text-center border-r border-gray-100">leedsheet状态</th>
-                                        <th class="py-3 px-5 font-semibold w-[25%]">创建信息</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-100 text-[13px]">
-                                    <tr class="hover:bg-gray-50/50 transition-colors">
-                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50">1</td>
-                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50">固定资产台账</td>
-                                        <td class="py-3.5 px-5 text-center text-gray-600 border-r border-gray-50">2026</td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50">
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">已收集</span>
-                                        </td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50">
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">已生成</span>
-                                        </td>
-                                        <td class="py-3.5 px-5">
-                                            <div class="flex flex-col">
-                                                <span class="text-gray-900 font-medium">Shen, Austen</span>
-                                                <span class="text-gray-400 text-xs mt-1">2026-07-14 11:50</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50/50 transition-colors">
-                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50">2</td>
-                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50">应收账款明细</td>
-                                        <td class="py-3.5 px-5 text-center text-gray-600 border-r border-gray-50">2026</td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50">
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200">未收集</span>
-                                        </td>
-                                        <td class="py-3.5 px-5 text-center text-gray-400 border-r border-gray-50">-</td>
-                                        <td class="py-3.5 px-5 text-gray-400">-</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50/50 transition-colors">
-                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50">3</td>
-                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50">应付账款明细</td>
-                                        <td class="py-3.5 px-5 text-center text-gray-600 border-r border-gray-50">2026</td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50">
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">不适用</span>
-                                        </td>
-                                        <td class="py-3.5 px-5 text-center text-gray-400 border-r border-gray-50">-</td>
-                                        <td class="py-3.5 px-5 text-gray-400">-</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-        
-                        <!-- 报表源数据 -->
-                        <div class="flex items-center mb-4 mt-8">
-                            <div class="w-1 h-4 bg-[#00338D] mr-2.5 rounded-sm"></div>
-                            <h1 class="text-[17px] font-bold text-gray-900 tracking-wide">报表源数据</h1>
-                        </div>
-                        
-                        <div class="mb-10">
-                            <div class="border border-gray-200 rounded-lg shadow-sm overflow-hidden bg-white">
-                                <table class="w-full text-left">
-                                    <thead class="bg-white text-gray-500 border-b border-gray-200 text-[12px] uppercase tracking-wider">
-                                        <tr>
-                                            <th class="py-3 px-5 font-semibold w-[5%] text-center border-r border-gray-100">序号</th>
-                                            <th class="py-3 px-5 font-semibold w-[30%] border-r border-gray-100">数据采集项</th>
-                                            <th class="py-3 px-5 font-semibold w-[15%] text-center border-r border-gray-100">所属年度</th>
-                                            <th class="py-3 px-5 font-semibold w-[20%] text-center border-r border-gray-100">处理状态</th>
-                                            <th class="py-3 px-5 font-semibold w-[30%]">创建信息</th>
+            
+                        <!-- 子模块 1.1：基础数据 -->
+                        <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden mb-6 flex flex-col w-full">
+                            <div class="px-6 py-4 border-b border-gray-100 bg-white flex justify-between items-center">
+                                <div class="flex items-baseline">
+                                    <h3 class="text-[16px] font-bold text-gray-800 tracking-wide">基础数据</h3>
+                                    <span class="text-[13px] text-gray-500 ml-4 font-normal">展示各明细报表的完整生命周期状态</span>
+                                </div>
+                            </div>
+            
+                            <div class="overflow-x-auto overflow-y-hidden">
+                                <table class="w-full text-left border-collapse min-w-[1350px]">
+                                    <thead class="bg-gray-50/80 text-[12px] tracking-wider whitespace-nowrap">
+                                        <tr class="text-gray-500 uppercase border-b border-gray-200">
+                                            <th class="py-3.5 px-4 font-semibold w-[4%] text-center border-r border-gray-100">序号</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[14%] border-r border-gray-100">数据采集项</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[10%] border-r border-gray-100">会计期间</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[9%] border-r border-gray-100">文件验证</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[12%] border-r border-gray-100">数据质检</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[14%] border-r border-gray-100">数据处理</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[13%] border-r border-gray-100">数据核对</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[12%] border-r border-gray-100">上传信息</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[12%] text-center">操作</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="divide-y divide-gray-100 text-[13px]">
-                                        <tr class="hover:bg-gray-50/50 transition-colors">
-                                            <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50">1</td>
-                                            <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50">久其</td>
-                                            <td class="py-3.5 px-5 text-center text-gray-600 border-r border-gray-50">2026</td>
-                                            <td class="py-3.5 px-5 text-center border-r border-gray-50">
-                                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">处理完成</span>
+                                    <tbody class="divide-y divide-gray-100 text-[13px] bg-white">
+                                        <!-- 基础数据 1: TB -->
+                                        <tr class="hover:bg-blue-50/30 transition-colors group">
+                                            <td class="py-4 px-4 align-top text-center text-gray-400">1</td>
+                                            <td class="py-4 px-4 align-top">
+                                                <div class="flex items-center text-gray-900 font-bold mb-1">
+                                                    <span class="bg-[#00338D]/10 text-[#00338D] p-1 rounded mr-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></span>
+                                                    科目余额表 (TB)
+                                                </div>
                                             </td>
-                                            <td class="py-3.5 px-5">
+                                            <td class="py-4 px-4 align-top text-gray-700 font-medium">2026-12 决算</td>
+                                            <td class="py-4 px-4 align-top">
+                                                <span class="flex items-center text-emerald-600 font-medium"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>格式正确</span>
+                                            </td>
+                                            <td class="py-4 px-4 align-top">
                                                 <div class="flex flex-col">
-                                                    <span class="text-gray-900 font-medium">Zhang, Christie (CD/AQPP)</span>
-                                                    <span class="text-gray-400 text-xs mt-1">2026-08-14 09:43</span>
+                                                    <span class="flex items-center text-emerald-600 font-medium"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>借贷必平</span>
+                                                    <span class="text-[11px] text-gray-400 mt-1">有效明细: 4,502行</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-top">
+                                                <div class="flex flex-col w-full pr-2">
+                                                    <div class="flex justify-between items-end mb-1">
+                                                        <span class="text-[11px] text-gray-600">科目映射完成度</span>
+                                                        <span class="text-[11px] font-bold text-emerald-600">100%</span>
+                                                    </div>
+                                                    <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="bg-emerald-500 h-1.5 rounded-full" style="width: 100%"></div></div>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-top">
+                                                <span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-200/60 text-[12px] font-medium inline-flex items-center">与MA核对一致</span>
+                                            </td>
+                                            <td class="py-4 px-4 align-top">
+                                                <div class="flex flex-col">
+                                                    <span class="text-gray-900 font-medium">Shen, Austen</span>
+                                                    <span class="text-gray-400 text-[11px] mt-0.5">26-08-11 14:30</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-top text-center">
+                                                <div class="flex items-center justify-center space-x-1.5">
+                                                    <!-- TB 独有的 映射工作台 按钮 -->
+                                                    <button class="bg-[#00338D] hover:bg-blue-800 text-white px-2 py-1 rounded text-[11px] font-medium transition-colors shadow-sm focus:outline-none">
+                                                        映射工作台
+                                                    </button>
+                                                    <!-- 标准双图标 -->
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded transition-colors bg-white border border-transparent hover:border-blue-200">
+                                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap">查看解析结果</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded transition-colors bg-white border border-transparent hover:border-blue-200">
+                                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap">查看原始文件</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr class="hover:bg-gray-50/50 transition-colors">
-                                            <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50">2</td>
-                                            <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50">Excel package</td>
-                                            <td class="py-3.5 px-5 text-center text-gray-600 border-r border-gray-50">2026</td>
-                                            <td class="py-3.5 px-5 text-center border-r border-gray-50">
-                                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">处理完成</span>
+                                        
+                                        <!-- 基础数据 2: MA -->
+                                        <tr class="hover:bg-blue-50/30 transition-colors group bg-rose-50/10">
+                                            <td class="py-4 px-4 align-top text-center text-gray-400">2</td>
+                                            <td class="py-4 px-4 align-top">
+                                                <div class="flex items-center text-gray-900 font-bold mb-1">
+                                                    <span class="bg-[#00338D]/10 text-[#00338D] p-1 rounded mr-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg></span>
+                                                    管理层报表 (MA)
+                                                </div>
                                             </td>
-                                            <td class="py-3.5 px-5">
+                                            <td class="py-4 px-4 align-top text-gray-700 font-medium">2026-12 决算</td>
+                                            <td class="py-4 px-4 align-top">
+                                                <span class="flex items-center text-emerald-600 font-medium"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>格式正确</span>
+                                            </td>
+                                            <td class="py-4 px-4 align-top">
                                                 <div class="flex flex-col">
-                                                    <span class="text-gray-900 font-medium">Gao, Gina (KDC/AST)</span>
-                                                    <span class="text-gray-400 text-xs mt-1">2026-06-10 17:32</span>
+                                                    <span class="flex items-center text-emerald-600 font-medium"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>勾稽关系正常</span>
+                                                    <span class="text-[11px] text-gray-400 mt-1">报表项目: 45项</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-top">
+                                                <div class="flex flex-col w-full pr-2">
+                                                    <div class="flex justify-between items-end mb-1">
+                                                        <span class="text-[11px] text-gray-600">底层TB关联率</span>
+                                                        <span class="text-[11px] font-bold text-amber-600">93%</span>
+                                                    </div>
+                                                    <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="bg-amber-400 h-1.5 rounded-full" style="width: 93%"></div></div>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-top">
+                                                <span class="bg-rose-50 text-rose-700 px-2 py-0.5 rounded border border-rose-200/80 text-[12px] font-medium inline-flex items-center">差额: ¥4,500</span>
+                                            </td>
+                                            <td class="py-4 px-4 align-top">
+                                                <div class="flex flex-col">
+                                                    <span class="text-gray-900 font-medium">Zhang, Christie</span>
+                                                    <span class="text-gray-400 text-[11px] mt-0.5">26-08-10 09:12</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-top text-center">
+                                                <div class="flex items-center justify-center space-x-1.5">
+                                                    <!-- MA 独有的 核对工作台 按钮 -->
+                                                    <button class="bg-rose-50 text-rose-600 border border-rose-200 hover:bg-rose-100 px-2 py-1 rounded text-[11px] font-medium transition-colors shadow-sm focus:outline-none">
+                                                        核对工作台
+                                                    </button>
+                                                    <!-- 标准双图标 -->
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded transition-colors bg-white border border-transparent hover:border-blue-200">
+                                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap">查看解析结果</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded transition-colors bg-white border border-transparent hover:border-blue-200">
+                                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap">查看原始文件</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+            
+                                        <!-- 基础数据 3: 序时账 -->
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+            
+                        <!-- 子模块 1.2：辅助信息 -->
+                        <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden flex flex-col w-full">
+                            <div class="px-6 py-4 border-b border-gray-100 bg-white flex justify-between items-center">
+                                <div class="flex items-baseline">
+                                    <h3 class="text-[16px] font-bold text-gray-800 tracking-wide">辅助信息</h3>
+                                    <span class="text-[13px] text-gray-500 ml-4 font-normal">收集并处理各类业务底稿的辅助文件</span>
+                                </div>
+                            </div>
+                            
+                            <div class="overflow-x-auto overflow-y-hidden">
+                                <table class="w-full text-left border-collapse min-w-[1300px]">
+                                    <thead class="bg-gray-50/80 text-[12px] tracking-wider whitespace-nowrap">
+                                        <tr class="text-gray-500 uppercase border-b border-gray-200">
+                                            <th class="py-3.5 px-4 font-semibold w-[4%] text-center border-r border-gray-100">序号</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[14%] border-r border-gray-100">数据采集项</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[10%] border-r border-gray-100">会计期间</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[9%] border-r border-gray-100">文件验证</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[11%] border-r border-gray-100">数据质检</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[15%] border-r border-gray-100">数据处理</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[12%] border-r border-gray-100">数据核对</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[13%] border-r border-gray-100">上传信息</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[12%] text-center">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100 text-[13px] bg-white">
+                                        <!-- 辅助信息 1 -->
+                                        <tr class="hover:bg-blue-50/30 transition-colors">
+                                            <td class="py-4 px-4 align-middle text-center text-gray-400">1</td>
+                                            <td class="py-4 px-4 align-middle font-medium text-gray-900">固定资产台账</td>
+                                            <td class="py-4 px-4 align-middle text-gray-700">2026-12 决算</td>
+                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>格式正确</span></td>
+                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>折旧逻辑正常</span></td>
+                                            <td class="py-4 px-4 align-middle"><span class="bg-blue-50 text-blue-700 px-2 py-0.5 rounded border border-blue-200 font-medium">底稿已生成</span></td>
+                                            <td class="py-4 px-4 align-middle"><span class="text-emerald-600 font-medium">与明细账一致</span></td>
+                                            <td class="py-4 px-4 align-middle">
+                                                <div class="flex flex-col">
+                                                    <span class="text-gray-900 font-medium">Shen, Austen</span>
+                                                    <span class="text-gray-400 text-[11px] mt-0.5">26-07-14 11:50</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-middle text-center">
+                                                <div class="flex items-center justify-center space-x-3">
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded transition-colors bg-white border border-transparent hover:border-blue-200 shadow-sm" title="查看解析结果">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap font-medium">查看解析结果</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded transition-colors bg-white border border-transparent hover:border-blue-200 shadow-sm" title="查看原始文件">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap font-medium">查看原始文件</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- 辅助信息 2: 账龄分析表 -->
+                                        <tr class="hover:bg-blue-50/30 transition-colors bg-rose-50/10">
+                                            <td class="py-4 px-4 align-middle text-center text-gray-400">2</td>
+                                            <td class="py-4 px-4 align-middle font-medium text-gray-900">应收账款账龄表</td>
+                                            <td class="py-4 px-4 align-middle text-gray-700">2026-12 决算</td>
+                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>格式正确</span></td>
+                                            <td class="py-4 px-4 align-middle">
+                                                <span class="flex items-center text-rose-600 font-medium"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>逻辑错误(3)</span>
+                                            </td>
+                                            <td class="py-4 px-4 align-middle">
+                                                <div class="flex flex-col w-full pr-2">
+                                                    <div class="flex justify-between items-end mb-1">
+                                                        <span class="text-[11px] text-gray-600">坏账准备测算</span>
+                                                        <span class="text-[11px] font-bold text-amber-600">45%</span>
+                                                    </div>
+                                                    <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="bg-amber-400 h-1.5 rounded-full" style="width: 45%"></div></div>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-middle">
+                                                <span class="text-rose-600 font-medium">明细差额 ¥200</span>
+                                            </td>
+                                            <td class="py-4 px-4 align-middle">
+                                                <div class="flex flex-col">
+                                                    <span class="text-gray-900 font-medium">Li, Wei</span>
+                                                    <span class="text-gray-400 text-[11px] mt-0.5">26-08-01 10:20</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-3.5 px-4 align-middle text-center">
+                                                <div class="flex items-center justify-center space-x-3">
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded transition-colors bg-white border border-transparent hover:border-blue-200 shadow-sm" title="查看解析结果">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap font-medium">查看解析结果</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded transition-colors bg-white border border-transparent hover:border-blue-200 shadow-sm" title="查看原始文件">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap font-medium">查看原始文件</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- 辅助信息 3: 银行存款对账单 -->
+                                        <tr class="hover:bg-blue-50/30 transition-colors">
+                                            <td class="py-4 px-4 align-middle text-center text-gray-400">3</td>
+                                            <td class="py-4 px-4 align-middle font-medium text-gray-900">银行存款对账单</td>
+                                            <td class="py-4 px-4 align-middle text-gray-700">2026-12 决算</td>
+                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>格式正确</span></td>
+                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>余额提取成功</span></td>
+                                            <td class="py-4 px-4 align-middle">
+                                                <div class="flex flex-col w-full pr-2">
+                                                    <div class="flex justify-between items-end mb-1">
+                                                        <span class="text-[11px] text-gray-600">银企自动匹配</span>
+                                                        <span class="text-[11px] font-bold text-amber-600">88%</span>
+                                                    </div>
+                                                    <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="bg-amber-400 h-1.5 rounded-full" style="width: 88%"></div></div>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-middle"><span class="text-amber-600 font-medium">未达账项 5 笔</span></td>
+                                            <td class="py-4 px-4 align-middle">
+                                                <div class="flex flex-col">
+                                                    <span class="text-gray-900 font-medium">Wang, Jing</span>
+                                                    <span class="text-gray-400 text-[11px] mt-0.5">26-08-05 16:45</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-3.5 px-4 align-middle text-center">
+                                                <div class="flex items-center justify-center space-x-3">
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded transition-colors bg-white border border-transparent hover:border-blue-200 shadow-sm" title="查看解析结果">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap font-medium">查看解析结果</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded transition-colors bg-white border border-transparent hover:border-blue-200 shadow-sm" title="查看原始文件">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap font-medium">查看原始文件</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -690,54 +703,289 @@
                                 </table>
                             </div>
                         </div>
-        
-                        <!-- 客户报告 -->
-                        <div class="flex items-center mb-4 mt-8">
-                            <div class="w-1 h-4 bg-[#00338D] mr-2.5 rounded-sm"></div>
-                            <h1 class="text-[17px] font-bold text-gray-900 tracking-wide">客户报告</h1>
+                    </div>
+            
+                    
+                    <!-- ================= 大类 2：财务报表数据 ================= -->
+                    <div class="mb-10">
+                        <div class="flex items-center mb-5 mt-8">
+                            <div class="w-1.5 h-5 bg-[#00338D] rounded-full mr-3"></div>
+                            <h2 class="text-xl font-bold text-gray-900 tracking-tight">财务报表数据</h2>
                         </div>
-                        
-                        <div class="mb-10">
-                            <div class="border border-gray-200 rounded-lg shadow-sm overflow-hidden bg-white">
-                                <table class="w-full text-left">
-                                    <thead class="bg-white text-gray-500 border-b border-gray-200 text-[12px] uppercase tracking-wider">
+            
+                        <!-- 子模块 2.1：报表源数据 -->
+                        <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden mb-6 flex flex-col w-full">
+                            <div class="px-6 py-4 border-b border-gray-100 bg-white flex justify-between items-center">
+                                <div class="flex items-baseline">
+                                    <h3 class="text-[16px] font-bold text-gray-800 tracking-wide">报表源数据</h3>
+                                    <span class="text-[13px] text-gray-500 ml-4 font-normal">审计所需的主附表数据源记录</span>
+                                </div>
+                            </div>
+            
+                            <div class="border-t border-gray-200 overflow-x-auto">
+                                <table class="w-full text-left border-collapse min-w-[1300px]">
+                                    <thead class="bg-gray-50/80 text-gray-500 border-b border-gray-200 text-[12px] uppercase tracking-wider">
                                         <tr>
-                                            <th class="py-3 px-5 font-semibold w-[5%] text-center border-r border-gray-100">序号</th>
-                                            <th class="py-3 px-5 font-semibold w-[30%] border-r border-gray-100">数据采集项</th>
-                                            <th class="py-3 px-5 font-semibold w-[15%] text-center border-r border-gray-100">所属年度</th>
-                                            <th class="py-3 px-5 font-semibold w-[20%] text-center border-r border-gray-100">处理状态</th>
-                                            <th class="py-3 px-5 font-semibold w-[30%]">创建信息</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[4%] text-center border-r border-gray-100">序号</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[14%] border-r border-gray-100">数据采集项</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[10%] border-r border-gray-100">会计期间</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[9%] border-r border-gray-100">文件验证</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[11%] border-r border-gray-100">数据质检</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[15%] border-r border-gray-100">数据处理</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[12%] border-r border-gray-100">数据核对</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[13%] border-r border-gray-100">上传信息</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[12%] text-center">操作</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="divide-y divide-gray-100 text-[13px]">
-                                        <tr class="hover:bg-gray-50/50 transition-colors">
-                                            <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50">1</td>
-                                            <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50">审计报告 (Audit Report)</td>
-                                            <td class="py-3.5 px-5 text-center text-gray-600 border-r border-gray-50">2026</td>
-                                            <td class="py-3.5 px-5 text-center border-r border-gray-50">
-                                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">处理中</span>
+                                    <tbody class="divide-y divide-gray-100 text-[13px] bg-white">
+                                        <!-- 报表源数据 1 -->
+                                        <tr class="hover:bg-blue-50/30 transition-colors">
+                                            <td class="py-4 px-4 align-middle text-center text-gray-400">1</td>
+                                            <td class="py-4 px-4 align-middle">
+                                                <div class="flex items-center text-gray-900 font-bold mb-1">集团合并系统数据 (久其)</div>
                                             </td>
-                                            <td class="py-3.5 px-5">
+                                            <td class="py-4 px-4 align-middle text-gray-700">2026-12 决算</td>
+                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>解析成功</span></td>
+                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>表内平衡</span></td>
+                                            <td class="py-4 px-4 align-middle"><span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-200 font-medium">处理完成</span></td>
+                                            <td class="py-4 px-4 align-middle"><span class="text-emerald-600 font-medium">勾稽无异常</span></td>
+                                            <td class="py-4 px-4 align-middle">
+                                                <div class="flex flex-col">
+                                                    <span class="text-gray-900 font-medium">Zhang, Christie</span>
+                                                    <span class="text-gray-400 text-[11px] mt-0.5">26-08-14 09:43</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-3.5 px-4 align-middle text-center">
+                                                <div class="flex items-center justify-center space-x-3">
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded-md transition-all border border-transparent hover:border-blue-200 bg-white shadow-sm" title="查看解析结果">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap font-medium">查看解析结果</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded-md transition-all border border-transparent hover:border-blue-200 bg-white shadow-sm" title="查看原始文件">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap font-medium">查看原始文件</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- 报表源数据 2 -->
+                                        <tr class="hover:bg-blue-50/30 transition-colors bg-rose-50/10">
+                                            <td class="py-4 px-4 align-middle text-center text-gray-400">2</td>
+                                            <td class="py-4 px-4 align-middle">
+                                                <div class="flex items-center text-gray-900 font-bold mb-1">审计数据收集包 (Excel Package)</div>
+                                            </td>
+                                            <td class="py-4 px-4 align-middle text-gray-700">2026-12 决算</td>
+                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>格式正确</span></td>
+                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-rose-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>公式异常(2)</span></td>
+                                            <td class="py-4 px-4 align-middle">
+                                                <div class="flex flex-col w-full pr-2">
+                                                    <div class="flex justify-between items-end mb-1">
+                                                        <span class="text-[11px] text-gray-600">抵销分录提取</span>
+                                                        <span class="text-[11px] font-bold text-blue-600">处理中</span>
+                                                    </div>
+                                                    <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="bg-blue-500 h-1.5 rounded-full" style="width: 60%"></div></div>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-middle"><span class="text-rose-600 font-medium">交易未消除: ¥1.2M</span></td>
+                                            <td class="py-4 px-4 align-middle">
+                                                <div class="flex flex-col">
+                                                    <span class="text-gray-900 font-medium">Gao, Gina</span>
+                                                    <span class="text-gray-400 text-[11px] mt-0.5">26-06-10 17:32</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-3.5 px-4 align-middle text-center">
+                                                <div class="flex items-center justify-center space-x-3">
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded-md transition-all border border-transparent hover:border-blue-200 bg-white shadow-sm" title="查看解析结果">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap font-medium">查看解析结果</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded-md transition-all border border-transparent hover:border-blue-200 bg-white shadow-sm" title="查看原始文件">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap font-medium">查看原始文件</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- 报表源数据 3 -->
+                                        <tr class="hover:bg-blue-50/30 transition-colors">
+                                            <td class="py-4 px-4 align-middle text-center text-gray-400">3</td>
+                                            <td class="py-4 px-4 align-middle">
+                                                <div class="flex items-center text-gray-900 font-bold mb-1">现金流量表补充资料</div>
+                                            </td>
+                                            <td class="py-4 px-4 align-middle text-gray-700">2026-12 决算</td>
+                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>格式正确</span></td>
+                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>净利润调节匹配</span></td>
+                                            <td class="py-4 px-4 align-middle"><span class="bg-blue-50 text-blue-700 px-2 py-0.5 rounded border border-blue-200 font-medium">重分类完成</span></td>
+                                            <td class="py-4 px-4 align-middle"><span class="text-emerald-600 font-medium">勾稽无异常</span></td>
+                                            <td class="py-4 px-4 align-middle">
+                                                <div class="flex flex-col">
+                                                    <span class="text-gray-900 font-medium">Shen, Austen</span>
+                                                    <span class="text-gray-400 text-[11px] mt-0.5">26-08-11 15:00</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-3.5 px-4 align-middle text-center">
+                                                <div class="flex items-center justify-center space-x-3">
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded-md transition-all border border-transparent hover:border-blue-200 bg-white shadow-sm" title="查看解析结果">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap font-medium">查看解析结果</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded-md transition-all border border-transparent hover:border-blue-200 bg-white shadow-sm" title="查看原始文件">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap font-medium">查看原始文件</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+            
+                        <!-- 子模块 2.2：客户报告 -->
+                        <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden flex flex-col w-full">
+                            <div class="px-6 py-4 border-b border-gray-100 bg-white flex justify-between items-center">
+                                <div class="flex items-baseline">
+                                    <h3 class="text-[16px] font-bold text-gray-800 tracking-wide">客户报告</h3>
+                                    <span class="text-[13px] text-gray-500 ml-4 font-normal">最终交付客户的审计产出物</span>
+                                </div>
+                            </div>
+                            
+                            <div class="border-t border-gray-200 overflow-x-auto">
+                                <table class="w-full text-left border-collapse min-w-[1300px]">
+                                    <thead class="bg-gray-50/80 text-gray-500 border-b border-gray-200 text-[12px] uppercase tracking-wider">
+                                        <tr>
+                                            <th class="py-3.5 px-4 font-semibold w-[4%] text-center border-r border-gray-100">序号</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[14%] border-r border-gray-100">数据采集项</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[10%] border-r border-gray-100">会计期间</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[9%] border-r border-gray-100">文件验证</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[11%] border-r border-gray-100">数据质检</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[15%] border-r border-gray-100">数据处理</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[12%] border-r border-gray-100">数据核对</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[13%] border-r border-gray-100">上传信息</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[12%] text-center">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100 text-[13px] bg-white">
+                                        <!-- 客户报告 1 -->
+                                        <tr class="hover:bg-blue-50/30 transition-colors">
+                                            <td class="py-4 px-4 align-middle text-center text-gray-400">1</td>
+                                            <td class="py-4 px-4 align-middle font-medium text-gray-900">审计报告初稿 (Draft Audit Report)</td>
+                                            <td class="py-4 px-4 align-middle text-gray-700">2026-12 决算</td>
+                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>模板匹配成功</span></td>
+                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>语法校验通过</span></td>
+                                            <td class="py-4 px-4 align-middle">
+                                                <div class="flex flex-col w-full pr-2">
+                                                    <div class="flex justify-between items-end mb-1">
+                                                        <span class="text-[11px] text-gray-600">正文段落生成</span>
+                                                        <span class="text-[11px] font-bold text-amber-600">进行中</span>
+                                                    </div>
+                                                    <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="bg-amber-400 h-1.5 rounded-full" style="width: 70%"></div></div>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-middle"><span class="text-emerald-600 font-medium">附注数与主表一致</span></td>
+                                            <td class="py-4 px-4 align-middle">
                                                 <div class="flex flex-col">
                                                     <span class="text-gray-900 font-medium">System Auto</span>
-                                                    <span class="text-gray-400 text-xs mt-1">2026-08-10 10:15</span>
+                                                    <span class="text-gray-400 text-[11px] mt-0.5">26-08-10 10:15</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-3.5 px-4 align-middle text-center">
+                                                <div class="flex items-center justify-center space-x-3">
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded-md transition-all border border-transparent hover:border-blue-200 bg-white shadow-sm" title="查看解析结果">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap font-medium">查看解析结果</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded-md transition-all border border-transparent hover:border-blue-200 bg-white shadow-sm" title="查看原始文件">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap font-medium">查看原始文件</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr class="hover:bg-gray-50/50 transition-colors">
-                                            <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50">2</td>
-                                            <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50">管理建议书 (Management Letter)</td>
-                                            <td class="py-3.5 px-5 text-center text-gray-600 border-r border-gray-50">2026</td>
-                                            <td class="py-3.5 px-5 text-center border-r border-gray-50">
-                                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">未开始</span>
+                                        <!-- 客户报告 2 -->
+                                        <tr class="hover:bg-blue-50/30 transition-colors">
+                                            <td class="py-4 px-4 align-middle text-center text-gray-400">2</td>
+                                            <td class="py-4 px-4 align-middle font-medium text-gray-900">管理建议书 (Management Letter)</td>
+                                            <td class="py-4 px-4 align-middle text-gray-700">2026-12 决算</td>
+                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>文档已就绪</span></td>
+                                            <td class="py-4 px-4 align-middle"><span class="text-amber-600 font-medium">内部复核中 (1/3)</span></td>
+                                            <td class="py-4 px-4 align-middle"><span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-200 font-medium">风险评级分类完成</span></td>
+                                            <td class="py-4 px-4 align-middle text-emerald-600 font-medium">无需核对</td>
+                                            <td class="py-4 px-4 align-middle">
+                                                <div class="flex flex-col">
+                                                    <span class="text-gray-900 font-medium">Li, Wei</span>
+                                                    <span class="text-gray-400 text-[11px] mt-0.5">26-08-12 11:30</span>
+                                                </div>
                                             </td>
-                                            <td class="py-3.5 px-5 text-gray-400">-</td>
+                                            <td class="py-3.5 px-4 align-middle text-center">
+                                                <div class="flex items-center justify-center space-x-3">
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded-md transition-all border border-transparent hover:border-blue-200 bg-white shadow-sm" title="查看解析结果">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap font-medium">查看解析结果</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="relative group/btn">
+                                                        <button class="p-1.5 text-gray-500 hover:text-[#00338D] hover:bg-blue-50 rounded-md transition-all border border-transparent hover:border-blue-200 bg-white shadow-sm" title="查看原始文件">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                                        </button>
+                                                        <div class="absolute bottom-full right-1/2 translate-x-1/2 mb-1.5 flex flex-col items-center pointer-events-none z-50 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200">
+                                                            <span class="bg-gray-800 text-white text-[11px] px-2.5 py-1 rounded shadow-lg whitespace-nowrap font-medium">查看原始文件</span>
+                                                            <div class="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-gray-800 -mt-[1px]"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
+            
                 </main>
             </div>
 
