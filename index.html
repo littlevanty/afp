@@ -371,20 +371,18 @@
             
                     <!-- ================= 大类 1：科目明细数据 ================= -->
                     <div class="mb-10">
-                        <div class="flex items-center mb-5">
+                        <div class="flex items-center mb-6">
                             <div class="w-1.5 h-5 bg-[#00338D] rounded-full mr-3"></div>
                             <h2 class="text-xl font-bold text-gray-900 tracking-tight">科目明细数据</h2>
                         </div>
             
                         <!-- 子模块 1.1：基础数据 -->
-                        <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden mb-6 flex flex-col w-full">
-                            <div class="px-6 py-4 border-b border-gray-100 bg-white flex justify-between items-center">
-                                <div class="flex items-baseline">
-                                    <h3 class="text-[16px] font-bold text-gray-800 tracking-wide">基础数据</h3>
-                                    <span class="text-[13px] text-gray-500 ml-4 font-normal">展示各明细报表的完整生命周期状态</span>
-                                </div>
-                            </div>
-            
+                        <div class="flex items-baseline mb-3">
+                            <h3 class="text-[16px] font-bold text-gray-800 tracking-wide">基础数据</h3>
+                            <span class="text-[13px] text-gray-500 ml-4 font-normal">展示各明细报表的完整生命周期状态</span>
+                        </div>
+                        
+                        <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden mb-8 flex flex-col w-full">
                             <div class="overflow-x-auto overflow-y-hidden">
                                 <table class="w-full text-left border-collapse min-w-[1350px]">
                                     <thead class="bg-gray-50/80 text-[12px] tracking-wider whitespace-nowrap">
@@ -392,8 +390,8 @@
                                             <th class="py-3.5 px-4 font-semibold w-[4%] text-center border-r border-gray-100">序号</th>
                                             <th class="py-3.5 px-4 font-semibold w-[14%] border-r border-gray-100">数据采集项</th>
                                             <th class="py-3.5 px-4 font-semibold w-[10%] border-r border-gray-100">会计期间</th>
-                                            <th class="py-3.5 px-4 font-semibold w-[9%] border-r border-gray-100">文件验证</th>
-                                            <th class="py-3.5 px-4 font-semibold w-[12%] border-r border-gray-100">数据质检</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[9%] border-r border-gray-100 text-center">文件验证</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[12%] border-r border-gray-100 text-center">数据质检</th>
                                             <th class="py-3.5 px-4 font-semibold w-[14%] border-r border-gray-100">数据处理</th>
                                             <th class="py-3.5 px-4 font-semibold w-[13%] border-r border-gray-100">数据核对</th>
                                             <th class="py-3.5 px-4 font-semibold w-[12%] border-r border-gray-100">上传信息</th>
@@ -404,20 +402,23 @@
                                         <!-- 基础数据 1: TB -->
                                         <tr class="hover:bg-blue-50/30 transition-colors group">
                                             <td class="py-4 px-4 align-top text-center text-gray-400">1</td>
-                                            <td class="py-4 px-4 align-top">
-                                                <div class="flex items-center text-gray-900 font-bold mb-1">
-                                                    <span class="bg-[#00338D]/10 text-[#00338D] p-1 rounded mr-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></span>
-                                                    科目余额表 (TB)
+                                            <td class="py-4 px-4 align-top font-medium text-gray-900">科目余额表 (TB)</td>
+                                            <td class="py-4 px-4 align-top text-gray-700 font-medium">2026-12 决算</td>
+                                            <td class="py-4 px-4 align-top text-center">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <div class="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-1.5">
+                                                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                                    </div>
+                                                    <span class="text-[12px] text-emerald-600 font-medium">格式正确</span>
                                                 </div>
                                             </td>
-                                            <td class="py-4 px-4 align-top text-gray-700 font-medium">2026-12 决算</td>
-                                            <td class="py-4 px-4 align-top">
-                                                <span class="flex items-center text-emerald-600 font-medium"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>格式正确</span>
-                                            </td>
-                                            <td class="py-4 px-4 align-top">
-                                                <div class="flex flex-col">
-                                                    <span class="flex items-center text-emerald-600 font-medium"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>借贷必平</span>
-                                                    <span class="text-[11px] text-gray-400 mt-1">有效明细: 4,502行</span>
+                                            <td class="py-4 px-4 align-top text-center">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <div class="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-1.5">
+                                                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                                    </div>
+                                                    <span class="text-[12px] text-emerald-600 font-medium">借贷必平</span>
+                                                    <span class="text-[11px] text-gray-400 mt-0.5">有效明细: 4,502行</span>
                                                 </div>
                                             </td>
                                             <td class="py-4 px-4 align-top">
@@ -468,22 +469,25 @@
                                         </tr>
                                         
                                         <!-- 基础数据 2: MA -->
-                                        <tr class="hover:bg-blue-50/30 transition-colors group bg-rose-50/10">
+                                        <tr class="hover:bg-blue-50/30 transition-colors group">
                                             <td class="py-4 px-4 align-top text-center text-gray-400">2</td>
-                                            <td class="py-4 px-4 align-top">
-                                                <div class="flex items-center text-gray-900 font-bold mb-1">
-                                                    <span class="bg-[#00338D]/10 text-[#00338D] p-1 rounded mr-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg></span>
-                                                    管理层报表 (MA)
+                                            <td class="py-4 px-4 align-top font-medium text-gray-900">管理层报表 (MA)</td>
+                                            <td class="py-4 px-4 align-top text-gray-700 font-medium">2026-12 决算</td>
+                                            <td class="py-4 px-4 align-top text-center">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <div class="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-1.5">
+                                                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                                    </div>
+                                                    <span class="text-[12px] text-emerald-600 font-medium">格式正确</span>
                                                 </div>
                                             </td>
-                                            <td class="py-4 px-4 align-top text-gray-700 font-medium">2026-12 决算</td>
-                                            <td class="py-4 px-4 align-top">
-                                                <span class="flex items-center text-emerald-600 font-medium"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>格式正确</span>
-                                            </td>
-                                            <td class="py-4 px-4 align-top">
-                                                <div class="flex flex-col">
-                                                    <span class="flex items-center text-emerald-600 font-medium"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>勾稽关系正常</span>
-                                                    <span class="text-[11px] text-gray-400 mt-1">报表项目: 45项</span>
+                                            <td class="py-4 px-4 align-top text-center">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <div class="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-1.5">
+                                                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                                    </div>
+                                                    <span class="text-[12px] text-emerald-600 font-medium">勾稽关系正常</span>
+                                                    <span class="text-[11px] text-gray-400 mt-0.5">报表项目: 45项</span>
                                                 </div>
                                             </td>
                                             <td class="py-4 px-4 align-top">
@@ -496,7 +500,7 @@
                                                 </div>
                                             </td>
                                             <td class="py-4 px-4 align-top">
-                                                <span class="bg-rose-50 text-rose-700 px-2 py-0.5 rounded border border-rose-200/80 text-[12px] font-medium inline-flex items-center">差额: ¥4,500</span>
+                                                <span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-200/60 text-[12px] font-medium inline-flex items-center">与TB核对一致</span>
                                             </td>
                                             <td class="py-4 px-4 align-top">
                                                 <div class="flex flex-col">
@@ -532,23 +536,18 @@
                                                 </div>
                                             </td>
                                         </tr>
-            
-                                        <!-- 基础数据 3: 序时账 -->
-                                        
                                     </tbody>
                                 </table>
                             </div>
                         </div>
             
                         <!-- 子模块 1.2：辅助信息 -->
+                        <div class="flex items-baseline mb-3 mt-4">
+                            <h3 class="text-[16px] font-bold text-gray-800 tracking-wide">辅助信息</h3>
+                            <span class="text-[13px] text-gray-500 ml-4 font-normal">收集并处理各类业务底稿的辅助文件</span>
+                        </div>
+                        
                         <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden flex flex-col w-full">
-                            <div class="px-6 py-4 border-b border-gray-100 bg-white flex justify-between items-center">
-                                <div class="flex items-baseline">
-                                    <h3 class="text-[16px] font-bold text-gray-800 tracking-wide">辅助信息</h3>
-                                    <span class="text-[13px] text-gray-500 ml-4 font-normal">收集并处理各类业务底稿的辅助文件</span>
-                                </div>
-                            </div>
-                            
                             <div class="overflow-x-auto overflow-y-hidden">
                                 <table class="w-full text-left border-collapse min-w-[1300px]">
                                     <thead class="bg-gray-50/80 text-[12px] tracking-wider whitespace-nowrap">
@@ -556,8 +555,8 @@
                                             <th class="py-3.5 px-4 font-semibold w-[4%] text-center border-r border-gray-100">序号</th>
                                             <th class="py-3.5 px-4 font-semibold w-[14%] border-r border-gray-100">数据采集项</th>
                                             <th class="py-3.5 px-4 font-semibold w-[10%] border-r border-gray-100">会计期间</th>
-                                            <th class="py-3.5 px-4 font-semibold w-[9%] border-r border-gray-100">文件验证</th>
-                                            <th class="py-3.5 px-4 font-semibold w-[11%] border-r border-gray-100">数据质检</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[9%] border-r border-gray-100 text-center">文件验证</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[11%] border-r border-gray-100 text-center">数据质检</th>
                                             <th class="py-3.5 px-4 font-semibold w-[15%] border-r border-gray-100">数据处理</th>
                                             <th class="py-3.5 px-4 font-semibold w-[12%] border-r border-gray-100">数据核对</th>
                                             <th class="py-3.5 px-4 font-semibold w-[13%] border-r border-gray-100">上传信息</th>
@@ -570,8 +569,22 @@
                                             <td class="py-4 px-4 align-middle text-center text-gray-400">1</td>
                                             <td class="py-4 px-4 align-middle font-medium text-gray-900">固定资产台账</td>
                                             <td class="py-4 px-4 align-middle text-gray-700">2026-12 决算</td>
-                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>格式正确</span></td>
-                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>折旧逻辑正常</span></td>
+                                            <td class="py-4 px-4 align-middle text-center">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <div class="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-1.5">
+                                                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                                    </div>
+                                                    <span class="text-[12px] text-emerald-600 font-medium">格式正确</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-middle text-center">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <div class="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-1.5">
+                                                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                                    </div>
+                                                    <span class="text-[12px] text-emerald-600 font-medium">折旧逻辑正常</span>
+                                                </div>
+                                            </td>
                                             <td class="py-4 px-4 align-middle"><span class="bg-blue-50 text-blue-700 px-2 py-0.5 rounded border border-blue-200 font-medium">底稿已生成</span></td>
                                             <td class="py-4 px-4 align-middle"><span class="text-emerald-600 font-medium">与明细账一致</span></td>
                                             <td class="py-4 px-4 align-middle">
@@ -608,9 +621,21 @@
                                             <td class="py-4 px-4 align-middle text-center text-gray-400">2</td>
                                             <td class="py-4 px-4 align-middle font-medium text-gray-900">应收账款账龄表</td>
                                             <td class="py-4 px-4 align-middle text-gray-700">2026-12 决算</td>
-                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>格式正确</span></td>
-                                            <td class="py-4 px-4 align-middle">
-                                                <span class="flex items-center text-rose-600 font-medium"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>逻辑错误(3)</span>
+                                            <td class="py-4 px-4 align-middle text-center">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <div class="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-1.5">
+                                                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                                    </div>
+                                                    <span class="text-[12px] text-emerald-600 font-medium">格式正确</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-middle text-center">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <div class="w-7 h-7 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center mb-1.5">
+                                                        <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                                    </div>
+                                                    <span class="text-[12px] text-rose-600 font-medium">逻辑错误(3)</span>
+                                                </div>
                                             </td>
                                             <td class="py-4 px-4 align-middle">
                                                 <div class="flex flex-col w-full pr-2">
@@ -658,8 +683,22 @@
                                             <td class="py-4 px-4 align-middle text-center text-gray-400">3</td>
                                             <td class="py-4 px-4 align-middle font-medium text-gray-900">银行存款对账单</td>
                                             <td class="py-4 px-4 align-middle text-gray-700">2026-12 决算</td>
-                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>格式正确</span></td>
-                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>余额提取成功</span></td>
+                                            <td class="py-4 px-4 align-middle text-center">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <div class="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-1.5">
+                                                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                                    </div>
+                                                    <span class="text-[12px] text-emerald-600 font-medium">格式正确</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-middle text-center">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <div class="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-1.5">
+                                                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                                    </div>
+                                                    <span class="text-[12px] text-emerald-600 font-medium">余额提取成功</span>
+                                                </div>
+                                            </td>
                                             <td class="py-4 px-4 align-middle">
                                                 <div class="flex flex-col w-full pr-2">
                                                     <div class="flex justify-between items-end mb-1">
@@ -705,32 +744,29 @@
                         </div>
                     </div>
             
-                    
                     <!-- ================= 大类 2：财务报表数据 ================= -->
                     <div class="mb-10">
-                        <div class="flex items-center mb-5 mt-8">
+                        <div class="flex items-center mb-6 mt-8">
                             <div class="w-1.5 h-5 bg-[#00338D] rounded-full mr-3"></div>
                             <h2 class="text-xl font-bold text-gray-900 tracking-tight">财务报表数据</h2>
                         </div>
             
                         <!-- 子模块 2.1：报表源数据 -->
-                        <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden mb-6 flex flex-col w-full">
-                            <div class="px-6 py-4 border-b border-gray-100 bg-white flex justify-between items-center">
-                                <div class="flex items-baseline">
-                                    <h3 class="text-[16px] font-bold text-gray-800 tracking-wide">报表源数据</h3>
-                                    <span class="text-[13px] text-gray-500 ml-4 font-normal">审计所需的主附表数据源记录</span>
-                                </div>
-                            </div>
-            
-                            <div class="border-t border-gray-200 overflow-x-auto">
+                        <div class="flex items-baseline mb-3">
+                            <h3 class="text-[16px] font-bold text-gray-800 tracking-wide">报表源数据</h3>
+                            <span class="text-[13px] text-gray-500 ml-4 font-normal">审计所需的主附表数据源记录</span>
+                        </div>
+                        
+                        <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden mb-8 flex flex-col w-full">
+                            <div class="overflow-x-auto">
                                 <table class="w-full text-left border-collapse min-w-[1300px]">
                                     <thead class="bg-gray-50/80 text-gray-500 border-b border-gray-200 text-[12px] uppercase tracking-wider">
                                         <tr>
                                             <th class="py-3.5 px-4 font-semibold w-[4%] text-center border-r border-gray-100">序号</th>
                                             <th class="py-3.5 px-4 font-semibold w-[14%] border-r border-gray-100">数据采集项</th>
                                             <th class="py-3.5 px-4 font-semibold w-[10%] border-r border-gray-100">会计期间</th>
-                                            <th class="py-3.5 px-4 font-semibold w-[9%] border-r border-gray-100">文件验证</th>
-                                            <th class="py-3.5 px-4 font-semibold w-[11%] border-r border-gray-100">数据质检</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[9%] border-r border-gray-100 text-center">文件验证</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[11%] border-r border-gray-100 text-center">数据质检</th>
                                             <th class="py-3.5 px-4 font-semibold w-[15%] border-r border-gray-100">数据处理</th>
                                             <th class="py-3.5 px-4 font-semibold w-[12%] border-r border-gray-100">数据核对</th>
                                             <th class="py-3.5 px-4 font-semibold w-[13%] border-r border-gray-100">上传信息</th>
@@ -741,12 +777,24 @@
                                         <!-- 报表源数据 1 -->
                                         <tr class="hover:bg-blue-50/30 transition-colors">
                                             <td class="py-4 px-4 align-middle text-center text-gray-400">1</td>
-                                            <td class="py-4 px-4 align-middle">
-                                                <div class="flex items-center text-gray-900 font-bold mb-1">集团合并系统数据 (久其)</div>
-                                            </td>
+                                            <td class="py-4 px-4 align-middle font-medium text-gray-900">集团合并系统数据 (久其)</td>
                                             <td class="py-4 px-4 align-middle text-gray-700">2026-12 决算</td>
-                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>解析成功</span></td>
-                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>表内平衡</span></td>
+                                            <td class="py-4 px-4 align-middle text-center">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <div class="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-1.5">
+                                                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                                    </div>
+                                                    <span class="text-[12px] text-emerald-600 font-medium">解析成功</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-middle text-center">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <div class="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-1.5">
+                                                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                                    </div>
+                                                    <span class="text-[12px] text-emerald-600 font-medium">表内平衡</span>
+                                                </div>
+                                            </td>
                                             <td class="py-4 px-4 align-middle"><span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-200 font-medium">处理完成</span></td>
                                             <td class="py-4 px-4 align-middle"><span class="text-emerald-600 font-medium">勾稽无异常</span></td>
                                             <td class="py-4 px-4 align-middle">
@@ -781,12 +829,24 @@
                                         <!-- 报表源数据 2 -->
                                         <tr class="hover:bg-blue-50/30 transition-colors bg-rose-50/10">
                                             <td class="py-4 px-4 align-middle text-center text-gray-400">2</td>
-                                            <td class="py-4 px-4 align-middle">
-                                                <div class="flex items-center text-gray-900 font-bold mb-1">审计数据收集包 (Excel Package)</div>
-                                            </td>
+                                            <td class="py-4 px-4 align-middle font-medium text-gray-900">审计数据收集包 (Excel Package)</td>
                                             <td class="py-4 px-4 align-middle text-gray-700">2026-12 决算</td>
-                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>格式正确</span></td>
-                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-rose-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>公式异常(2)</span></td>
+                                            <td class="py-4 px-4 align-middle text-center">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <div class="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-1.5">
+                                                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                                    </div>
+                                                    <span class="text-[12px] text-emerald-600 font-medium">格式正确</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-middle text-center">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <div class="w-7 h-7 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center mb-1.5">
+                                                        <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                                    </div>
+                                                    <span class="text-[12px] text-rose-600 font-medium">公式异常(2)</span>
+                                                </div>
+                                            </td>
                                             <td class="py-4 px-4 align-middle">
                                                 <div class="flex flex-col w-full pr-2">
                                                     <div class="flex justify-between items-end mb-1">
@@ -829,13 +889,25 @@
                                         <!-- 报表源数据 3 -->
                                         <tr class="hover:bg-blue-50/30 transition-colors">
                                             <td class="py-4 px-4 align-middle text-center text-gray-400">3</td>
-                                            <td class="py-4 px-4 align-middle">
-                                                <div class="flex items-center text-gray-900 font-bold mb-1">现金流量表补充资料</div>
-                                            </td>
+                                            <td class="py-4 px-4 align-middle font-medium text-gray-900">现金流量表补充资料</td>
                                             <td class="py-4 px-4 align-middle text-gray-700">2026-12 决算</td>
-                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>格式正确</span></td>
-                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>净利润调节匹配</span></td>
-                                            <td class="py-4 px-4 align-middle"><span class="bg-blue-50 text-blue-700 px-2 py-0.5 rounded border border-blue-200 font-medium">重分类完成</span></td>
+                                            <td class="py-4 px-4 align-middle text-center">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <div class="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-1.5">
+                                                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                                    </div>
+                                                    <span class="text-[12px] text-emerald-600 font-medium">格式正确</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-middle text-center">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <div class="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-1.5">
+                                                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                                    </div>
+                                                    <span class="text-[12px] text-emerald-600 font-medium">净利润调节匹配</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-middle"><span class="bg-blue-50 text-blue-700 px-2 py-0.5 rounded border border-emerald-200 font-medium">重分类完成</span></td>
                                             <td class="py-4 px-4 align-middle"><span class="text-emerald-600 font-medium">勾稽无异常</span></td>
                                             <td class="py-4 px-4 align-middle">
                                                 <div class="flex flex-col">
@@ -872,23 +944,21 @@
                         </div>
             
                         <!-- 子模块 2.2：客户报告 -->
+                        <div class="flex items-baseline mb-3 mt-4">
+                            <h3 class="text-[16px] font-bold text-gray-800 tracking-wide">客户报告</h3>
+                            <span class="text-[13px] text-gray-500 ml-4 font-normal">最终交付客户的审计产出物</span>
+                        </div>
+                        
                         <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden flex flex-col w-full">
-                            <div class="px-6 py-4 border-b border-gray-100 bg-white flex justify-between items-center">
-                                <div class="flex items-baseline">
-                                    <h3 class="text-[16px] font-bold text-gray-800 tracking-wide">客户报告</h3>
-                                    <span class="text-[13px] text-gray-500 ml-4 font-normal">最终交付客户的审计产出物</span>
-                                </div>
-                            </div>
-                            
-                            <div class="border-t border-gray-200 overflow-x-auto">
+                            <div class="overflow-x-auto">
                                 <table class="w-full text-left border-collapse min-w-[1300px]">
                                     <thead class="bg-gray-50/80 text-gray-500 border-b border-gray-200 text-[12px] uppercase tracking-wider">
                                         <tr>
                                             <th class="py-3.5 px-4 font-semibold w-[4%] text-center border-r border-gray-100">序号</th>
                                             <th class="py-3.5 px-4 font-semibold w-[14%] border-r border-gray-100">数据采集项</th>
                                             <th class="py-3.5 px-4 font-semibold w-[10%] border-r border-gray-100">会计期间</th>
-                                            <th class="py-3.5 px-4 font-semibold w-[9%] border-r border-gray-100">文件验证</th>
-                                            <th class="py-3.5 px-4 font-semibold w-[11%] border-r border-gray-100">数据质检</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[9%] border-r border-gray-100 text-center">文件验证</th>
+                                            <th class="py-3.5 px-4 font-semibold w-[11%] border-r border-gray-100 text-center">数据质检</th>
                                             <th class="py-3.5 px-4 font-semibold w-[15%] border-r border-gray-100">数据处理</th>
                                             <th class="py-3.5 px-4 font-semibold w-[12%] border-r border-gray-100">数据核对</th>
                                             <th class="py-3.5 px-4 font-semibold w-[13%] border-r border-gray-100">上传信息</th>
@@ -901,8 +971,22 @@
                                             <td class="py-4 px-4 align-middle text-center text-gray-400">1</td>
                                             <td class="py-4 px-4 align-middle font-medium text-gray-900">审计报告初稿 (Draft Audit Report)</td>
                                             <td class="py-4 px-4 align-middle text-gray-700">2026-12 决算</td>
-                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>模板匹配成功</span></td>
-                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>语法校验通过</span></td>
+                                            <td class="py-4 px-4 align-middle text-center">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <div class="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-1.5">
+                                                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                                    </div>
+                                                    <span class="text-[12px] text-emerald-600 font-medium">模板匹配成功</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-middle text-center">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <div class="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-1.5">
+                                                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                                    </div>
+                                                    <span class="text-[12px] text-emerald-600 font-medium">语法校验通过</span>
+                                                </div>
+                                            </td>
                                             <td class="py-4 px-4 align-middle">
                                                 <div class="flex flex-col w-full pr-2">
                                                     <div class="flex justify-between items-end mb-1">
@@ -947,8 +1031,17 @@
                                             <td class="py-4 px-4 align-middle text-center text-gray-400">2</td>
                                             <td class="py-4 px-4 align-middle font-medium text-gray-900">管理建议书 (Management Letter)</td>
                                             <td class="py-4 px-4 align-middle text-gray-700">2026-12 决算</td>
-                                            <td class="py-4 px-4 align-middle"><span class="flex items-center text-emerald-600"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>文档已就绪</span></td>
-                                            <td class="py-4 px-4 align-middle"><span class="text-amber-600 font-medium">内部复核中 (1/3)</span></td>
+                                            <td class="py-4 px-4 align-middle text-center">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <div class="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-1.5">
+                                                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                                    </div>
+                                                    <span class="text-[12px] text-emerald-600 font-medium">文档已就绪</span>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4 align-middle text-center">
+                                                <span class="text-amber-600 font-medium">内部复核中 (1/3)</span>
+                                            </td>
                                             <td class="py-4 px-4 align-middle"><span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-200 font-medium">风险评级分类完成</span></td>
                                             <td class="py-4 px-4 align-middle text-emerald-600 font-medium">无需核对</td>
                                             <td class="py-4 px-4 align-middle">
@@ -985,7 +1078,6 @@
                             </div>
                         </div>
                     </div>
-            
                 </main>
             </div>
 
