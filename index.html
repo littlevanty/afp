@@ -282,39 +282,63 @@
                     </div>
 
                     <!-- 下半部：数据质量与流程总览 -->
-                    <div class="w-full pt-4">
-                        <div class="flex justify-between w-full">
-                            <div class="flex flex-col relative flex-1 pr-6">
-                                <div class="flex items-center mb-3"><span class="text-[#00338D] font-bold text-sm mr-3">01 数据上传</span><div class="h-px bg-blue-100 flex-1"></div></div>
-                                <div class="border-l-2 border-[#00338D]/20 ml-2.5 pl-4 py-1 space-y-2 min-h-[48px]">
-                                    <div class="flex items-center text-xs text-emerald-600 font-medium"><svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>TB完成</div>
-                                    <div class="flex items-center text-xs text-emerald-600 font-medium"><svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>MA完成</div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col relative flex-1 pr-6">
-                                <div class="flex items-center mb-3"><span class="text-[#00338D] font-bold text-sm mr-3">02 自动质检</span><div class="h-px bg-rose-100 flex-1"></div></div>
-                                <div class="border-l-2 border-rose-300 ml-2.5 pl-4 py-1 space-y-2 min-h-[48px]">
-                                    <div class="flex items-center text-xs text-rose-600 font-bold bg-rose-50 inline-flex px-2 py-0.5 rounded border border-rose-100 shadow-sm"><svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>3个异常</div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col relative flex-1 pr-6">
-                                <div class="flex items-center mb-3"><span class="text-gray-400 font-bold text-sm mr-3">03 数据核对</span><div class="h-px bg-gray-200 flex-1"></div></div>
-                                <div class="border-l-2 border-gray-200 ml-2.5 pl-4 py-1 space-y-2 min-h-[48px]">
-                                    <div class="flex items-center text-xs text-blue-600 font-medium"><svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>12/15完成</div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col relative flex-1 pr-6">
-                                <div class="flex items-center mb-3"><span class="text-gray-400 font-bold text-sm mr-3">04 调整分录</span><div class="h-px bg-gray-200 flex-1"></div></div>
-                                <div class="border-l-2 border-gray-200 ml-2.5 pl-4 py-1 space-y-2 min-h-[48px]">
-                                    <div class="flex items-center text-xs text-amber-500 font-medium"><svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>待审批</div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col relative flex-1">
-                                <div class="flex items-center mb-3"><span class="text-gray-400 font-bold text-sm mr-3">05 交付</span></div>
-                                <div class="border-l-2 border-transparent ml-2.5 pl-4 py-1 min-h-[48px]"></div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- 下半部：数据质量与流程总览 (高度压缩，仅显示异常) -->
+<div class="w-full pt-2">
+    <div class="flex justify-between w-full">
+        
+        <!-- 01 数据上传 -->
+        <div class="flex flex-col relative flex-1 pr-6">
+            <div class="flex items-center mb-1.5">
+                <span class="text-[#00338D] font-bold text-[13px] mr-3">01 数据上传</span>
+                <div class="h-px bg-blue-100 flex-1"></div>
+            </div>
+            <!-- 高度从 48px 压缩至 28px，取消了 y 轴 padding -->
+            <div class="border-l-2 border-[#00338D]/20 ml-2.5 pl-4 py-0 min-h-[28px] flex flex-col justify-center">
+                <!-- 正常无异常时留空，边框线会维持基础高度 -->
+            </div>
+        </div>
+
+        <!-- 02 录入调整分录 -->
+        <div class="flex flex-col relative flex-1 pr-6">
+            <div class="flex items-center mb-1.5">
+                <span class="text-[#00338D] font-bold text-[13px] mr-3">02 录入调整分录</span>
+                <div class="h-px bg-blue-100 flex-1"></div>
+            </div>
+            <div class="border-l-2 border-[#00338D]/20 ml-2.5 pl-4 py-0 min-h-[28px] flex flex-col justify-center">
+                <!-- 这里放置了一个异常示例，按需通过条件渲染控制它的出现 -->
+                <div class="flex items-center text-xs text-rose-600 font-bold bg-rose-50 inline-flex px-2 py-0.5 rounded border border-rose-100 shadow-sm self-start">
+                    <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>存在未平分录
+                </div>
+            </div>
+        </div>
+
+        <!-- 03 财务数据核对 -->
+        <div class="flex flex-col relative flex-1 pr-6">
+            <div class="flex items-center mb-1.5">
+                <span class="text-gray-400 font-bold text-[13px] mr-3">03 财务数据核对</span>
+                <div class="h-px bg-gray-200 flex-1"></div>
+            </div>
+            <div class="border-l-2 border-gray-200 ml-2.5 pl-4 py-0 min-h-[28px] flex flex-col justify-center">
+                <!-- 异常示例 2 -->
+                <div class="flex items-center text-xs text-rose-600 font-bold bg-rose-50 inline-flex px-2 py-0.5 rounded border border-rose-100 shadow-sm self-start">
+                    <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>3个异常
+                </div>
+            </div>
+        </div>
+
+        <!-- 04 交付物 -->
+        <div class="flex flex-col relative flex-1">
+            <div class="flex items-center mb-1.5">
+                <span class="text-gray-400 font-bold text-[13px] mr-3">04 交付物</span>
+            </div>
+            <!-- 最后一个步骤由于没有后续连线，边框设置为透明 -->
+            <div class="border-l-2 border-transparent ml-2.5 pl-4 py-0 min-h-[28px]">
+                <!-- 无异常时留空 -->
+            </div>
+        </div>
+
+    </div>
+</div>
                 </div>
 
                 <!-- 滚动主内容区域 -->
