@@ -281,75 +281,63 @@
                         </button>
                     </div>
 
-                    <!-- 下半部：数据质量与流程总览 -->
                     <!-- 下半部：数据质量与流程总览 (高度压缩，仅显示异常) -->
-<div class="w-full pt-2">
-    <div class="flex justify-between w-full">
-        
-        <!-- 01 数据上传 -->
-        <div class="flex flex-col relative flex-1 pr-6">
-            <div class="flex items-center mb-1.5">
-                <span class="text-[#00338D] font-bold text-[13px] mr-3">01 数据上传</span>
-                <div class="h-px bg-blue-100 flex-1"></div>
-            </div>
-            <!-- 高度从 48px 压缩至 28px，取消了 y 轴 padding -->
-            <div class="border-l-2 border-[#00338D]/20 ml-2.5 pl-4 py-0 min-h-[28px] flex flex-col justify-center">
-                <!-- 正常无异常时留空，边框线会维持基础高度 -->
-            </div>
-        </div>
+                    <div class="w-full pt-2">
+                        <div class="flex justify-between w-full">
+                            <!-- 01 数据上传 -->
+                            <div class="flex flex-col relative flex-1 pr-6">
+                                <div class="flex items-center mb-1.5">
+                                    <span class="text-[#00338D] font-bold text-[13px] mr-3">01 数据上传</span>
+                                    <div class="h-px bg-blue-100 flex-1"></div>
+                                </div>
+                                <div class="border-l-2 border-[#00338D]/20 ml-2.5 pl-4 py-0 min-h-[28px] flex flex-col justify-center"></div>
+                            </div>
 
-        <!-- 02 录入调整分录 -->
-        <div class="flex flex-col relative flex-1 pr-6">
-            <div class="flex items-center mb-1.5">
-                <span class="text-[#00338D] font-bold text-[13px] mr-3">02 录入调整分录</span>
-                <div class="h-px bg-blue-100 flex-1"></div>
-            </div>
-            <div class="border-l-2 border-[#00338D]/20 ml-2.5 pl-4 py-0 min-h-[28px] flex flex-col justify-center">
-                <!-- 这里放置了一个异常示例，按需通过条件渲染控制它的出现 -->
-                <div class="flex items-center text-xs text-rose-600 font-bold bg-rose-50 inline-flex px-2 py-0.5 rounded border border-rose-100 shadow-sm self-start">
-                    <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>存在未平分录
-                </div>
-            </div>
-        </div>
+                            <!-- 02 录入调整分录 -->
+                            <div class="flex flex-col relative flex-1 pr-6">
+                                <div class="flex items-center mb-1.5">
+                                    <span class="text-[#00338D] font-bold text-[13px] mr-3">02 录入调整分录</span>
+                                    <div class="h-px bg-blue-100 flex-1"></div>
+                                </div>
+                                <div class="border-l-2 border-[#00338D]/20 ml-2.5 pl-4 py-0 min-h-[28px] flex flex-col justify-center">
+                                    <div class="flex items-center text-xs text-rose-600 font-bold bg-rose-50 inline-flex px-2 py-0.5 rounded border border-rose-100 shadow-sm self-start">
+                                        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>存在未平分录
+                                    </div>
+                                </div>
+                            </div>
 
-        <!-- 03 财务数据核对 -->
-        <div class="flex flex-col relative flex-1 pr-6">
-            <div class="flex items-center mb-1.5">
-                <span class="text-gray-400 font-bold text-[13px] mr-3">03 财务数据核对</span>
-                <div class="h-px bg-gray-200 flex-1"></div>
-            </div>
-            <div class="border-l-2 border-gray-200 ml-2.5 pl-4 py-0 min-h-[28px] flex flex-col justify-center">
-                <!-- 异常示例 2 -->
-                <div class="flex items-center text-xs text-rose-600 font-bold bg-rose-50 inline-flex px-2 py-0.5 rounded border border-rose-100 shadow-sm self-start">
-                    <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>3个异常
-                </div>
-            </div>
-        </div>
+                            <!-- 03 财务数据核对 -->
+                            <div class="flex flex-col relative flex-1 pr-6">
+                                <div class="flex items-center mb-1.5">
+                                    <span class="text-gray-400 font-bold text-[13px] mr-3">03 财务数据核对</span>
+                                    <div class="h-px bg-gray-200 flex-1"></div>
+                                </div>
+                                <div class="border-l-2 border-gray-200 ml-2.5 pl-4 py-0 min-h-[28px] flex flex-col justify-center">
+                                    <div class="flex items-center text-xs text-rose-600 font-bold bg-rose-50 inline-flex px-2 py-0.5 rounded border border-rose-100 shadow-sm self-start">
+                                        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>3个异常
+                                    </div>
+                                </div>
+                            </div>
 
-        <!-- 04 交付物 -->
-        <div class="flex flex-col relative flex-1">
-            <div class="flex items-center mb-1.5">
-                <span class="text-gray-400 font-bold text-[13px] mr-3">04 交付物</span>
-            </div>
-            <!-- 最后一个步骤由于没有后续连线，边框设置为透明 -->
-            <div class="border-l-2 border-transparent ml-2.5 pl-4 py-0 min-h-[28px]">
-                <!-- 无异常时留空 -->
-            </div>
-        </div>
-
-    </div>
-</div>
+                            <!-- 04 交付物 -->
+                            <div class="flex flex-col relative flex-1">
+                                <div class="flex items-center mb-1.5">
+                                    <span class="text-gray-400 font-bold text-[13px] mr-3">04 交付物</span>
+                                </div>
+                                <div class="border-l-2 border-transparent ml-2.5 pl-4 py-0 min-h-[28px]"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- 滚动主内容区域 -->
-                <main class="flex-1 overflow-auto p-8 relative w-full">
+                <!-- 滚动主内容区域：整体内边距减少 (p-8 -> p-4) 以腾出更多视口空间 -->
+                <main class="flex-1 overflow-auto p-4 relative w-full bg-gray-50/30">
                     
                     <!-- 面包屑与操作按钮 -->
-                    <div class="flex justify-between items-end mb-6">
+                    <div class="flex justify-between items-end mb-3">
                         <div class="flex items-center space-x-2 text-gray-500 text-sm">
                             <a href="#" class="flex items-center text-[#00338D] hover:text-blue-700 hover:underline font-medium transition-colors">
-                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                                返回
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>返回
                             </a>
                             <span class="text-gray-300">/</span>
                             <span class="text-gray-600 bg-white px-2 py-0.5 rounded shadow-sm border border-gray-200 text-xs">数据源</span>
@@ -367,12 +355,10 @@
                                 </button>
                                 <div class="absolute right-0 mt-1 w-[160px] bg-white border border-gray-200 rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 overflow-hidden">
                                     <a href="#" class="flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-[#00338D] text-sm transition-colors border-b border-gray-100">
-                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                                        从DPE同步
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>从DPE同步
                                     </a>
                                     <a href="#" class="flex items-center px-4 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-[#00338D] text-sm transition-colors">
-                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                        操作记录
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>操作记录
                                     </a>
                                 </div>
                             </div>
@@ -380,102 +366,98 @@
                     </div>
 
                     <!-- 表格区域 1 - 基础数据 -->
-                    <div class="flex items-center mb-4">
+                    <div class="flex items-center mb-2">
                         <div class="w-1 h-4 bg-[#00338D] mr-2.5 rounded-sm"></div>
-                        <h1 class="text-[17px] font-bold text-gray-900 tracking-wide">基础数据</h1>
+                        <h1 class="text-[16px] font-bold text-gray-900 tracking-wide">基础数据</h1>
                     </div>
 
-                    <div class="mb-8 bg-white border border-gray-200 rounded-lg shadow-sm overflow-x-auto">
+                    <div class="mb-4 bg-white border border-gray-200 rounded-lg shadow-sm overflow-x-auto">
                         <table class="w-full text-left border-collapse min-w-[1000px] table-fixed">
-                            <thead class="bg-white text-[12px] tracking-wider whitespace-nowrap">
+                            <thead class="bg-gray-50/80 text-[12px] tracking-wider whitespace-nowrap">
                                 <tr class="text-gray-500 uppercase border-b border-gray-200 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-                                    <th class="py-3 px-4 font-semibold w-[5%] text-center border-r border-gray-100">序号</th>
-                                    <th class="py-3 px-4 font-semibold w-[15%] border-r border-gray-100">数据采集项</th>
-                                    <th class="py-3 px-4 font-semibold w-[35%] text-center border-r border-gray-200">会计期间</th>
-                                    <th class="py-3 px-4 font-semibold w-[10%] text-center border-r border-gray-100">科目映射</th>
-                                    <th class="py-3 px-4 font-semibold w-[10%] text-center border-r border-gray-100">数据核对</th>
-                                    <th class="py-3 px-4 font-semibold w-[15%] border-r border-gray-100">创建信息</th>
-                                    <th class="py-3 px-4 font-semibold w-[10%] text-center">操作</th>
+                                    <th class="py-2 px-3 font-semibold w-[4%] text-center border-r border-gray-100">序号</th>
+                                    <th class="py-2 px-3 font-semibold w-[14%] border-r border-gray-100">数据采集项</th>
+                                    <th class="py-2 px-3 font-semibold w-[30%] text-center border-r border-gray-200">会计期间</th>
+                                    <th class="py-2 px-3 font-semibold w-[10%] text-center border-r border-gray-100">科目映射</th>
+                                    <th class="py-2 px-3 font-semibold w-[10%] text-center border-r border-gray-100">数据核对</th>
+                                    <th class="py-2 px-3 font-semibold w-[12%] border-r border-gray-100">创建人</th>
+                                    <th class="py-2 px-3 font-semibold w-[12%] border-r border-gray-100">创建时间</th>
+                                    <th class="py-2 px-3 font-semibold w-[8%] text-center">操作</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100 text-[13px] tb-ma-group">
                                 <!-- 第一行：TB -->
                                 <tr class="hover:bg-gray-50/50 transition-colors bg-white">
-                                    <td class="py-4 px-4 text-center text-gray-400 border-r border-gray-50 align-middle">1</td>
-                                    <td class="py-4 px-4 font-medium text-gray-900 border-r border-gray-50 align-middle">科目余额表 (TB)</td>
-                                    <td class="py-4 px-6 border-r border-gray-50 align-middle">
+                                    <td class="py-1.5 px-3 text-center text-gray-400 border-r border-gray-50 align-middle">1</td>
+                                    <td class="py-1.5 px-3 font-medium text-gray-900 border-r border-gray-50 align-middle">科目余额表 (TB)</td>
+                                    <td class="py-1.5 px-3 border-r border-gray-50 align-middle">
                                         <div class="flex space-x-6 w-full max-w-[480px] mx-auto justify-center items-center">
                                             <div class="flex-1 flex flex-col w-full">
-                                                <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">当期 (2026)</div>
-                                                <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                <div class="text-gray-500 mb-1 text-[11px] w-full text-left">当期 (2026)</div>
+                                                <!-- 高度压缩 h-[8px] -->
+                                                <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                     <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                 </div>
                                             </div>
                                             <div class="flex-1 flex flex-col w-full">
-                                                <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">比较期 (2025)</div>
-                                                <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                <div class="text-gray-500 mb-1 text-[11px] w-full text-left">比较期 (2025)</div>
+                                                <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                     <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="py-4 px-4 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">已映射</span></td>
-                                    <td class="py-4 px-4 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">已核对</span></td>
-                                    <td class="py-4 px-5 align-middle border-r border-gray-50"><div class="flex flex-col"><span class="text-gray-900 font-medium">Shen, Austen</span><span class="text-gray-400 text-xs mt-1">2026-07-14 11:45</span></div></td>
-                                    <td class="py-4 px-4 text-center align-middle">
+                                    <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">已映射</span></td>
+                                    <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">已核对</span></td>
+                                    <!-- 拆分：创建人 -->
+                                    <td class="py-1.5 px-3 align-middle border-r border-gray-50 text-gray-900 font-medium">Shen, Austen</td>
+                                    <!-- 拆分：创建时间 -->
+                                    <td class="py-1.5 px-3 align-middle border-r border-gray-50 text-gray-500 text-[12px]">2026-07-14 11:45</td>
+                                    <td class="py-1.5 px-3 text-center align-middle">
                                         <div class="flex items-center justify-center space-x-3 text-gray-400">
                                             <button onclick="openModal('basic')" class="relative group hover:text-[#00338D] transition-colors">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                                                <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-800 text-white text-[11px] px-2 py-1 rounded shadow-sm whitespace-nowrap pointer-events-none z-50">上传文件</span>
                                             </button>
                                             <button class="relative group hover:text-[#00338D] transition-colors">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                                                <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-800 text-white text-[11px] px-2 py-1 rounded shadow-sm whitespace-nowrap pointer-events-none z-50">查看解析结果</span>
                                             </button>
                                             <button class="relative group hover:text-[#00338D] transition-colors">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                                                <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-800 text-white text-[11px] px-2 py-1 rounded shadow-sm whitespace-nowrap pointer-events-none z-50">原始文件管理</span>
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
                                 <!-- 第二行：MA -->
                                 <tr class="hover:bg-gray-50/50 transition-colors bg-white">
-                                    <td class="py-4 px-4 text-center text-gray-400 border-r border-gray-50 align-middle">2</td>
-                                    <td class="py-4 px-4 font-medium text-gray-900 border-r border-gray-50 align-middle">管理层报表 (MA)</td>
-                                    <td class="py-4 px-6 border-r border-gray-50 align-middle">
+                                    <td class="py-1.5 px-3 text-center text-gray-400 border-r border-gray-50 align-middle">2</td>
+                                    <td class="py-1.5 px-3 font-medium text-gray-900 border-r border-gray-50 align-middle">管理层报表 (MA)</td>
+                                    <td class="py-1.5 px-3 border-r border-gray-50 align-middle">
                                         <div class="flex space-x-6 w-full max-w-[480px] mx-auto justify-center items-center">
                                             <div class="flex-1 flex flex-col w-full">
-                                                <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">当期 (2026)</div>
-                                                <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                <div class="text-gray-500 mb-1 text-[11px] w-full text-left">当期 (2026)</div>
+                                                <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                     <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                 </div>
                                             </div>
                                             <div class="flex-1 flex flex-col w-full">
-                                                <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">比较期 (2025)</div>
-                                                <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                <div class="text-gray-500 mb-1 text-[11px] w-full text-left">比较期 (2025)</div>
+                                                <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                     <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="py-4 px-4 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">已映射</span></td>
-                                    <td class="py-4 px-4 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">已核对</span></td>
-                                    <td class="py-4 px-5 align-middle border-r border-gray-50"><div class="flex flex-col"><span class="text-gray-900 font-medium">Shen, Austen</span><span class="text-gray-400 text-xs mt-1">2026-07-14 15:02</span></div></td>
-                                    <td class="py-4 px-4 text-center align-middle">
+                                    <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">已映射</span></td>
+                                    <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">已核对</span></td>
+                                    <!-- 拆分：创建人 -->
+                                    <td class="py-1.5 px-3 align-middle border-r border-gray-50 text-gray-900 font-medium">Shen, Austen</td>
+                                    <!-- 拆分：创建时间 -->
+                                    <td class="py-1.5 px-3 align-middle border-r border-gray-50 text-gray-500 text-[12px]">2026-07-14 15:02</td>
+                                    <td class="py-1.5 px-3 text-center align-middle">
                                         <div class="flex items-center justify-center space-x-3 text-gray-400">
-                                            <button onclick="openModal('basic')" class="relative group hover:text-[#00338D] transition-colors">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                                                <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-800 text-white text-[11px] px-2 py-1 rounded shadow-sm whitespace-nowrap pointer-events-none z-50">上传文件</span>
-                                            </button>
-                                            <button class="relative group hover:text-[#00338D] transition-colors">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                                                <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-800 text-white text-[11px] px-2 py-1 rounded shadow-sm whitespace-nowrap pointer-events-none z-50">查看解析结果</span>
-                                            </button>
-                                            <button class="relative group hover:text-[#00338D] transition-colors">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                                                <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-800 text-white text-[11px] px-2 py-1 rounded shadow-sm whitespace-nowrap pointer-events-none z-50">原始文件管理</span>
-                                            </button>
+                                            <button onclick="openModal('basic')" class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg></button>
+                                            <button class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
+                                            <button class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -484,49 +466,51 @@
                     </div>
 
                     <!-- 辅助信息表格 -->
-                    <div class="mb-10">
-                        <div class="flex items-center mb-4 mt-8">
+                    <div class="mb-4">
+                        <div class="flex items-center mb-2 mt-4">
                             <div class="w-1 h-4 bg-[#00338D] mr-2.5 rounded-sm"></div>
-                            <h1 class="text-[17px] font-bold text-gray-900 tracking-wide">辅助信息</h1>
+                            <h1 class="text-[16px] font-bold text-gray-900 tracking-wide">辅助信息</h1>
                         </div>
                         <div class="border border-gray-200 rounded-lg shadow-sm overflow-hidden bg-white overflow-x-auto">
                             <table class="w-full text-left border-collapse min-w-[1000px] table-fixed">
-                                <thead class="bg-white text-gray-500 border-b border-gray-200 text-[12px] uppercase tracking-wider">
+                                <thead class="bg-gray-50/80 text-gray-500 border-b border-gray-200 text-[12px] uppercase tracking-wider">
                                     <tr>
-                                        <th class="py-3 px-5 font-semibold w-[5%] text-center border-r border-gray-100">序号</th>
-                                        <th class="py-3 px-5 font-semibold w-[15%] border-r border-gray-100">数据采集项</th>
-                                        <th class="py-3 px-5 font-semibold w-[35%] text-center border-r border-gray-100">会计期间</th>
-                                        <th class="py-3 px-5 font-semibold w-[10%] text-center border-r border-gray-100">采集状态</th>
-                                        <th class="py-3 px-5 font-semibold w-[10%] text-center border-r border-gray-100">leedsheet状态</th>
-                                        <th class="py-3 px-5 font-semibold w-[15%] border-r border-gray-100">创建信息</th>
-                                        <th class="py-3 px-5 font-semibold w-[10%] text-center">操作</th>
+                                        <th class="py-2 px-3 font-semibold w-[4%] text-center border-r border-gray-100">序号</th>
+                                        <th class="py-2 px-3 font-semibold w-[14%] border-r border-gray-100">数据采集项</th>
+                                        <th class="py-2 px-3 font-semibold w-[30%] text-center border-r border-gray-100">会计期间</th>
+                                        <th class="py-2 px-3 font-semibold w-[10%] text-center border-r border-gray-100">采集状态</th>
+                                        <th class="py-2 px-3 font-semibold w-[10%] text-center border-r border-gray-100">leedsheet状态</th>
+                                        <th class="py-2 px-3 font-semibold w-[12%] border-r border-gray-100">创建人</th>
+                                        <th class="py-2 px-3 font-semibold w-[12%] border-r border-gray-100">创建时间</th>
+                                        <th class="py-2 px-3 font-semibold w-[8%] text-center">操作</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-100 text-[13px]">
                                     <!-- 1. 固定资产台账 -->
                                     <tr class="hover:bg-gray-50/50 transition-colors">
-                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50 align-middle">1</td>
-                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50 align-middle">固定资产台账</td>
-                                        <td class="py-3.5 px-5 border-r border-gray-50 align-middle">
+                                        <td class="py-1.5 px-3 text-center text-gray-500 border-r border-gray-50 align-middle">1</td>
+                                        <td class="py-1.5 px-3 text-gray-900 font-medium border-r border-gray-50 align-middle">固定资产台账</td>
+                                        <td class="py-1.5 px-3 border-r border-gray-50 align-middle">
                                             <div class="flex space-x-6 w-full max-w-[480px] mx-auto justify-center items-center">
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">当期 (2026)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">当期 (2026)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">比较期 (2025)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">比较期 (2025)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">已收集</span></td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">已生成</span></td>
-                                        <td class="py-3.5 px-5 align-middle border-r border-gray-50"><div class="flex flex-col"><span class="text-gray-900 font-medium whitespace-nowrap">Shen, Austen</span><span class="text-gray-400 text-xs mt-1 whitespace-nowrap">2026-07-14 11:50</span></div></td>
-                                        <td class="py-3.5 px-5 text-center align-middle">
+                                        <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">已收集</span></td>
+                                        <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">已生成</span></td>
+                                        <td class="py-1.5 px-3 align-middle border-r border-gray-50 text-gray-900 font-medium whitespace-nowrap">Shen, Austen</td>
+                                        <td class="py-1.5 px-3 align-middle border-r border-gray-50 text-gray-500 text-[12px] whitespace-nowrap">2026-07-14 11:50</td>
+                                        <td class="py-1.5 px-3 text-center align-middle">
                                             <div class="flex items-center justify-center space-x-3 text-gray-400">
                                                 <button onclick="openModal('aux')" class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg></button>
                                                 <button class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
@@ -536,28 +520,29 @@
                                     </tr>
                                     <!-- 2. 固定资产新增清单 -->
                                     <tr class="hover:bg-gray-50/50 transition-colors">
-                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50 align-middle">2</td>
-                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50 align-middle">固定资产新增清单</td>
-                                        <td class="py-3.5 px-5 border-r border-gray-50 align-middle">
+                                        <td class="py-1.5 px-3 text-center text-gray-500 border-r border-gray-50 align-middle">2</td>
+                                        <td class="py-1.5 px-3 text-gray-900 font-medium border-r border-gray-50 align-middle">固定资产新增清单</td>
+                                        <td class="py-1.5 px-3 border-r border-gray-50 align-middle">
                                             <div class="flex space-x-6 w-full max-w-[480px] mx-auto justify-center items-center">
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">当期 (2026)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">当期 (2026)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">比较期 (2025)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">比较期 (2025)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200">未收集</span></td>
-                                        <td class="py-3.5 px-5 text-center text-gray-400 border-r border-gray-50 align-middle">-</td>
-                                        <td class="py-3.5 px-5 text-gray-400 align-middle border-r border-gray-50">-</td>
-                                        <td class="py-3.5 px-5 text-center align-middle">
+                                        <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200">未收集</span></td>
+                                        <td class="py-1.5 px-3 text-center text-gray-400 border-r border-gray-50 align-middle">-</td>
+                                        <td class="py-1.5 px-3 text-gray-400 align-middle border-r border-gray-50">-</td>
+                                        <td class="py-1.5 px-3 text-gray-400 align-middle border-r border-gray-50 text-[12px]">-</td>
+                                        <td class="py-1.5 px-3 text-center align-middle">
                                             <div class="flex items-center justify-center space-x-3 text-gray-400">
                                                 <button onclick="openModal('aux')" class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg></button>
                                                 <button class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
@@ -567,28 +552,29 @@
                                     </tr>
                                     <!-- 3. 固定资产处置清单 -->
                                     <tr class="hover:bg-gray-50/50 transition-colors">
-                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50 align-middle">3</td>
-                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50 align-middle">固定资产处置清单</td>
-                                        <td class="py-3.5 px-5 border-r border-gray-50 align-middle">
+                                        <td class="py-1.5 px-3 text-center text-gray-500 border-r border-gray-50 align-middle">3</td>
+                                        <td class="py-1.5 px-3 text-gray-900 font-medium border-r border-gray-50 align-middle">固定资产处置清单</td>
+                                        <td class="py-1.5 px-3 border-r border-gray-50 align-middle">
                                             <div class="flex space-x-6 w-full max-w-[480px] mx-auto justify-center items-center">
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">当期 (2026)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">当期 (2026)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">比较期 (2025)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">比较期 (2025)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">不适用</span></td>
-                                        <td class="py-3.5 px-5 text-center text-gray-400 border-r border-gray-50 align-middle">-</td>
-                                        <td class="py-3.5 px-5 text-gray-400 align-middle border-r border-gray-50">-</td>
-                                        <td class="py-3.5 px-5 text-center align-middle">
+                                        <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">不适用</span></td>
+                                        <td class="py-1.5 px-3 text-center text-gray-400 border-r border-gray-50 align-middle">-</td>
+                                        <td class="py-1.5 px-3 text-gray-400 align-middle border-r border-gray-50">-</td>
+                                        <td class="py-1.5 px-3 text-gray-400 align-middle border-r border-gray-50 text-[12px]">-</td>
+                                        <td class="py-1.5 px-3 text-center align-middle">
                                             <div class="flex items-center justify-center space-x-3 text-gray-400">
                                                 <button onclick="openModal('aux')" class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg></button>
                                                 <button class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
@@ -598,28 +584,29 @@
                                     </tr>
                                     <!-- 4. 无形资产台账 -->
                                     <tr class="hover:bg-gray-50/50 transition-colors">
-                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50 align-middle">4</td>
-                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50 align-middle">无形资产台账</td>
-                                        <td class="py-3.5 px-5 border-r border-gray-50 align-middle">
+                                        <td class="py-1.5 px-3 text-center text-gray-500 border-r border-gray-50 align-middle">4</td>
+                                        <td class="py-1.5 px-3 text-gray-900 font-medium border-r border-gray-50 align-middle">无形资产台账</td>
+                                        <td class="py-1.5 px-3 border-r border-gray-50 align-middle">
                                             <div class="flex space-x-6 w-full max-w-[480px] mx-auto justify-center items-center">
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">当期 (2026)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">当期 (2026)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">比较期 (2025)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">比较期 (2025)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">已收集</span></td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">已生成</span></td>
-                                        <td class="py-3.5 px-5 align-middle border-r border-gray-50"><div class="flex flex-col"><span class="text-gray-900 font-medium whitespace-nowrap">Shen, Austen</span><span class="text-gray-400 text-xs mt-1 whitespace-nowrap">2026-07-14 11:51</span></div></td>
-                                        <td class="py-3.5 px-5 text-center align-middle">
+                                        <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">已收集</span></td>
+                                        <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">已生成</span></td>
+                                        <td class="py-1.5 px-3 align-middle border-r border-gray-50 text-gray-900 font-medium whitespace-nowrap">Shen, Austen</td>
+                                        <td class="py-1.5 px-3 align-middle border-r border-gray-50 text-gray-500 text-[12px] whitespace-nowrap">2026-07-14 11:51</td>
+                                        <td class="py-1.5 px-3 text-center align-middle">
                                             <div class="flex items-center justify-center space-x-3 text-gray-400">
                                                 <button onclick="openModal('aux')" class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg></button>
                                                 <button class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
@@ -629,28 +616,29 @@
                                     </tr>
                                     <!-- 5. 无形资产新增清单 -->
                                     <tr class="hover:bg-gray-50/50 transition-colors">
-                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50 align-middle">5</td>
-                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50 align-middle">无形资产新增清单</td>
-                                        <td class="py-3.5 px-5 border-r border-gray-50 align-middle">
+                                        <td class="py-1.5 px-3 text-center text-gray-500 border-r border-gray-50 align-middle">5</td>
+                                        <td class="py-1.5 px-3 text-gray-900 font-medium border-r border-gray-50 align-middle">无形资产新增清单</td>
+                                        <td class="py-1.5 px-3 border-r border-gray-50 align-middle">
                                             <div class="flex space-x-6 w-full max-w-[480px] mx-auto justify-center items-center">
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">当期 (2026)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">当期 (2026)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">比较期 (2025)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">比较期 (2025)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200">未收集</span></td>
-                                        <td class="py-3.5 px-5 text-center text-gray-400 border-r border-gray-50 align-middle">-</td>
-                                        <td class="py-3.5 px-5 text-gray-400 align-middle border-r border-gray-50">-</td>
-                                        <td class="py-3.5 px-5 text-center align-middle">
+                                        <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200">未收集</span></td>
+                                        <td class="py-1.5 px-3 text-center text-gray-400 border-r border-gray-50 align-middle">-</td>
+                                        <td class="py-1.5 px-3 text-gray-400 align-middle border-r border-gray-50">-</td>
+                                        <td class="py-1.5 px-3 text-gray-400 align-middle border-r border-gray-50 text-[12px]">-</td>
+                                        <td class="py-1.5 px-3 text-center align-middle">
                                             <div class="flex items-center justify-center space-x-3 text-gray-400">
                                                 <button onclick="openModal('aux')" class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg></button>
                                                 <button class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
@@ -660,28 +648,29 @@
                                     </tr>
                                     <!-- 6. 无形资产处置清单 -->
                                     <tr class="hover:bg-gray-50/50 transition-colors">
-                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50 align-middle">6</td>
-                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50 align-middle">无形资产处置清单</td>
-                                        <td class="py-3.5 px-5 border-r border-gray-50 align-middle">
+                                        <td class="py-1.5 px-3 text-center text-gray-500 border-r border-gray-50 align-middle">6</td>
+                                        <td class="py-1.5 px-3 text-gray-900 font-medium border-r border-gray-50 align-middle">无形资产处置清单</td>
+                                        <td class="py-1.5 px-3 border-r border-gray-50 align-middle">
                                             <div class="flex space-x-6 w-full max-w-[480px] mx-auto justify-center items-center">
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">当期 (2026)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">当期 (2026)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">比较期 (2025)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">比较期 (2025)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">不适用</span></td>
-                                        <td class="py-3.5 px-5 text-center text-gray-400 border-r border-gray-50 align-middle">-</td>
-                                        <td class="py-3.5 px-5 text-gray-400 align-middle border-r border-gray-50">-</td>
-                                        <td class="py-3.5 px-5 text-center align-middle">
+                                        <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">不适用</span></td>
+                                        <td class="py-1.5 px-3 text-center text-gray-400 border-r border-gray-50 align-middle">-</td>
+                                        <td class="py-1.5 px-3 text-gray-400 align-middle border-r border-gray-50">-</td>
+                                        <td class="py-1.5 px-3 text-gray-400 align-middle border-r border-gray-50 text-[12px]">-</td>
+                                        <td class="py-1.5 px-3 text-center align-middle">
                                             <div class="flex items-center justify-center space-x-3 text-gray-400">
                                                 <button onclick="openModal('aux')" class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg></button>
                                                 <button class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
@@ -691,28 +680,29 @@
                                     </tr>
                                     <!-- 7. 长期待摊费用清单 -->
                                     <tr class="hover:bg-gray-50/50 transition-colors">
-                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50 align-middle">7</td>
-                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50 align-middle">长期待摊费用清单</td>
-                                        <td class="py-3.5 px-5 border-r border-gray-50 align-middle">
+                                        <td class="py-1.5 px-3 text-center text-gray-500 border-r border-gray-50 align-middle">7</td>
+                                        <td class="py-1.5 px-3 text-gray-900 font-medium border-r border-gray-50 align-middle">长期待摊费用清单</td>
+                                        <td class="py-1.5 px-3 border-r border-gray-50 align-middle">
                                             <div class="flex space-x-6 w-full max-w-[480px] mx-auto justify-center items-center">
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">当期 (2026)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">当期 (2026)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">比较期 (2025)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">比较期 (2025)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">已收集</span></td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">已生成</span></td>
-                                        <td class="py-3.5 px-5 align-middle border-r border-gray-50"><div class="flex flex-col"><span class="text-gray-900 font-medium whitespace-nowrap">Shen, Austen</span><span class="text-gray-400 text-xs mt-1 whitespace-nowrap">2026-07-14 11:55</span></div></td>
-                                        <td class="py-3.5 px-5 text-center align-middle">
+                                        <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">已收集</span></td>
+                                        <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">已生成</span></td>
+                                        <td class="py-1.5 px-3 align-middle border-r border-gray-50 text-gray-900 font-medium whitespace-nowrap">Shen, Austen</td>
+                                        <td class="py-1.5 px-3 align-middle border-r border-gray-50 text-gray-500 text-[12px] whitespace-nowrap">2026-07-14 11:55</td>
+                                        <td class="py-1.5 px-3 text-center align-middle">
                                             <div class="flex items-center justify-center space-x-3 text-gray-400">
                                                 <button onclick="openModal('aux')" class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg></button>
                                                 <button class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
@@ -722,28 +712,29 @@
                                     </tr>
                                     <!-- 8. 应收账款明细 -->
                                     <tr class="hover:bg-gray-50/50 transition-colors">
-                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50 align-middle">8</td>
-                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50 align-middle">应收账款明细</td>
-                                        <td class="py-3.5 px-5 border-r border-gray-50 align-middle">
+                                        <td class="py-1.5 px-3 text-center text-gray-500 border-r border-gray-50 align-middle">8</td>
+                                        <td class="py-1.5 px-3 text-gray-900 font-medium border-r border-gray-50 align-middle">应收账款明细</td>
+                                        <td class="py-1.5 px-3 border-r border-gray-50 align-middle">
                                             <div class="flex space-x-6 w-full max-w-[480px] mx-auto justify-center items-center">
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">当期 (2026)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">当期 (2026)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">比较期 (2025)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">比较期 (2025)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200">未收集</span></td>
-                                        <td class="py-3.5 px-5 text-center text-gray-400 border-r border-gray-50 align-middle">-</td>
-                                        <td class="py-3.5 px-5 text-gray-400 align-middle border-r border-gray-50">-</td>
-                                        <td class="py-3.5 px-5 text-center align-middle">
+                                        <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200">未收集</span></td>
+                                        <td class="py-1.5 px-3 text-center text-gray-400 border-r border-gray-50 align-middle">-</td>
+                                        <td class="py-1.5 px-3 text-gray-400 align-middle border-r border-gray-50">-</td>
+                                        <td class="py-1.5 px-3 text-gray-400 align-middle border-r border-gray-50 text-[12px]">-</td>
+                                        <td class="py-1.5 px-3 text-center align-middle">
                                             <div class="flex items-center justify-center space-x-3 text-gray-400">
                                                 <button onclick="openModal('aux')" class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg></button>
                                                 <button class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
@@ -753,28 +744,29 @@
                                     </tr>
                                     <!-- 9. 应收账款关联方清单 -->
                                     <tr class="hover:bg-gray-50/50 transition-colors">
-                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50 align-middle">9</td>
-                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50 align-middle">应收账款关联方清单</td>
-                                        <td class="py-3.5 px-5 border-r border-gray-50 align-middle">
+                                        <td class="py-1.5 px-3 text-center text-gray-500 border-r border-gray-50 align-middle">9</td>
+                                        <td class="py-1.5 px-3 text-gray-900 font-medium border-r border-gray-50 align-middle">应收账款关联方清单</td>
+                                        <td class="py-1.5 px-3 border-r border-gray-50 align-middle">
                                             <div class="flex space-x-6 w-full max-w-[480px] mx-auto justify-center items-center">
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">当期 (2026)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">当期 (2026)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">比较期 (2025)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">比较期 (2025)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200">未收集</span></td>
-                                        <td class="py-3.5 px-5 text-center text-gray-400 border-r border-gray-50 align-middle">-</td>
-                                        <td class="py-3.5 px-5 text-gray-400 align-middle border-r border-gray-50">-</td>
-                                        <td class="py-3.5 px-5 text-center align-middle">
+                                        <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200">未收集</span></td>
+                                        <td class="py-1.5 px-3 text-center text-gray-400 border-r border-gray-50 align-middle">-</td>
+                                        <td class="py-1.5 px-3 text-gray-400 align-middle border-r border-gray-50">-</td>
+                                        <td class="py-1.5 px-3 text-gray-400 align-middle border-r border-gray-50 text-[12px]">-</td>
+                                        <td class="py-1.5 px-3 text-center align-middle">
                                             <div class="flex items-center justify-center space-x-3 text-gray-400">
                                                 <button onclick="openModal('aux')" class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg></button>
                                                 <button class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
@@ -784,28 +776,29 @@
                                     </tr>
                                     <!-- 10. 其他 -->
                                     <tr class="hover:bg-gray-50/50 transition-colors">
-                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50 align-middle">10</td>
-                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50 align-middle">其他</td>
-                                        <td class="py-3.5 px-5 border-r border-gray-50 align-middle">
+                                        <td class="py-1.5 px-3 text-center text-gray-500 border-r border-gray-50 align-middle">10</td>
+                                        <td class="py-1.5 px-3 text-gray-900 font-medium border-r border-gray-50 align-middle">其他</td>
+                                        <td class="py-1.5 px-3 border-r border-gray-50 align-middle">
                                             <div class="flex space-x-6 w-full max-w-[480px] mx-auto justify-center items-center">
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">当期 (2026)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">当期 (2026)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">比较期 (2025)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">比较期 (2025)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">不适用</span></td>
-                                        <td class="py-3.5 px-5 text-center text-gray-400 border-r border-gray-50 align-middle">-</td>
-                                        <td class="py-3.5 px-5 text-gray-400 align-middle border-r border-gray-50">-</td>
-                                        <td class="py-3.5 px-5 text-center align-middle">
+                                        <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">不适用</span></td>
+                                        <td class="py-1.5 px-3 text-center text-gray-400 border-r border-gray-50 align-middle">-</td>
+                                        <td class="py-1.5 px-3 text-gray-400 align-middle border-r border-gray-50">-</td>
+                                        <td class="py-1.5 px-3 text-gray-400 align-middle border-r border-gray-50 text-[12px]">-</td>
+                                        <td class="py-1.5 px-3 text-center align-middle">
                                             <div class="flex items-center justify-center space-x-3 text-gray-400">
                                                 <button onclick="openModal('aux')" class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg></button>
                                                 <button class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
@@ -819,56 +812,60 @@
                     </div>
 
                     <!-- 客户报告 -->
-                    <div class="flex items-center mb-4 mt-8">
-                        <div class="w-1 h-4 bg-[#00338D] mr-2.5 rounded-sm"></div>
-                        <h1 class="text-[17px] font-bold text-gray-900 tracking-wide">客户报告</h1>
-                    </div>
-                    <div class="mb-10">
+                    <div class="mb-4">
+                        <div class="flex items-center mb-2 mt-4">
+                            <div class="w-1 h-4 bg-[#00338D] mr-2.5 rounded-sm"></div>
+                            <h1 class="text-[16px] font-bold text-gray-900 tracking-wide">客户报告</h1>
+                        </div>
                         <div class="border border-gray-200 rounded-lg shadow-sm overflow-hidden bg-white overflow-x-auto">
                             <table class="w-full text-left border-collapse min-w-[1000px] table-fixed">
-                                <thead class="bg-white text-gray-500 border-b border-gray-200 text-[12px] uppercase tracking-wider">
+                                <thead class="bg-gray-50/80 text-gray-500 border-b border-gray-200 text-[12px] uppercase tracking-wider">
                                     <tr>
-                                        <th class="py-3 px-5 font-semibold w-[5%] text-center border-r border-gray-100">序号</th>
-                                        <th class="py-3 px-5 font-semibold w-[15%] border-r border-gray-100">数据采集项</th>
-                                        <th class="py-3 px-5 font-semibold w-[35%] text-center border-r border-gray-100">会计期间</th>
-                                        <th class="py-3 px-5 font-semibold w-[20%] text-center border-r border-gray-100">处理状态</th>
-                                        <th class="py-3 px-5 font-semibold w-[15%] border-r border-gray-100">创建信息</th>
-                                        <th class="py-3 px-5 font-semibold w-[10%] text-center">操作</th>
+                                        <th class="py-2 px-3 font-semibold w-[4%] text-center border-r border-gray-100">序号</th>
+                                        <th class="py-2 px-3 font-semibold w-[16%] border-r border-gray-100">数据采集项</th>
+                                        <th class="py-2 px-3 font-semibold w-[30%] text-center border-r border-gray-100">会计期间</th>
+                                        <th class="py-2 px-3 font-semibold w-[16%] text-center border-r border-gray-100">处理状态</th>
+                                        <th class="py-2 px-3 font-semibold w-[13%] border-r border-gray-100">创建人</th>
+                                        <th class="py-2 px-3 font-semibold w-[13%] border-r border-gray-100">创建时间</th>
+                                        <th class="py-2 px-3 font-semibold w-[8%] text-center">操作</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-100 text-[13px]">
                                     <tr class="hover:bg-gray-50/50 transition-colors">
-                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50 align-middle">1</td>
-                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50 align-middle">审计报告 (Audit Report)</td>
-                                        <td class="py-3.5 px-5 border-r border-gray-50 align-middle">
+                                        <td class="py-1.5 px-3 text-center text-gray-500 border-r border-gray-50 align-middle">1</td>
+                                        <td class="py-1.5 px-3 text-gray-900 font-medium border-r border-gray-50 align-middle">审计报告 (Audit Report)</td>
+                                        <td class="py-1.5 px-3 border-r border-gray-50 align-middle">
                                             <div class="flex space-x-6 w-full max-w-[480px] mx-auto justify-center items-center">
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">当期 (2026)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">当期 (2026)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
-                                                    <div class="flex w-full text-[10px] text-gray-500 mt-1.5 font-medium">
+                                                    <div class="flex w-full text-[10px] text-gray-500 mt-1 font-medium">
                                                         <div class="flex-1 text-left">1</div><div class="flex-1"></div><div class="flex-1 text-center">3</div><div class="flex-1"></div><div class="flex-1"></div><div class="flex-1 text-center">6</div><div class="flex-1"></div><div class="flex-1"></div><div class="flex-1 text-center">9</div><div class="flex-1"></div><div class="flex-1"></div><div class="flex-1 text-right whitespace-nowrap">12月</div>
                                                     </div>
                                                 </div>
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">比较期 (2025)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">比较期 (2025)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
-                                                    <div class="flex w-full text-[10px] text-gray-500 mt-1.5 font-medium">
+                                                    <div class="flex w-full text-[10px] text-gray-500 mt-1 font-medium">
                                                         <div class="flex-1 text-left">1</div><div class="flex-1"></div><div class="flex-1 text-center">3</div><div class="flex-1"></div><div class="flex-1"></div><div class="flex-1 text-center">6</div><div class="flex-1"></div><div class="flex-1"></div><div class="flex-1 text-center">9</div><div class="flex-1"></div><div class="flex-1"></div><div class="flex-1 text-right whitespace-nowrap">12月</div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">处理中</span></td>
-                                        <td class="py-3.5 px-5 align-middle border-r border-gray-50"><div class="flex flex-col"><span class="text-gray-900 font-medium">System Auto</span><span class="text-gray-400 text-xs mt-1">2026-08-10 10:15</span></div></td>
-                                        <td class="py-3.5 px-5 text-center align-middle">
+                                        <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">处理中</span></td>
+                                        <!-- 拆分：创建人 -->
+                                        <td class="py-1.5 px-3 align-middle border-r border-gray-50 text-gray-900 font-medium">System Auto</td>
+                                        <!-- 拆分：创建时间 -->
+                                        <td class="py-1.5 px-3 align-middle border-r border-gray-50 text-gray-500 text-[12px]">2026-08-10 10:15</td>
+                                        <td class="py-1.5 px-3 text-center align-middle">
                                             <div class="flex items-center justify-center space-x-3 text-gray-400">
                                                 <button onclick="openModal('basic')" class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg></button>
                                                 <button class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
@@ -882,56 +879,60 @@
                     </div>
 
                     <!-- 其他财务报表数据 -->
-                    <div class="flex items-center mb-4 mt-8">
-                        <div class="w-1 h-4 bg-[#00338D] mr-2.5 rounded-sm"></div>
-                        <h1 class="text-[17px] font-bold text-gray-900 tracking-wide">其他财务报表数据</h1>
-                    </div>
-                    <div class="mb-10">
+                    <div class="mb-4">
+                        <div class="flex items-center mb-2 mt-4">
+                            <div class="w-1 h-4 bg-[#00338D] mr-2.5 rounded-sm"></div>
+                            <h1 class="text-[16px] font-bold text-gray-900 tracking-wide">其他财务报表数据</h1>
+                        </div>
                         <div class="border border-gray-200 rounded-lg shadow-sm overflow-hidden bg-white overflow-x-auto">
                             <table class="w-full text-left border-collapse min-w-[1000px] table-fixed">
-                                <thead class="bg-white text-gray-500 border-b border-gray-200 text-[12px] uppercase tracking-wider">
+                                <thead class="bg-gray-50/80 text-gray-500 border-b border-gray-200 text-[12px] uppercase tracking-wider">
                                     <tr>
-                                        <th class="py-3 px-5 font-semibold w-[5%] text-center border-r border-gray-100">序号</th>
-                                        <th class="py-3 px-5 font-semibold w-[15%] border-r border-gray-100">数据采集项</th>
-                                        <th class="py-3 px-5 font-semibold w-[35%] text-center border-r border-gray-100">会计期间</th>
-                                        <th class="py-3 px-5 font-semibold w-[20%] text-center border-r border-gray-100">处理状态</th>
-                                        <th class="py-3 px-5 font-semibold w-[15%] border-r border-gray-100">创建信息</th>
-                                        <th class="py-3 px-5 font-semibold w-[10%] text-center">操作</th>
+                                        <th class="py-2 px-3 font-semibold w-[4%] text-center border-r border-gray-100">序号</th>
+                                        <th class="py-2 px-3 font-semibold w-[16%] border-r border-gray-100">数据采集项</th>
+                                        <th class="py-2 px-3 font-semibold w-[30%] text-center border-r border-gray-100">会计期间</th>
+                                        <th class="py-2 px-3 font-semibold w-[16%] text-center border-r border-gray-100">处理状态</th>
+                                        <th class="py-2 px-3 font-semibold w-[13%] border-r border-gray-100">创建人</th>
+                                        <th class="py-2 px-3 font-semibold w-[13%] border-r border-gray-100">创建时间</th>
+                                        <th class="py-2 px-3 font-semibold w-[8%] text-center">操作</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-100 text-[13px]">
                                     <tr class="hover:bg-gray-50/50 transition-colors">
-                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50 align-middle">1</td>
-                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50 align-middle">久其</td>
-                                        <td class="py-3.5 px-5 border-r border-gray-50 align-middle">
+                                        <td class="py-1.5 px-3 text-center text-gray-500 border-r border-gray-50 align-middle">1</td>
+                                        <td class="py-1.5 px-3 text-gray-900 font-medium border-r border-gray-50 align-middle">久其</td>
+                                        <td class="py-1.5 px-3 border-r border-gray-50 align-middle">
                                             <div class="flex space-x-6 w-full max-w-[480px] mx-auto justify-center items-center">
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">当期 (2026)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">当期 (2026)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
-                                                    <div class="flex w-full text-[10px] text-gray-500 mt-1.5 font-medium">
+                                                    <div class="flex w-full text-[10px] text-gray-500 mt-1 font-medium">
                                                         <div class="flex-1 text-left">1</div><div class="flex-1"></div><div class="flex-1 text-center">3</div><div class="flex-1"></div><div class="flex-1"></div><div class="flex-1 text-center">6</div><div class="flex-1"></div><div class="flex-1"></div><div class="flex-1 text-center">9</div><div class="flex-1"></div><div class="flex-1"></div><div class="flex-1 text-right whitespace-nowrap">12月</div>
                                                     </div>
                                                 </div>
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">比较期 (2025)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">比较期 (2025)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
-                                                    <div class="flex w-full text-[10px] text-gray-500 mt-1.5 font-medium">
+                                                    <div class="flex w-full text-[10px] text-gray-500 mt-1 font-medium">
                                                         <div class="flex-1 text-left">1</div><div class="flex-1"></div><div class="flex-1 text-center">3</div><div class="flex-1"></div><div class="flex-1"></div><div class="flex-1 text-center">6</div><div class="flex-1"></div><div class="flex-1"></div><div class="flex-1 text-center">9</div><div class="flex-1"></div><div class="flex-1"></div><div class="flex-1 text-right whitespace-nowrap">12月</div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">处理完成</span></td>
-                                        <td class="py-3.5 px-5 align-middle border-r border-gray-50"><div class="flex flex-col"><span class="text-gray-900 font-medium">Zhang, Christie (CD/AQPP)</span><span class="text-gray-400 text-xs mt-1">2026-08-14 09:43</span></div></td>
-                                        <td class="py-3.5 px-5 text-center align-middle">
+                                        <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">处理完成</span></td>
+                                        <!-- 拆分：创建人 -->
+                                        <td class="py-1.5 px-3 align-middle border-r border-gray-50 text-gray-900 font-medium whitespace-nowrap truncate">Zhang, Christie...</td>
+                                        <!-- 拆分：创建时间 -->
+                                        <td class="py-1.5 px-3 align-middle border-r border-gray-50 text-gray-500 text-[12px]">2026-08-14 09:43</td>
+                                        <td class="py-1.5 px-3 text-center align-middle">
                                             <div class="flex items-center justify-center space-x-3 text-gray-400">
                                                 <button onclick="openModal('financial')" class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg></button>
                                                 <button class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
@@ -940,37 +941,40 @@
                                         </td>
                                     </tr>
                                     <tr class="hover:bg-gray-50/50 transition-colors">
-                                        <td class="py-3.5 px-5 text-center text-gray-500 border-r border-gray-50 align-middle">2</td>
-                                        <td class="py-3.5 px-5 text-gray-900 font-medium border-r border-gray-50 align-middle">Excel package</td>
-                                        <td class="py-3.5 px-5 border-r border-gray-50 align-middle">
+                                        <td class="py-1.5 px-3 text-center text-gray-500 border-r border-gray-50 align-middle">2</td>
+                                        <td class="py-1.5 px-3 text-gray-900 font-medium border-r border-gray-50 align-middle">Excel package</td>
+                                        <td class="py-1.5 px-3 border-r border-gray-50 align-middle">
                                             <div class="flex space-x-6 w-full max-w-[480px] mx-auto justify-center items-center">
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">当期 (2026)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">当期 (2026)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
-                                                    <div class="flex w-full text-[10px] text-gray-500 mt-1.5 font-medium">
+                                                    <div class="flex w-full text-[10px] text-gray-500 mt-1 font-medium">
                                                         <div class="flex-1 text-left">1</div><div class="flex-1"></div><div class="flex-1 text-center">3</div><div class="flex-1"></div><div class="flex-1"></div><div class="flex-1 text-center">6</div><div class="flex-1"></div><div class="flex-1"></div><div class="flex-1 text-center">9</div><div class="flex-1"></div><div class="flex-1"></div><div class="flex-1 text-right whitespace-nowrap">12月</div>
                                                     </div>
                                                 </div>
                                                 <div class="flex-1 flex flex-col w-full">
-                                                    <div class="text-gray-500 mb-1.5 text-[11px] w-full text-left">比较期 (2025)</div>
-                                                    <div class="flex w-full h-[12px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
+                                                    <div class="text-gray-500 mb-1 text-[11px] w-full text-left">比较期 (2025)</div>
+                                                    <div class="flex w-full h-[8px] bg-gray-200 rounded-sm overflow-hidden shadow-inner ring-1 ring-black/5">
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div>
                                                         <div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400 border-r border-white/40"></div><div class="flex-1 bg-emerald-400"></div>
                                                     </div>
-                                                    <div class="flex w-full text-[10px] text-gray-500 mt-1.5 font-medium">
+                                                    <div class="flex w-full text-[10px] text-gray-500 mt-1 font-medium">
                                                         <div class="flex-1 text-left">1</div><div class="flex-1"></div><div class="flex-1 text-center">3</div><div class="flex-1"></div><div class="flex-1"></div><div class="flex-1 text-center">6</div><div class="flex-1"></div><div class="flex-1"></div><div class="flex-1 text-center">9</div><div class="flex-1"></div><div class="flex-1"></div><div class="flex-1 text-right whitespace-nowrap">12月</div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="py-3.5 px-5 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">处理完成</span></td>
-                                        <td class="py-3.5 px-5 align-middle border-r border-gray-50"><div class="flex flex-col"><span class="text-gray-900 font-medium">Gao, Gina (KDC/AST)</span><span class="text-gray-400 text-xs mt-1">2026-06-10 17:32</span></div></td>
-                                        <td class="py-3.5 px-5 text-center align-middle">
+                                        <td class="py-1.5 px-3 text-center border-r border-gray-50 align-middle"><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">处理完成</span></td>
+                                        <!-- 拆分：创建人 -->
+                                        <td class="py-1.5 px-3 align-middle border-r border-gray-50 text-gray-900 font-medium whitespace-nowrap truncate">Gao, Gina (KDC...</td>
+                                        <!-- 拆分：创建时间 -->
+                                        <td class="py-1.5 px-3 align-middle border-r border-gray-50 text-gray-500 text-[12px]">2026-06-10 17:32</td>
+                                        <td class="py-1.5 px-3 text-center align-middle">
                                             <div class="flex items-center justify-center space-x-3 text-gray-400">
                                                 <button onclick="openModal('financial')" class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg></button>
                                                 <button class="relative group hover:text-[#00338D] transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
