@@ -1738,15 +1738,37 @@ Error generating stack: `+e.message+`
 
         <!-- 弹窗4：科目余额表 (TB) -->
 
-        <div id="modal-tb" class="fixed inset-0 z-[120] hidden flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div id="modal-tb" class="fixed inset-0 z-[120] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+    
+            <!-- 弹窗内部组件专用样式 -->
+            <style>
+                .tb-modal-ui .filter-popover { display: none; }
+                .tb-modal-ui .filter-popover.show { display: block; }
+                .tb-modal-ui .sort-icon .up, .tb-modal-ui .sort-icon .down { fill: #D1D5DB; transition: fill 0.2s; }
+                .tb-modal-ui .sort-icon.asc .up { fill: #6BA4C7; }
+                .tb-modal-ui .sort-icon.desc .down { fill: #6BA4C7; }
+                .tb-modal-ui .filter-icon.active { fill: #6BA4C7; background-color: #F0F6FA; }
+                .tb-modal-ui .checkbox-item { display: flex; align-items: center; gap: 8px; padding: 6px 4px; cursor: pointer; transition: background-color 0.2s; border-radius: 4px; }
+                .tb-modal-ui .checkbox-item:hover { background-color: #F8FAFC; }
+                .tb-modal-ui .chevron { display: inline-flex; width: 16px; height: 16px; cursor: pointer; color: #9CA3AF; align-items: center; justify-content: center; }
+                .tb-modal-ui .chevron svg { width: 12px; height: 12px; fill: currentColor; transition: transform 0.2s; }
+                .tb-modal-ui .chevron.expanded svg { transform: rotate(90deg); }
+                .tb-modal-ui .chevron.hidden { visibility: hidden; }
+                .tb-modal-ui .depth-0 { background-color: #F8FAFC; font-weight: 600; color: #111827; }
+                .tb-modal-ui .depth-1 .tree-node { padding-left: 24px; }
+                .tb-modal-ui .depth-2 .tree-node { padding-left: 48px; }
+                .tb-modal-ui .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+                .tb-modal-ui .custom-scrollbar::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+                .tb-modal-ui .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+            </style>
+        
             <!-- 弹窗内部容器，几乎全屏 -->
             <div class="w-[95vw] h-[92vh] bg-white rounded-xl shadow-2xl overflow-hidden relative tb-modal-ui flex flex-col">
-                <!-- 整个您提供的结构包裹在此 -->
                 <div class="layout h-full w-full flex relative">
                     <!-- 左侧边栏 -->
                     <aside class="sidebar bg-white border-r border-gray-200 flex flex-col shrink-0 w-[260px] z-20">
                         <div class="sidebar-header p-4 flex items-center gap-3 border-b border-gray-200">
-                            <a href="#" onclick="closeTbAdvancedModal(); return false;" class="back-btn text-[#00338D] flex items-center gap-1 text-sm font-medium hover:text-blue-800 transition-colors">
+                            <a href="#" onclick="closeModal(); return false;" class="back-btn text-[#6BA4C7] flex items-center gap-1 text-sm font-medium hover:text-[#528AAB] transition-colors">
                                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                                 返回
                             </a>
@@ -1754,16 +1776,8 @@ Error generating stack: `+e.message+`
                             <span class="text-[15px] font-semibold text-gray-900">查看数据</span>
                         </div>
                         
-                        <div class="sidebar-period p-4 border-b border-gray-200 text-[13px] flex items-center gap-4">
-                            <span class="text-gray-600 font-medium">套表所属年度</span>
-                            <div class="flex gap-4">
-                                <label class="flex items-center gap-1 cursor-pointer text-gray-900"><input type="radio" name="period" class="accent-[#00338D]" checked> 当期</label>
-                                <label class="flex items-center gap-1 cursor-pointer text-gray-900"><input type="radio" name="period" class="accent-[#00338D]"> 比较期</label>
-                            </div>
-                        </div>
-    
-                        <div class="sidebar-menu p-3 flex-1 overflow-y-auto">
-                            <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 bg-[#00338D] text-white font-medium transition-all">科目余额表</div>
+                        <div class="sidebar-menu p-3 flex-1 overflow-y-auto custom-scrollbar">
+                            <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 bg-[#6BA4C7] text-white font-medium transition-all shadow-sm">科目余额表</div>
                             <div class="mt-2">
                                 <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm text-gray-900 flex items-center justify-between hover:bg-gray-50 transition-all">
                                     管理层报表
@@ -1776,111 +1790,351 @@ Error generating stack: `+e.message+`
                             </div>
                         </div>
                     </aside>
-    
+        
                     <!-- 右侧主内容 -->
                     <div class="main-content flex-1 flex flex-col p-6 bg-[#F8F9FB] overflow-hidden">
+                        <!-- 工具栏：年度选择与隐藏零余额横向舒展排列 -->
                         <div class="toolbar flex justify-between items-center bg-white p-4 px-6 rounded-t-lg border border-gray-200 border-b-0 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-                            <h1 class="text-base font-semibold m-0 flex items-center gap-3">
-                                科目余额表 
-                                <span class="bg-blue-50 text-[#00338D] text-xs px-2 py-1 rounded font-medium">年报审计</span>
-                            </h1>
-                            <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-600">
+                            
+                            <div class="flex items-center gap-6 text-[13px]">
+                                <h1 class="text-base font-semibold text-gray-900 m-0 pr-4 border-r border-gray-200">科目余额表</h1>
+                                
+                                <div class="flex items-center gap-4">
+                                    <span class="text-gray-600 font-medium">套表所属年度</span>
+                                    <div class="flex items-center gap-4">
+                                        <label class="flex items-center gap-1.5 cursor-pointer text-gray-800">
+                                            <input type="radio" name="period" class="accent-[#6BA4C7] w-3.5 h-3.5" checked> 当期
+                                        </label>
+                                        <label class="flex items-center gap-1.5 cursor-pointer text-gray-800">
+                                            <input type="radio" name="period" class="accent-[#6BA4C7] w-3.5 h-3.5"> 比较期
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-600 hover:text-gray-900 transition-colors">
                                 <span class="relative inline-block w-9 h-5">
                                     <input type="checkbox" id="hideZeroSwitch" onchange="renderTbTable()" class="opacity-0 w-0 h-0 peer">
-                                    <span class="absolute cursor-pointer inset-0 bg-gray-300 transition-colors rounded-full peer-checked:bg-[#00338D] before:absolute before:h-4 before:w-4 before:left-[2px] before:bottom-[2px] before:bg-white before:rounded-full before:transition-transform peer-checked:before:translate-x-[16px]"></span>
+                                    <span class="absolute cursor-pointer inset-0 bg-gray-300 transition-colors rounded-full peer-checked:bg-[#6BA4C7] before:absolute before:h-4 before:w-4 before:left-[2px] before:bottom-[2px] before:bg-white before:rounded-full before:transition-transform peer-checked:before:translate-x-[16px] shadow-inner"></span>
                                 </span>
                                 隐藏零余额科目
                             </label>
                         </div>
-    
+        
+                        <!-- 表格区域 -->
                         <div class="table-container flex-1 bg-white border border-gray-200 overflow-auto relative custom-scrollbar">
                             <table class="w-full text-left border-collapse min-w-[1000px] whitespace-nowrap">
                                 <thead class="sticky top-0 z-10">
                                     <tr>
-                                        <th width="20%" class="bg-[#F8F9FC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB]">
-                                            <div class="flex items-center gap-1.5 relative cursor-pointer" onclick="toggleFilter(event, 'code')">
+                                        <th width="20%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB]">
+                                            <div class="flex items-center gap-1.5 relative cursor-pointer select-none hover:text-gray-900" onclick="toggleTbFilter(event, 'code')">
                                                 科目编码
-                                                <svg class="filter-icon w-3.5 h-3.5 fill-gray-400 p-0.5 rounded hover:fill-[#00338D] hover:bg-blue-50 transition-colors" id="icon-code" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd"></path></svg>
-                                                <div class="filter-popover absolute top-[30px] left-0 bg-white border border-gray-200 rounded-md p-3 shadow-xl hidden z-[130] w-[240px] cursor-default font-normal text-gray-800" id="popover-code" onclick="event.stopPropagation()">
-                                                    <input type="text" class="w-full p-1.5 border border-gray-200 rounded text-xs outline-none mb-2 focus:border-[#00338D]" id="search-code" placeholder="搜索科目编码" oninput="renderCheckboxList('code')">
-                                                    <div class="max-h-[180px] overflow-y-auto mb-3 pr-1 text-[13px]" id="list-code"></div>
+                                                <svg class="filter-icon w-4 h-4 fill-gray-400 p-0.5 rounded transition-colors" id="icon-code" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd"></path></svg>
+                                                <!-- 编码过滤弹窗 -->
+                                                <div class="filter-popover absolute top-[32px] left-0 bg-white border border-gray-200 rounded-lg p-3 shadow-xl z-[130] w-[240px] cursor-default font-normal text-gray-800" id="popover-code" onclick="event.stopPropagation()">
+                                                    <input type="text" class="w-full p-2 border border-gray-200 rounded text-xs outline-none mb-2 focus:border-[#6BA4C7] focus:ring-1 focus:ring-[#6BA4C7] transition-all" id="search-code" placeholder="搜索科目编码" oninput="renderTbCheckboxList('code')">
+                                                    <div class="max-h-[180px] overflow-y-auto mb-3 pr-1 text-[13px] custom-scrollbar" id="list-code"></div>
                                                     <div class="flex justify-between gap-2 border-t border-gray-100 pt-3">
-                                                        <button class="flex-1 py-1.5 bg-gray-100 text-gray-600 border-none rounded text-xs hover:bg-gray-200 transition-colors" onclick="resetFilter('code')">重置</button>
-                                                        <button class="flex-1 py-1.5 bg-[#00338D] text-white border-none rounded text-xs hover:bg-blue-800 transition-colors" onclick="applyFilter('code')">确定</button>
+                                                        <button class="flex-1 py-1.5 bg-gray-100 text-gray-600 border-none rounded text-xs hover:bg-gray-200 transition-colors font-medium" onclick="resetTbFilter('code')">重置</button>
+                                                        <button class="flex-1 py-1.5 bg-[#6BA4C7] text-white border-none rounded text-xs hover:bg-[#528AAB] transition-colors font-medium" onclick="applyTbFilter('code')">确定</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </th>
-                                        <th width="30%" class="bg-[#F8F9FC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB]">
-                                            <div class="flex items-center gap-1.5 relative cursor-pointer" onclick="toggleFilter(event, 'name')">
+                                        <th width="30%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB]">
+                                            <div class="flex items-center gap-1.5 relative cursor-pointer select-none hover:text-gray-900" onclick="toggleTbFilter(event, 'name')">
                                                 科目名称
-                                                <svg class="filter-icon w-3.5 h-3.5 fill-gray-400 p-0.5 rounded hover:fill-[#00338D] hover:bg-blue-50 transition-colors" id="icon-name" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd"></path></svg>
-                                                <div class="filter-popover absolute top-[30px] left-0 bg-white border border-gray-200 rounded-md p-3 shadow-xl hidden z-[130] w-[240px] cursor-default font-normal text-gray-800" id="popover-name" onclick="event.stopPropagation()">
-                                                    <input type="text" class="w-full p-1.5 border border-gray-200 rounded text-xs outline-none mb-2 focus:border-[#00338D]" id="search-name" placeholder="搜索科目名称" oninput="renderCheckboxList('name')">
-                                                    <div class="max-h-[180px] overflow-y-auto mb-3 pr-1 text-[13px]" id="list-name"></div>
+                                                <svg class="filter-icon w-4 h-4 fill-gray-400 p-0.5 rounded transition-colors" id="icon-name" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd"></path></svg>
+                                                <!-- 名称过滤弹窗 -->
+                                                <div class="filter-popover absolute top-[32px] left-0 bg-white border border-gray-200 rounded-lg p-3 shadow-xl z-[130] w-[240px] cursor-default font-normal text-gray-800" id="popover-name" onclick="event.stopPropagation()">
+                                                    <input type="text" class="w-full p-2 border border-gray-200 rounded text-xs outline-none mb-2 focus:border-[#6BA4C7] focus:ring-1 focus:ring-[#6BA4C7] transition-all" id="search-name" placeholder="搜索科目名称" oninput="renderTbCheckboxList('name')">
+                                                    <div class="max-h-[180px] overflow-y-auto mb-3 pr-1 text-[13px] custom-scrollbar" id="list-name"></div>
                                                     <div class="flex justify-between gap-2 border-t border-gray-100 pt-3">
-                                                        <button class="flex-1 py-1.5 bg-gray-100 text-gray-600 border-none rounded text-xs hover:bg-gray-200 transition-colors" onclick="resetFilter('name')">重置</button>
-                                                        <button class="flex-1 py-1.5 bg-[#00338D] text-white border-none rounded text-xs hover:bg-blue-800 transition-colors" onclick="applyFilter('name')">确定</button>
+                                                        <button class="flex-1 py-1.5 bg-gray-100 text-gray-600 border-none rounded text-xs hover:bg-gray-200 transition-colors font-medium" onclick="resetTbFilter('name')">重置</button>
+                                                        <button class="flex-1 py-1.5 bg-[#6BA4C7] text-white border-none rounded text-xs hover:bg-[#528AAB] transition-colors font-medium" onclick="applyTbFilter('name')">确定</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </th>
-                                        <th width="12.5%" class="bg-[#F8F9FC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer hover:text-gray-900" onclick="handleSort('open')">
+                                        <th width="12.5%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer select-none hover:text-gray-900 group" onclick="handleTbSort('open')">
                                             <div class="flex items-center justify-end gap-1">期初余额
-                                                <div class="flex flex-col w-2.5 h-3.5 fill-gray-300 ml-1" id="sort-open">
-                                                    <svg class="up w-2.5 h-1.5" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
-                                                    <svg class="down w-2.5 h-1.5 mt-0.5" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
+                                                <div class="sort-icon flex flex-col w-2.5 h-3.5 ml-1" id="sort-open">
+                                                    <svg class="up w-2.5 h-1.5 group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
+                                                    <svg class="down w-2.5 h-1.5 mt-[2px] group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
                                                 </div>
                                             </div>
                                         </th>
-                                        <th width="12.5%" class="bg-[#F8F9FC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer hover:text-gray-900" onclick="handleSort('inc')">
+                                        <th width="12.5%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer select-none hover:text-gray-900 group" onclick="handleTbSort('inc')">
                                             <div class="flex items-center justify-end gap-1">本期增加
-                                                <div class="flex flex-col w-2.5 h-3.5 fill-gray-300 ml-1" id="sort-inc">
-                                                    <svg class="up w-2.5 h-1.5" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
-                                                    <svg class="down w-2.5 h-1.5 mt-0.5" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
+                                                <div class="sort-icon flex flex-col w-2.5 h-3.5 ml-1" id="sort-inc">
+                                                    <svg class="up w-2.5 h-1.5 group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
+                                                    <svg class="down w-2.5 h-1.5 mt-[2px] group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
                                                 </div>
                                             </div>
                                         </th>
-                                        <th width="12.5%" class="bg-[#F8F9FC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer hover:text-gray-900" onclick="handleSort('dec')">
+                                        <th width="12.5%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer select-none hover:text-gray-900 group" onclick="handleTbSort('dec')">
                                             <div class="flex items-center justify-end gap-1">本期减少
-                                                <div class="flex flex-col w-2.5 h-3.5 fill-gray-300 ml-1" id="sort-dec">
-                                                    <svg class="up w-2.5 h-1.5" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
-                                                    <svg class="down w-2.5 h-1.5 mt-0.5" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
+                                                <div class="sort-icon flex flex-col w-2.5 h-3.5 ml-1" id="sort-dec">
+                                                    <svg class="up w-2.5 h-1.5 group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
+                                                    <svg class="down w-2.5 h-1.5 mt-[2px] group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
                                                 </div>
                                             </div>
                                         </th>
-                                        <th width="12.5%" class="bg-[#F8F9FC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer hover:text-gray-900" onclick="handleSort('close')">
+                                        <th width="12.5%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer select-none hover:text-gray-900 group" onclick="handleTbSort('close')">
                                             <div class="flex items-center justify-end gap-1">期末余额
-                                                <div class="flex flex-col w-2.5 h-3.5 fill-gray-300 ml-1" id="sort-close">
-                                                    <svg class="up w-2.5 h-1.5" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
-                                                    <svg class="down w-2.5 h-1.5 mt-0.5" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
+                                                <div class="sort-icon flex flex-col w-2.5 h-3.5 ml-1" id="sort-close">
+                                                    <svg class="up w-2.5 h-1.5 group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
+                                                    <svg class="down w-2.5 h-1.5 mt-[2px] group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
                                                 </div>
                                             </div>
                                         </th>
                                     </tr>
                                 </thead>
+                                
+                                <!-- JS 动态渲染主体 -->
                                 <tbody id="tbTableBody" class="text-[13px] text-gray-800"></tbody>
-                                <tfoot id="tbTableFooter" class="sticky bottom-0 z-10 bg-[#F8F9FC] font-semibold text-[13px] shadow-[0_-1px_0_#E5E7EB]"></tfoot>
+                                
+                                <!-- JS 动态渲染合计 -->
+                                <tfoot id="tbTableFooter" class="sticky bottom-0 z-10 bg-[#F8FAFC] font-semibold text-[13px] shadow-[0_-1px_0_#E5E7EB]"></tfoot>
                             </table>
                         </div>
-    
+            
+                        <!-- 底部独立分页 -->
                         <div class="pagination flex justify-end items-center p-3 px-6 bg-white border border-gray-200 border-t-0 rounded-b-lg text-[13px] text-gray-500 gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
                             <span>共 436 条</span>
-                            <select class="px-2 py-1 border border-gray-200 rounded outline-none cursor-pointer"><option>20条/页</option><option>50条/页</option><option>100条/页</option></select>
+                            <select class="px-2 py-1 border border-gray-200 rounded outline-none cursor-pointer focus:border-[#6BA4C7]"><option>20条/页</option><option>50条/页</option><option>100条/页</option></select>
                             <div class="flex items-center gap-1">
-                                <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#00338D] hover:text-[#00338D]">&lt;</button>
-                                <button class="min-w-[28px] h-7 bg-[#00338D] text-white border border-[#00338D] rounded flex justify-center items-center">1</button>
-                                <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#00338D] hover:text-[#00338D]">2</button>
-                                <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#00338D] hover:text-[#00338D]">3</button>
+                                <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">&lt;</button>
+                                <button class="min-w-[28px] h-7 bg-[#6BA4C7] text-white border border-[#6BA4C7] rounded flex justify-center items-center shadow-sm">1</button>
+                                <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">2</button>
+                                <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">3</button>
                                 <span class="px-1">...</span>
-                                <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#00338D] hover:text-[#00338D]">22</button>
-                                <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#00338D] hover:text-[#00338D]">&gt;</button>
+                                <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">22</button>
+                                <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">&gt;</button>
                             </div>
-                            <div class="flex items-center">前往 <input type="number" value="1" class="w-11 h-7 text-center border border-gray-200 rounded mx-2 outline-none focus:border-[#00338D]"> 页</div>
+                            <div class="flex items-center">前往 <input type="number" value="1" class="w-11 h-7 text-center border border-gray-200 rounded mx-2 outline-none focus:border-[#6BA4C7] transition-colors"> 页</div>
                         </div>
                     </div>
                 </div>
             </div>
+        
+            <!-- 内嵌 JS 逻辑处理排序、筛选和渲染 -->
+            <script>
+                (function() {
+                    const mockData = [
+                        { id: '10', parentId: null, code: '10', name: '资产类', open: 12345623.21, inc: 123456712.13, dec: 113456712.27, close: 22345623.07 },
+                        { id: '1001', parentId: '10', code: '1001', name: '货币资金', open: 12345623.21, inc: 123456712.13, dec: 113456712.27, close: 22345623.07 },
+                        { id: '1001.01', parentId: '1001', code: '1001.01', name: '库存现金', open: 0, inc: 0, dec: 0, close: 0 },
+                        { id: '1002', parentId: '10', code: '1002', name: '银行存款', open: 12345623.21, inc: 123456712.13, dec: 113456712.27, close: 22345623.07 },
+                        { id: '1002.01', parentId: '1002', code: '1002.01', name: '工商银行-基本户', open: 2345623.21, inc: 23456712.13, dec: 13456712.27, close: 12345623.07 },
+                        { id: '1002.02', parentId: '1002', code: '1002.02', name: '招商银行-一般户', open: 10000000.00, inc: 100000000.00, dec: 100000000.00, close: 10000000.00 },
+                        { id: '1122', parentId: '10', code: '1122', name: '应收账款', open: 500000.00, inc: 0, dec: 0, close: 500000.00 },
+                        { id: '20', parentId: null, code: '20', name: '负债类', open: -5000000.00, inc: 200000.00, dec: 90000.00, close: -4890000.00 },
+                        { id: '2202', parentId: '20', code: '2202', name: '应付账款', open: -5000000.00, inc: 200000.00, dec: 90000.00, close: -4890000.00 },
+                        { id: '2202.01', parentId: '2202', code: '2202.01', name: '应付账款-供应商A', open: -5000000.00, inc: 200000.00, dec: 90000.00, close: -4890000.00 },
+                        { id: '40', parentId: null, code: '40', name: '权益类', open: 0, inc: 0, dec: 0, close: 0 },
+                        { id: '4001', parentId: '40', code: '4001', name: '实收资本', open: 0, inc: 0, dec: 0, close: 0 }
+                    ];
+        
+                    let activeFilters = { code: [], name: [] };
+                    let sortState = { col: null, order: null };
+                    
+                    const formatMoney = (amount) => amount === 0 ? '0.00' : amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    
+                    // 暴露全局方法以绑定到 HTML 的 onclick
+                    window.toggleTbFilter = (event, colKey) => {
+                        event.stopPropagation();
+                        const popover = document.getElementById(`popover-${colKey}`);
+                        const isVisible = popover.classList.contains('show');
+                        document.querySelectorAll('.filter-popover').forEach(p => p.classList.remove('show'));
+                        if (!isVisible) {
+                            popover.classList.add('show');
+                            document.getElementById(`search-${colKey}`).value = ''; 
+                            window.renderTbCheckboxList(colKey);
+                            setTimeout(() => document.getElementById(`search-${colKey}`).focus(), 50);
+                        }
+                    };
+        
+                    window.renderTbCheckboxList = (colKey) => {
+                        const searchVal = document.getElementById(`search-${colKey}`).value.toLowerCase().trim();
+                        const listContainer = document.getElementById(`list-${colKey}`);
+                        let uniqueVals = [...new Set(mockData.map(item => item[colKey]))].sort();
+                        if (searchVal) uniqueVals = uniqueVals.filter(v => String(v).toLowerCase().includes(searchVal));
+                        const isAllSelected = uniqueVals.length > 0 && uniqueVals.every(v => activeFilters[colKey].includes(v));
+                        
+                        let html = `<label class="checkbox-item font-semibold text-gray-800"><input type="checkbox" onchange="toggleTbSelectAll('${colKey}', this.checked)" ${isAllSelected ? 'checked' : ''} class="accent-[#6BA4C7] w-3.5 h-3.5"> 全选</label><div class="h-px bg-gray-200 my-1"></div>`;
+                        if (uniqueVals.length === 0) {
+                            html += `<div class="text-gray-400 py-2 text-center">无匹配数据</div>`;
+                        } else {
+                            uniqueVals.forEach(val => {
+                                const isChecked = activeFilters[colKey].includes(val);
+                                html += `<label class="checkbox-item"><input type="checkbox" value="${val}" class="filter-cb-${colKey} accent-[#6BA4C7] w-3.5 h-3.5" onchange="updateTbCheckedState('${colKey}')" ${isChecked ? 'checked' : ''}> ${val}</label>`;
+                            });
+                        }
+                        listContainer.innerHTML = html;
+                    };
+        
+                    window.toggleTbSelectAll = (colKey, isChecked) => {
+                        document.querySelectorAll(`.filter-cb-${colKey}`).forEach(cb => cb.checked = isChecked);
+                        window.updateTbCheckedState(colKey);
+                    };
+        
+                    window.updateTbCheckedState = (colKey) => {
+                        let newActive = [...activeFilters[colKey]];
+                        document.querySelectorAll(`.filter-cb-${colKey}`).forEach(cb => {
+                            if (cb.checked && !newActive.includes(cb.value)) newActive.push(cb.value);
+                            if (!cb.checked && newActive.includes(cb.value)) newActive = newActive.filter(v => v !== cb.value);
+                        });
+                        activeFilters[colKey] = newActive;
+                        if(!document.getElementById(`search-${colKey}`).value) window.renderTbCheckboxList(colKey); 
+                    };
+        
+                    window.applyTbFilter = (colKey) => {
+                        document.getElementById(`popover-${colKey}`).classList.remove('show');
+                        const iconEle = document.getElementById(`icon-${colKey}`);
+                        activeFilters[colKey].length > 0 ? iconEle.classList.add('active') : iconEle.classList.remove('active');
+                        window.renderTbTable();
+                    };
+        
+                    window.resetTbFilter = (colKey) => {
+                        activeFilters[colKey] = [];
+                        document.getElementById(`search-${colKey}`).value = '';
+                        window.applyTbFilter(colKey);
+                    };
+        
+                    window.handleTbSort = (colKey) => {
+                        if (sortState.col === colKey) {
+                            sortState.order = sortState.order === 'desc' ? 'asc' : (sortState.order === 'asc' ? null : 'desc');
+                        } else {
+                            sortState = { col: colKey, order: 'desc' };
+                        }
+                        document.querySelectorAll('.sort-icon').forEach(el => { el.classList.remove('asc', 'desc'); });
+                        if (sortState.order) {
+                            document.getElementById(`sort-${colKey}`).classList.add(sortState.order);
+                        }
+                        window.renderTbTable();
+                    };
+        
+                    const buildAndSortTree = (data) => {
+                        let map = {}, root = [];
+                        data.forEach(node => map[node.id] = { ...node, children: [], hasChildren: false });
+                        data.forEach(node => {
+                            if (node.parentId && map[node.parentId]) { map[node.parentId].children.push(map[node.id]); map[node.parentId].hasChildren = true; } 
+                            else root.push(map[node.id]);
+                        });
+                        const sortNodes = (nodes) => {
+                            if (!sortState.col || !sortState.order) return nodes;
+                            nodes.sort((a, b) => sortState.order === 'asc' ? a[sortState.col] - b[sortState.col] : b[sortState.col] - a[sortState.col]);
+                            nodes.forEach(node => { if (node.children.length > 0) node.children = sortNodes(node.children); });
+                            return nodes;
+                        };
+                        const flatten = (nodes, depth = 0, result = []) => {
+                            nodes.forEach(node => { node.depth = depth; result.push(node); if (node.children.length > 0) flatten(node.children, depth + 1, result); });
+                            return result;
+                        };
+                        return flatten(sortNodes(root));
+                    };
+        
+                    const getProcessedData = () => {
+                        let resultData = [...mockData];
+                        const hideZeroChecked = document.getElementById('hideZeroSwitch') ? document.getElementById('hideZeroSwitch').checked : false;
+                        
+                        if (hideZeroChecked) {
+                            resultData = resultData.filter(row => !(row.open === 0 && row.inc === 0 && row.dec === 0 && row.close === 0));
+                        }
+                        if (activeFilters.code.length > 0 || activeFilters.name.length > 0) {
+                            const keepIds = new Set();
+                            resultData.forEach(row => {
+                                let match = true;
+                                if (activeFilters.code.length > 0 && !activeFilters.code.includes(row.code)) match = false;
+                                if (activeFilters.name.length > 0 && !activeFilters.name.includes(row.name)) match = false;
+                                if (match) {
+                                    keepIds.add(row.id);
+                                    let pId = row.parentId;
+                                    while(pId) { keepIds.add(pId); const pNode = resultData.find(n => n.id === pId); pId = pNode ? pNode.parentId : null; }
+                                }
+                            });
+                            resultData = resultData.filter(row => keepIds.has(row.id));
+                        }
+                        return buildAndSortTree(resultData);
+                    };
+        
+                    window.renderTbTable = () => {
+                        const tbody = document.getElementById('tbTableBody');
+                        if (!tbody) return;
+                        const dataToRender = getProcessedData();
+                        let html = '';
+                        if (dataToRender.length === 0) {
+                            tbody.innerHTML = `<tr><td colspan="6" class="text-center py-12 text-gray-400">没有找到匹配的科目数据</td></tr>`;
+                            renderFooter(dataToRender); return;
+                        }
+                        dataToRender.forEach(row => {
+                            const chevronSvg = row.hasChildren ? `<span class="chevron expanded hover:text-[#6BA4C7]" onclick="toggleTbNode('${row.id}', this)"><svg viewBox="0 0 10 10"><path d="M3 1 L7 5 L3 9" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></span>` : `<span class="chevron hidden"></span>`;
+                            html += `<tr class="border-b border-gray-100 hover:bg-[#F0F6FA]/40 transition-colors depth-${row.depth}" data-id="${row.id}" data-parent="${row.parentId || ''}">
+                                <td class="px-4 py-2.5"><div class="tree-node">${chevronSvg}<span>${row.code}</span></div></td>
+                                <td class="px-4 py-2.5">${row.name}</td>
+                                <td class="px-4 py-2.5 text-right tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(row.open)}</td>
+                                <td class="px-4 py-2.5 text-right tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(row.inc)}</td>
+                                <td class="px-4 py-2.5 text-right tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(row.dec)}</td>
+                                <td class="px-4 py-2.5 text-right tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(row.close)}</td>
+                            </tr>`;
+                        });
+                        tbody.innerHTML = html;
+                        renderFooter(dataToRender);
+                    };
+        
+                    const renderFooter = (dataToRender) => {
+                        const tfoot = document.getElementById('tbTableFooter');
+                        if (!tfoot) return;
+                        let totalOpen = 0, totalInc = 0, totalDec = 0, totalClose = 0;
+                        dataToRender.forEach(row => {
+                            if (row.depth === 0) { totalOpen += row.open; totalInc += row.inc; totalDec += row.dec; totalClose += row.close; }
+                        });
+                        
+                        tfoot.innerHTML = `<tr>
+                            <td colspan="2" class="px-4 py-3 text-right border-t border-gray-200">合计</td>
+                            <td class="px-4 py-3 text-right border-t border-gray-200 tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(totalOpen)}</td>
+                            <td class="px-4 py-3 text-right border-t border-gray-200 tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(totalInc)}</td>
+                            <td class="px-4 py-3 text-right border-t border-gray-200 tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(totalDec)}</td>
+                            <td class="px-4 py-3 text-right border-t border-gray-200 tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(totalClose)}</td>
+                        </tr>`;
+                    };
+        
+                    window.toggleTbNode = (id, iconElement) => {
+                        const isExpanded = iconElement.classList.contains('expanded');
+                        if (isExpanded) { iconElement.classList.remove('expanded'); hideChildren(id); } 
+                        else { iconElement.classList.add('expanded'); showChildren(id); }
+                    };
+                    
+                    const hideChildren = (parentId) => { 
+                        document.querySelectorAll(`tr[data-parent="${parentId}"]`).forEach(child => { 
+                            child.style.display = 'none'; 
+                            hideChildren(child.getAttribute('data-id')); 
+                        }); 
+                    };
+                    
+                    const showChildren = (parentId) => { 
+                        document.querySelectorAll(`tr[data-parent="${parentId}"]`).forEach(child => { 
+                            child.style.display = 'table-row'; 
+                            const childIcon = child.querySelector('.chevron'); 
+                            if (childIcon && childIcon.classList.contains('expanded')) showChildren(child.getAttribute('data-id')); 
+                        }); 
+                    };
+        
+                    // 全局点击关闭弹窗
+                    document.addEventListener('click', (e) => {
+                        if (!e.target.closest('.filter-popover') && !e.target.closest('.relative.cursor-pointer')) {
+                            document.querySelectorAll('.filter-popover').forEach(p => p.classList.remove('show'));
+                        }
+                    });
+        
+                    // 初始化渲染
+                    document.addEventListener('DOMContentLoaded', window.renderTbTable);
+                    // 如果是在单页面应用中动态插入，可能需要直接调用一次
+                    setTimeout(window.renderTbTable, 100);
+                    
+                })();
+            </script>
         </div>
         <div id="modal-tb-advanced" class="bg-white rounded-lg shadow-xl w-[1100px] max-h-[90vh] flex flex-col overflow-hidden hidden">
             <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
@@ -2295,9 +2549,10 @@ Error generating stack: `+e.message+`
             // 隐藏遮罩层
             backdrop.classList.add('hidden');
             backdrop.classList.remove('flex');
-            // 隐藏tb弹窗
+            // 隐藏tb弹窗（同时清除可能残留的内联 display:none）
             tb.classList.add('hidden');
             tb.classList.remove('flex');
+            tb.style.display = '';
         }
     </script>
 </body>
