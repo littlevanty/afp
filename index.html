@@ -466,7 +466,7 @@
                                                 <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                                                 <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 opacity-0 invisible tooltip-content px-2 py-1 bg-gray-800 text-white text-[11px] rounded shadow-sm whitespace-nowrap z-50 font-normal transition-all duration-200">上传文件</span>
                                             </button>
-                                            <button onclick="openModal('tb')" class="relative hover:text-[#00338D] transition-colors tooltip-trigger p-1">
+                                            <button onclick="openModal('tb', 'tb')" class="relative hover:text-[#00338D] transition-colors tooltip-trigger p-1">
                                                 <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                                 <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 opacity-0 invisible tooltip-content px-2 py-1 bg-gray-800 text-white text-[11px] rounded shadow-sm whitespace-nowrap z-50 font-normal transition-all duration-200">查看解析结果</span>
                                             </button>
@@ -512,7 +512,7 @@
                                                 <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                                                 <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 opacity-0 invisible tooltip-content px-2 py-1 bg-gray-800 text-white text-[11px] rounded shadow-sm whitespace-nowrap z-50 font-normal transition-all duration-200">上传文件</span>
                                             </button>
-                                            <button onclick="openModal('tb')" class="relative hover:text-[#00338D] transition-colors tooltip-trigger p-1">
+                                            <button onclick="openModal('tb', 'ma')" class="relative hover:text-[#00338D] transition-colors tooltip-trigger p-1">
                                                 <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                                 <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 opacity-0 invisible tooltip-content px-2 py-1 bg-gray-800 text-white text-[11px] rounded shadow-sm whitespace-nowrap z-50 font-normal transition-all duration-200">查看解析结果</span>
                                             </button>
@@ -3087,7 +3087,7 @@ Error generating stack: `+e.message+`
         }
 
         // ======= 3. 弹窗控制逻辑 (从 sourcedataimport 模块引入) =======
-        function openModal(type) {
+        function openModal(type, defaultView) {
             const backdrop = document.getElementById('modal-backdrop');
             const basic = document.getElementById('modal-basic');
             const aux = document.getElementById('modal-aux');
@@ -3113,6 +3113,23 @@ Error generating stack: `+e.message+`
             if (target) {
                 target.classList.remove('hidden');
                 target.classList.add('flex');
+            }
+
+            // TB 弹窗：根据来源行设置默认视图
+            // TB 行 → 默认显示“科目余额表”；MA 行 → 默认显示“管理层报表-资产负债表”
+            if (type === 'tb') {
+                const submenu = document.getElementById('management-submenu');
+                const arrow = document.getElementById('management-arrow');
+                if (defaultView === 'ma') {
+                    if (submenu) {
+                        submenu.classList.remove('submenu-collapsed');
+                        submenu.classList.add('submenu-expanded');
+                    }
+                    if (arrow) arrow.classList.add('rotate-180');
+                    if (window.switchView) window.switchView('bs');
+                } else {
+                    if (window.switchView) window.switchView('tb');
+                }
             }
         }
 
