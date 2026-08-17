@@ -256,30 +256,77 @@
             <div id="view-upload" class="absolute inset-0 flex flex-col w-full h-full">
                 <!-- 统一基础信息与步骤质量总览模块 -->
                 <div class="bg-white border-b border-gray-200 px-8 py-6 flex-shrink-0 z-10 shadow-sm w-full relative">
-                    <!-- 上半部：项目基础信息 -->
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center space-x-4">
-                            <h2 class="text-[17px] font-bold text-gray-900 tracking-tight">00000023 - KDC Caseview Test</h2>
-                            <div class="h-4 w-px bg-gray-200"></div>
+    
+                    <!-- 上半部：项目基础信息与 Ticket no -->
+                    <div class="flex items-center justify-between mb-5">
+                        
+                        <!-- 左侧核心数据流 -->
+                        <div class="flex items-center flex-wrap gap-y-2">
                             
-                            <div class="relative">
+                            <!-- 1. 独立的大标题 -->
+                            <h2 class="text-[20px] font-bold text-gray-900 tracking-tight mr-4">KDC Caseview Test</h2>
+                            
+                            <div class="h-4 w-px bg-gray-200 mx-2"></div>
+                            
+                            <!-- 2. 独立的项目编号 -->
+                            <div class="text-sm ml-2 flex items-center">
+                                <span class="text-gray-500 font-medium mr-1.5">项目编号</span>
+                                <span class="text-gray-700 font-mono font-medium select-all">00000023</span>
+                            </div>
+                
+                            <div class="h-4 w-px bg-gray-200 mx-4"></div>
+                            
+                            <!-- 3. 公司下拉选择 -->
+                            <div class="relative mr-4">
                                 <select class="appearance-none bg-gray-50 border border-gray-200 text-gray-700 hover:bg-gray-100 hover:border-gray-300 rounded-md pl-3 pr-8 py-1.5 text-xs font-medium focus:outline-none focus:border-[#00338D] focus:ring-1 focus:ring-[#00338D] transition-all cursor-pointer">
                                     <option>KDC Caseview Test_1</option>
                                 </select>
                                 <svg class="w-3.5 h-3.5 absolute right-2.5 top-[7px] text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </div>
                             
-                            <div class="flex items-center bg-[#F0F4F8] text-[#00338D] px-2.5 py-1.5 rounded-md text-xs font-medium border border-[#D9E2EC]">
+                            <!-- 4. Hash值与类型 -->
+                            <div class="flex items-center bg-[#F0F4F8] text-[#00338D] px-2.5 py-1.5 rounded-md text-xs font-medium border border-[#D9E2EC] select-all">
                                 <svg class="w-3.5 h-3.5 mr-1.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
-                                a7132a368992422aa0952ea38cc5a44b <span class="mx-1.5 text-blue-300">|</span> 年报审计
+                                <span class="mr-1.5">年报审计</span> <span class="mx-1 text-blue-300">|</span> <span class="font-mono ml-1">a7132a368992422aa0952ea38cc5a44b</span>
                             </div>
                         </div>
                         
+                        <!-- 右侧：Ticket no (完全恢复为你原有的 button 代码) -->
                         <button class="flex items-center text-gray-500 hover:text-[#00338D] transition-colors cursor-pointer text-xs font-medium bg-white hover:bg-blue-50 px-3 py-1.5 rounded-md border border-gray-200 hover:border-blue-200 shadow-sm">
                             <span class="mr-1.5">Ticket no</span>
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                         </button>
                     </div>
+                
+                    <!-- 下半部：状态、期间 -->
+                    <div class="flex items-center mt-1">
+                        
+                        <!-- 区块 1：项目健康度 -->
+                        <div class="flex items-center">
+                            <!-- 黑色红绿灯指示器 -->
+                            <div class="flex items-center justify-center h-[22px] px-1.5 bg-[#252E38] rounded mr-3 shadow-sm">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#FA5151] mr-1.5"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-gray-500 opacity-50 mr-1.5"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-gray-500 opacity-50"></span>
+                            </div>
+                            <!-- 上下堆叠的文字 -->
+                            <div class="flex flex-col justify-center">
+                                <span class="text-[11px] text-gray-400 mb-0.5 leading-none">项目健康度</span>
+                                <span class="text-[#FA5151] text-xs font-medium leading-none mt-1">红灯·高风险</span>
+                            </div>
+                        </div>
+                
+                        <!-- 浅灰色长竖线分割 -->
+                        <div class="h-7 w-px bg-gray-200 mx-8"></div>
+                
+                        <!-- 区块 2：审计期间 -->
+                        <div class="flex flex-col justify-center">
+                            <span class="text-[11px] text-gray-400 mb-0.5 leading-none">审计期间</span>
+                            <span class="text-gray-800 text-xs font-medium leading-none mt-1">2025-01-01 至 2025-12-31</span>
+                        </div>
+                        
+                    </div>
+                        
                 </div>
             
                 <!-- 滚动主内容区域 -->
@@ -1797,7 +1844,6 @@ Error generating stack: `+e.message+`
                         <div class="toolbar flex justify-between items-center bg-white p-4 px-6 rounded-t-lg border border-gray-200 border-b-0 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
                             
                             <div class="flex items-center gap-6 text-[13px]">
-                                <h1 class="text-base font-semibold text-gray-900 m-0 pr-4 border-r border-gray-200">科目余额表</h1>
                                 
                                 <div class="flex items-center gap-4">
                                     <span class="text-gray-600 font-medium">套表所属年度</span>
@@ -1921,19 +1967,18 @@ Error generating stack: `+e.message+`
             <!-- 内嵌 JS 逻辑处理排序、筛选和渲染 -->
             <script>
                 (function() {
+                    // 数据调整：去除了中间级科目，直接挂靠在资产负债权益（大类）下
+                    // 故意修改了金额数据，制造差额，以便演示借贷不平提示
                     const mockData = [
                         { id: '10', parentId: null, code: '10', name: '资产类', open: 12345623.21, inc: 123456712.13, dec: 113456712.27, close: 22345623.07 },
-                        { id: '1001', parentId: '10', code: '1001', name: '货币资金', open: 12345623.21, inc: 123456712.13, dec: 113456712.27, close: 22345623.07 },
-                        { id: '1001.01', parentId: '1001', code: '1001.01', name: '库存现金', open: 0, inc: 0, dec: 0, close: 0 },
-                        { id: '1002', parentId: '10', code: '1002', name: '银行存款', open: 12345623.21, inc: 123456712.13, dec: 113456712.27, close: 22345623.07 },
-                        { id: '1002.01', parentId: '1002', code: '1002.01', name: '工商银行-基本户', open: 2345623.21, inc: 23456712.13, dec: 13456712.27, close: 12345623.07 },
-                        { id: '1002.02', parentId: '1002', code: '1002.02', name: '招商银行-一般户', open: 10000000.00, inc: 100000000.00, dec: 100000000.00, close: 10000000.00 },
+                        { id: '1001.01', parentId: '10', code: '1001.01', name: '库存现金', open: 0, inc: 0, dec: 0, close: 0 },
+                        { id: '1002.01', parentId: '10', code: '1002.01', name: '工商银行-基本户', open: 2345623.21, inc: 23456712.13, dec: 13456712.27, close: 12345623.07 },
+                        { id: '1002.02', parentId: '10', code: '1002.02', name: '招商银行-一般户', open: 10000000.00, inc: 100000000.00, dec: 100000000.00, close: 10000000.00 },
                         { id: '1122', parentId: '10', code: '1122', name: '应收账款', open: 500000.00, inc: 0, dec: 0, close: 500000.00 },
                         { id: '20', parentId: null, code: '20', name: '负债类', open: -5000000.00, inc: 200000.00, dec: 90000.00, close: -4890000.00 },
-                        { id: '2202', parentId: '20', code: '2202', name: '应付账款', open: -5000000.00, inc: 200000.00, dec: 90000.00, close: -4890000.00 },
-                        { id: '2202.01', parentId: '2202', code: '2202.01', name: '应付账款-供应商A', open: -5000000.00, inc: 200000.00, dec: 90000.00, close: -4890000.00 },
-                        { id: '40', parentId: null, code: '40', name: '权益类', open: 0, inc: 0, dec: 0, close: 0 },
-                        { id: '4001', parentId: '40', code: '4001', name: '实收资本', open: 0, inc: 0, dec: 0, close: 0 }
+                        { id: '2202.01', parentId: '20', code: '2202.01', name: '应付账款-供应商A', open: -5000000.00, inc: 200000.00, dec: 90000.00, close: -4890000.00 },
+                        { id: '40', parentId: null, code: '40', name: '权益类', open: -7300000.00, inc: -123000000.00, dec: -113000000.00, close: -17300000.00 },
+                        { id: '4001', parentId: '40', code: '4001', name: '实收资本', open: -7300000.00, inc: -123000000.00, dec: -113000000.00, close: -17300000.00 }
                     ];
         
                     let activeFilters = { code: [], name: [] };
@@ -2087,16 +2132,35 @@ Error generating stack: `+e.message+`
                         const tfoot = document.getElementById('tbTableFooter');
                         if (!tfoot) return;
                         let totalOpen = 0, totalInc = 0, totalDec = 0, totalClose = 0;
+                        
+                        // 计算一级科目的汇总（即大类），如果是平的，汇总应该是0
                         dataToRender.forEach(row => {
-                            if (row.depth === 0) { totalOpen += row.open; totalInc += row.inc; totalDec += row.dec; totalClose += row.close; }
+                            if (row.depth === 0) { 
+                                totalOpen += row.open; 
+                                totalInc += row.inc; 
+                                totalDec += row.dec; 
+                                totalClose += row.close; 
+                            }
                         });
                         
+                        // 浮点数精度处理，绝对值大于0.01视为不平
+                        const isBalanced = Math.abs(totalOpen) < 0.01 && Math.abs(totalInc) < 0.01 && Math.abs(totalDec) < 0.01 && Math.abs(totalClose) < 0.01;
+                        
+                        let warningHtml = '';
+                        if (!isBalanced) {
+                            warningHtml = `<span class="text-red-500 inline-flex items-center gap-1 font-normal text-[12px] bg-red-50 px-2 py-0.5 rounded border border-red-100 whitespace-nowrap shadow-sm">
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
+                                借贷不平
+                            </span>`;
+                        }
+                        
                         tfoot.innerHTML = `<tr>
-                            <td colspan="2" class="px-4 py-3 text-right border-t border-gray-200">合计</td>
-                            <td class="px-4 py-3 text-right border-t border-gray-200 tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(totalOpen)}</td>
-                            <td class="px-4 py-3 text-right border-t border-gray-200 tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(totalInc)}</td>
-                            <td class="px-4 py-3 text-right border-t border-gray-200 tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(totalDec)}</td>
-                            <td class="px-4 py-3 text-right border-t border-gray-200 tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(totalClose)}</td>
+                            <td class="px-4 py-3 border-t border-gray-200 align-middle">${warningHtml}</td>
+                            <td class="px-4 py-3 text-left border-t border-gray-200 text-gray-900 align-middle font-semibold">合计</td>
+                            <td class="px-4 py-3 text-right border-t border-gray-200 tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace] ${Math.abs(totalOpen) >= 0.01 ? 'text-red-500' : ''}">${formatMoney(totalOpen)}</td>
+                            <td class="px-4 py-3 text-right border-t border-gray-200 tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace] ${Math.abs(totalInc) >= 0.01 ? 'text-red-500' : ''}">${formatMoney(totalInc)}</td>
+                            <td class="px-4 py-3 text-right border-t border-gray-200 tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace] ${Math.abs(totalDec) >= 0.01 ? 'text-red-500' : ''}">${formatMoney(totalDec)}</td>
+                            <td class="px-4 py-3 text-right border-t border-gray-200 tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace] ${Math.abs(totalClose) >= 0.01 ? 'text-red-500' : ''}">${formatMoney(totalClose)}</td>
                         </tr>`;
                     };
         
