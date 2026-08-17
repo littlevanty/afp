@@ -1807,6 +1807,10 @@ Error generating stack: `+e.message+`
                 .tb-modal-ui .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
                 .tb-modal-ui .custom-scrollbar::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
                 .tb-modal-ui .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+                
+                /* 子菜单展开折叠动画样式 */
+                .submenu-expanded { max-height: 200px; opacity: 1; margin-top: 0.25rem; }
+                .submenu-collapsed { max-height: 0; opacity: 0; margin-top: 0; }
             </style>
         
             <!-- 弹窗内部容器，几乎全屏 -->
@@ -1824,15 +1828,20 @@ Error generating stack: `+e.message+`
                         </div>
                         
                         <div class="sidebar-menu p-3 flex-1 overflow-y-auto custom-scrollbar">
-                            <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 bg-[#6BA4C7] text-white font-medium transition-all shadow-sm">科目余额表</div>
+                            <div id="menu-tb" class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all bg-[#6BA4C7] text-white font-medium shadow-sm" onclick="switchView('tb')">科目余额表</div>
                             <div class="mt-2">
-                                <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm text-gray-900 flex items-center justify-between hover:bg-gray-50 transition-all">
+                                <!-- 点击父级“管理层报表”默认切换至资产负债表且触发展开/折叠 -->
+                                <div class="p-2.5 pl-4 pr-3 rounded-md cursor-pointer text-sm text-gray-900 flex items-center justify-between hover:bg-gray-50 transition-all" onclick="toggleManagementAndSwitch(event)">
                                     管理层报表
-                                    <svg class="w-3.5 h-3.5 fill-gray-400 rotate-180" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+                                    <!-- 独立点击箭头仅触发展开折叠 -->
+                                    <div class="p-1 rounded hover:bg-gray-200 transition-colors flex items-center justify-center" onclick="toggleManagementOnly(event)">
+                                        <svg id="management-arrow" class="w-3.5 h-3.5 fill-gray-400 transform transition-transform duration-200 rotate-180" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+                                    </div>
                                 </div>
-                                <div class="pl-3 mt-1 flex flex-col gap-0.5">
-                                    <div class="py-2 pl-6 pr-4 rounded-md cursor-pointer text-[13px] text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition-all">资产负债表</div>
-                                    <div class="py-2 pl-6 pr-4 rounded-md cursor-pointer text-[13px] text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition-all">利润表</div>
+                                <!-- 子菜单容器 -->
+                                <div id="management-submenu" class="pl-3 flex flex-col gap-0.5 overflow-hidden transition-all duration-300 submenu-expanded">
+                                    <div id="menu-bs" class="py-2 pl-6 pr-4 rounded-md cursor-pointer text-[13px] transition-all text-gray-500 hover:bg-gray-50 hover:text-gray-900 block" onclick="switchView('bs')">资产负债表</div>
+                                    <div id="menu-is" class="py-2 pl-6 pr-4 rounded-md cursor-pointer text-[13px] transition-all text-gray-500 hover:bg-gray-50 hover:text-gray-900 block" onclick="switchView('is')">利润表</div>
                                 </div>
                             </div>
                         </div>
@@ -1840,126 +1849,228 @@ Error generating stack: `+e.message+`
         
                     <!-- 右侧主内容 -->
                     <div class="main-content flex-1 flex flex-col p-6 bg-[#F8F9FB] overflow-hidden">
-                        <!-- 工具栏：年度选择与隐藏零余额横向舒展排列 -->
+                        <!-- 工具栏 -->
                         <div class="toolbar flex justify-between items-center bg-white p-4 px-6 rounded-t-lg border border-gray-200 border-b-0 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
                             
-                            <div class="flex items-center gap-6 text-[13px]">
-                                
+                            <div class="flex items-center gap-4 text-[13px]">
+                                <span class="text-gray-600 font-medium">套表所属年度</span>
                                 <div class="flex items-center gap-4">
-                                    <span class="text-gray-600 font-medium">套表所属年度</span>
-                                    <div class="flex items-center gap-4">
-                                        <label class="flex items-center gap-1.5 cursor-pointer text-gray-800">
-                                            <input type="radio" name="period" class="accent-[#6BA4C7] w-3.5 h-3.5" checked> 当期
-                                        </label>
-                                        <label class="flex items-center gap-1.5 cursor-pointer text-gray-800">
-                                            <input type="radio" name="period" class="accent-[#6BA4C7] w-3.5 h-3.5"> 比较期
-                                        </label>
-                                    </div>
+                                    <label class="flex items-center gap-1.5 cursor-pointer text-gray-800">
+                                        <input type="radio" name="period" class="accent-[#6BA4C7] w-3.5 h-3.5" checked> 当期
+                                    </label>
+                                    <label class="flex items-center gap-1.5 cursor-pointer text-gray-800">
+                                        <input type="radio" name="period" class="accent-[#6BA4C7] w-3.5 h-3.5"> 比较期
+                                    </label>
                                 </div>
                             </div>
         
                             <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-600 hover:text-gray-900 transition-colors">
                                 <span class="relative inline-block w-9 h-5">
-                                    <input type="checkbox" id="hideZeroSwitch" onchange="renderTbTable()" class="opacity-0 w-0 h-0 peer">
+                                    <input type="checkbox" id="hideZeroSwitch" onchange="window.currentView === 'tb' ? renderTbTable() : (window.currentView === 'bs' ? renderBsTable() : renderIsTable())" class="opacity-0 w-0 h-0 peer">
                                     <span class="absolute cursor-pointer inset-0 bg-gray-300 transition-colors rounded-full peer-checked:bg-[#6BA4C7] before:absolute before:h-4 before:w-4 before:left-[2px] before:bottom-[2px] before:bg-white before:rounded-full before:transition-transform peer-checked:before:translate-x-[16px] shadow-inner"></span>
                                 </span>
                                 隐藏零余额科目
                             </label>
                         </div>
         
-                        <!-- 表格区域 -->
-                        <div class="table-container flex-1 bg-white border border-gray-200 overflow-auto relative custom-scrollbar">
-                            <table class="w-full text-left border-collapse min-w-[1000px] whitespace-nowrap">
-                                <thead class="sticky top-0 z-10">
-                                    <tr>
-                                        <th width="20%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB]">
-                                            <div class="flex items-center gap-1.5 relative cursor-pointer select-none hover:text-gray-900" onclick="toggleTbFilter(event, 'code')">
-                                                科目编码
-                                                <svg class="filter-icon w-4 h-4 fill-gray-400 p-0.5 rounded transition-colors" id="icon-code" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd"></path></svg>
-                                                <!-- 编码过滤弹窗 -->
-                                                <div class="filter-popover absolute top-[32px] left-0 bg-white border border-gray-200 rounded-lg p-3 shadow-xl z-[130] w-[240px] cursor-default font-normal text-gray-800" id="popover-code" onclick="event.stopPropagation()">
-                                                    <input type="text" class="w-full p-2 border border-gray-200 rounded text-xs outline-none mb-2 focus:border-[#6BA4C7] focus:ring-1 focus:ring-[#6BA4C7] transition-all" id="search-code" placeholder="搜索科目编码" oninput="renderTbCheckboxList('code')">
-                                                    <div class="max-h-[180px] overflow-y-auto mb-3 pr-1 text-[13px] custom-scrollbar" id="list-code"></div>
-                                                    <div class="flex justify-between gap-2 border-t border-gray-100 pt-3">
-                                                        <button class="flex-1 py-1.5 bg-gray-100 text-gray-600 border-none rounded text-xs hover:bg-gray-200 transition-colors font-medium" onclick="resetTbFilter('code')">重置</button>
-                                                        <button class="flex-1 py-1.5 bg-[#6BA4C7] text-white border-none rounded text-xs hover:bg-[#528AAB] transition-colors font-medium" onclick="applyTbFilter('code')">确定</button>
+                        <!-- 科目余额表 (TB) 视图 -->
+                        <div id="view-tb" class="flex-1 flex flex-col min-h-0">
+                            <div class="table-container flex-1 bg-white border border-gray-200 overflow-auto relative custom-scrollbar">
+                                <table class="w-full text-left border-collapse min-w-[1000px] whitespace-nowrap">
+                                    <thead class="sticky top-0 z-10">
+                                        <tr>
+                                            <th width="20%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB]">
+                                                <div class="flex items-center gap-1.5 relative cursor-pointer select-none hover:text-gray-900" onclick="toggleTbFilter(event, 'code')">
+                                                    科目编码
+                                                    <svg class="filter-icon w-4 h-4 fill-gray-400 p-0.5 rounded transition-colors" id="icon-code" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd"></path></svg>
+                                                    <div class="filter-popover absolute top-[32px] left-0 bg-white border border-gray-200 rounded-lg p-3 shadow-xl z-[130] w-[240px] cursor-default font-normal text-gray-800" id="popover-code" onclick="event.stopPropagation()">
+                                                        <input type="text" class="w-full p-2 border border-gray-200 rounded text-xs outline-none mb-2 focus:border-[#6BA4C7] focus:ring-1 focus:ring-[#6BA4C7] transition-all" id="search-code" placeholder="搜索科目编码" oninput="renderTbCheckboxList('code')">
+                                                        <div class="max-h-[180px] overflow-y-auto mb-3 pr-1 text-[13px] custom-scrollbar" id="list-code"></div>
+                                                        <div class="flex justify-between gap-2 border-t border-gray-100 pt-3">
+                                                            <button class="flex-1 py-1.5 bg-gray-100 text-gray-600 border-none rounded text-xs hover:bg-gray-200 transition-colors font-medium" onclick="resetTbFilter('code')">重置</button>
+                                                            <button class="flex-1 py-1.5 bg-[#6BA4C7] text-white border-none rounded text-xs hover:bg-[#528AAB] transition-colors font-medium" onclick="applyTbFilter('code')">确定</button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </th>
-                                        <th width="30%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB]">
-                                            <div class="flex items-center gap-1.5 relative cursor-pointer select-none hover:text-gray-900" onclick="toggleTbFilter(event, 'name')">
-                                                科目名称
-                                                <svg class="filter-icon w-4 h-4 fill-gray-400 p-0.5 rounded transition-colors" id="icon-name" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd"></path></svg>
-                                                <!-- 名称过滤弹窗 -->
-                                                <div class="filter-popover absolute top-[32px] left-0 bg-white border border-gray-200 rounded-lg p-3 shadow-xl z-[130] w-[240px] cursor-default font-normal text-gray-800" id="popover-name" onclick="event.stopPropagation()">
-                                                    <input type="text" class="w-full p-2 border border-gray-200 rounded text-xs outline-none mb-2 focus:border-[#6BA4C7] focus:ring-1 focus:ring-[#6BA4C7] transition-all" id="search-name" placeholder="搜索科目名称" oninput="renderTbCheckboxList('name')">
-                                                    <div class="max-h-[180px] overflow-y-auto mb-3 pr-1 text-[13px] custom-scrollbar" id="list-name"></div>
-                                                    <div class="flex justify-between gap-2 border-t border-gray-100 pt-3">
-                                                        <button class="flex-1 py-1.5 bg-gray-100 text-gray-600 border-none rounded text-xs hover:bg-gray-200 transition-colors font-medium" onclick="resetTbFilter('name')">重置</button>
-                                                        <button class="flex-1 py-1.5 bg-[#6BA4C7] text-white border-none rounded text-xs hover:bg-[#528AAB] transition-colors font-medium" onclick="applyTbFilter('name')">确定</button>
+                                            </th>
+                                            <th width="30%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB]">
+                                                <div class="flex items-center gap-1.5 relative cursor-pointer select-none hover:text-gray-900" onclick="toggleTbFilter(event, 'name')">
+                                                    科目名称
+                                                    <svg class="filter-icon w-4 h-4 fill-gray-400 p-0.5 rounded transition-colors" id="icon-name" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd"></path></svg>
+                                                    <div class="filter-popover absolute top-[32px] left-0 bg-white border border-gray-200 rounded-lg p-3 shadow-xl z-[130] w-[240px] cursor-default font-normal text-gray-800" id="popover-name" onclick="event.stopPropagation()">
+                                                        <input type="text" class="w-full p-2 border border-gray-200 rounded text-xs outline-none mb-2 focus:border-[#6BA4C7] focus:ring-1 focus:ring-[#6BA4C7] transition-all" id="search-name" placeholder="搜索科目名称" oninput="renderTbCheckboxList('name')">
+                                                        <div class="max-h-[180px] overflow-y-auto mb-3 pr-1 text-[13px] custom-scrollbar" id="list-name"></div>
+                                                        <div class="flex justify-between gap-2 border-t border-gray-100 pt-3">
+                                                            <button class="flex-1 py-1.5 bg-gray-100 text-gray-600 border-none rounded text-xs hover:bg-gray-200 transition-colors font-medium" onclick="resetTbFilter('name')">重置</button>
+                                                            <button class="flex-1 py-1.5 bg-[#6BA4C7] text-white border-none rounded text-xs hover:bg-[#528AAB] transition-colors font-medium" onclick="applyTbFilter('name')">确定</button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </th>
-                                        <th width="12.5%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer select-none hover:text-gray-900 group" onclick="handleTbSort('open')">
-                                            <div class="flex items-center justify-end gap-1">期初余额
-                                                <div class="sort-icon flex flex-col w-2.5 h-3.5 ml-1" id="sort-open">
-                                                    <svg class="up w-2.5 h-1.5 group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
-                                                    <svg class="down w-2.5 h-1.5 mt-[2px] group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
+                                            </th>
+                                            <th width="12.5%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer select-none hover:text-gray-900 group" onclick="handleTbSort('open')">
+                                                <div class="flex items-center justify-end gap-1">期初余额
+                                                    <div class="sort-icon flex flex-col w-2.5 h-3.5 ml-1" id="sort-open">
+                                                        <svg class="up w-2.5 h-1.5 group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
+                                                        <svg class="down w-2.5 h-1.5 mt-[2px] group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </th>
-                                        <th width="12.5%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer select-none hover:text-gray-900 group" onclick="handleTbSort('inc')">
-                                            <div class="flex items-center justify-end gap-1">本期增加
-                                                <div class="sort-icon flex flex-col w-2.5 h-3.5 ml-1" id="sort-inc">
-                                                    <svg class="up w-2.5 h-1.5 group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
-                                                    <svg class="down w-2.5 h-1.5 mt-[2px] group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
+                                            </th>
+                                            <th width="12.5%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer select-none hover:text-gray-900 group" onclick="handleTbSort('inc')">
+                                                <div class="flex items-center justify-end gap-1">本期增加
+                                                    <div class="sort-icon flex flex-col w-2.5 h-3.5 ml-1" id="sort-inc">
+                                                        <svg class="up w-2.5 h-1.5 group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
+                                                        <svg class="down w-2.5 h-1.5 mt-[2px] group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </th>
-                                        <th width="12.5%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer select-none hover:text-gray-900 group" onclick="handleTbSort('dec')">
-                                            <div class="flex items-center justify-end gap-1">本期减少
-                                                <div class="sort-icon flex flex-col w-2.5 h-3.5 ml-1" id="sort-dec">
-                                                    <svg class="up w-2.5 h-1.5 group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
-                                                    <svg class="down w-2.5 h-1.5 mt-[2px] group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
+                                            </th>
+                                            <th width="12.5%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer select-none hover:text-gray-900 group" onclick="handleTbSort('dec')">
+                                                <div class="flex items-center justify-end gap-1">本期减少
+                                                    <div class="sort-icon flex flex-col w-2.5 h-3.5 ml-1" id="sort-dec">
+                                                        <svg class="up w-2.5 h-1.5 group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
+                                                        <svg class="down w-2.5 h-1.5 mt-[2px] group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </th>
-                                        <th width="12.5%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer select-none hover:text-gray-900 group" onclick="handleTbSort('close')">
-                                            <div class="flex items-center justify-end gap-1">期末余额
-                                                <div class="sort-icon flex flex-col w-2.5 h-3.5 ml-1" id="sort-close">
-                                                    <svg class="up w-2.5 h-1.5 group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
-                                                    <svg class="down w-2.5 h-1.5 mt-[2px] group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
+                                            </th>
+                                            <th width="12.5%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer select-none hover:text-gray-900 group" onclick="handleTbSort('close')">
+                                                <div class="flex items-center justify-end gap-1">期末余额
+                                                    <div class="sort-icon flex flex-col w-2.5 h-3.5 ml-1" id="sort-close">
+                                                        <svg class="up w-2.5 h-1.5 group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
+                                                        <svg class="down w-2.5 h-1.5 mt-[2px] group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                
-                                <!-- JS 动态渲染主体 -->
-                                <tbody id="tbTableBody" class="text-[13px] text-gray-800"></tbody>
-                                
-                                <!-- JS 动态渲染合计 -->
-                                <tfoot id="tbTableFooter" class="sticky bottom-0 z-10 bg-[#F8FAFC] font-semibold text-[13px] shadow-[0_-1px_0_#E5E7EB]"></tfoot>
-                            </table>
-                        </div>
-            
-                        <!-- 底部独立分页 -->
-                        <div class="pagination flex justify-end items-center p-3 px-6 bg-white border border-gray-200 border-t-0 rounded-b-lg text-[13px] text-gray-500 gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-                            <span>共 436 条</span>
-                            <select class="px-2 py-1 border border-gray-200 rounded outline-none cursor-pointer focus:border-[#6BA4C7]"><option>20条/页</option><option>50条/页</option><option>100条/页</option></select>
-                            <div class="flex items-center gap-1">
-                                <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">&lt;</button>
-                                <button class="min-w-[28px] h-7 bg-[#6BA4C7] text-white border border-[#6BA4C7] rounded flex justify-center items-center shadow-sm">1</button>
-                                <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">2</button>
-                                <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">3</button>
-                                <span class="px-1">...</span>
-                                <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">22</button>
-                                <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">&gt;</button>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbTableBody" class="text-[13px] text-gray-800"></tbody>
+                                    <tfoot id="tbTableFooter" class="sticky bottom-0 z-10 bg-[#F8FAFC] font-semibold text-[13px] shadow-[0_-1px_0_#E5E7EB]"></tfoot>
+                                </table>
                             </div>
-                            <div class="flex items-center">前往 <input type="number" value="1" class="w-11 h-7 text-center border border-gray-200 rounded mx-2 outline-none focus:border-[#6BA4C7] transition-colors"> 页</div>
+                            <div class="pagination flex justify-end items-center p-3 px-6 bg-white border border-gray-200 border-t-0 rounded-b-lg text-[13px] text-gray-500 gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+                                <span>共 436 条</span>
+                                <select class="px-2 py-1 border border-gray-200 rounded outline-none cursor-pointer focus:border-[#6BA4C7]"><option>20条/页</option><option>50条/页</option><option>100条/页</option></select>
+                                <div class="flex items-center gap-1">
+                                    <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">&lt;</button>
+                                    <button class="min-w-[28px] h-7 bg-[#6BA4C7] text-white border border-[#6BA4C7] rounded flex justify-center items-center shadow-sm">1</button>
+                                    <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">2</button>
+                                    <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">3</button>
+                                    <span class="px-1">...</span>
+                                    <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">22</button>
+                                    <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">&gt;</button>
+                                </div>
+                                <div class="flex items-center">前往 <input type="number" value="1" class="w-11 h-7 text-center border border-gray-200 rounded mx-2 outline-none focus:border-[#6BA4C7] transition-colors"> 页</div>
+                            </div>
                         </div>
+    
+                        <!-- 资产负债表 (BS) 视图 -->
+                        <div id="view-bs" class="flex-1 flex flex-col min-h-0 hidden">
+                            <div class="table-container flex-1 bg-white border border-gray-200 overflow-auto relative custom-scrollbar">
+                                <table class="w-full text-left border-collapse min-w-[1000px] whitespace-nowrap">
+                                    <thead class="sticky top-0 z-10">
+                                        <tr>
+                                            <th width="10%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB]">序号</th>
+                                            <th width="40%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB]">
+                                                <div class="flex items-center gap-1.5 relative cursor-pointer select-none hover:text-gray-900" onclick="toggleBsFilter(event, 'item')">
+                                                    报表项目
+                                                    <svg class="filter-icon w-4 h-4 fill-gray-400 p-0.5 rounded transition-colors" id="icon-bs-item" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd"></path></svg>
+                                                    <div class="filter-popover absolute top-[32px] left-0 bg-white border border-gray-200 rounded-lg p-3 shadow-xl z-[130] w-[240px] cursor-default font-normal text-gray-800" id="popover-bs-item" onclick="event.stopPropagation()">
+                                                        <input type="text" class="w-full p-2 border border-gray-200 rounded text-xs outline-none mb-2 focus:border-[#6BA4C7] focus:ring-1 focus:ring-[#6BA4C7] transition-all" id="search-bs-item" placeholder="搜索报表项目" oninput="renderBsCheckboxList('item')">
+                                                        <div class="max-h-[180px] overflow-y-auto mb-3 pr-1 text-[13px] custom-scrollbar" id="list-bs-item"></div>
+                                                        <div class="flex justify-between gap-2 border-t border-gray-100 pt-3">
+                                                            <button class="flex-1 py-1.5 bg-gray-100 text-gray-600 border-none rounded text-xs hover:bg-gray-200 transition-colors font-medium" onclick="resetBsFilter('item')">重置</button>
+                                                            <button class="flex-1 py-1.5 bg-[#6BA4C7] text-white border-none rounded text-xs hover:bg-[#528AAB] transition-colors font-medium" onclick="applyBsFilter('item')">确定</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th width="25%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer select-none hover:text-gray-900 group" onclick="handleBsSort('open')">
+                                                <div class="flex items-center justify-end gap-1">期初余额
+                                                    <div class="sort-icon flex flex-col w-2.5 h-3.5 ml-1" id="sort-bs-open">
+                                                        <svg class="up w-2.5 h-1.5 group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
+                                                        <svg class="down w-2.5 h-1.5 mt-[2px] group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th width="25%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer select-none hover:text-gray-900 group" onclick="handleBsSort('close')">
+                                                <div class="flex items-center justify-end gap-1">期末余额
+                                                    <div class="sort-icon flex flex-col w-2.5 h-3.5 ml-1" id="sort-bs-close">
+                                                        <svg class="up w-2.5 h-1.5 group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
+                                                        <svg class="down w-2.5 h-1.5 mt-[2px] group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bsTableBody" class="text-[13px] text-gray-800"></tbody>
+                                    <tfoot id="bsTableFooter" class="sticky bottom-0 z-10 bg-[#F8FAFC] font-semibold text-[13px] shadow-[0_-1px_0_#E5E7EB]"></tfoot>
+                                </table>
+                            </div>
+                            <div class="pagination flex justify-end items-center p-3 px-6 bg-white border border-gray-200 border-t-0 rounded-b-lg text-[13px] text-gray-500 gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+                                <span>共 20 条</span>
+                                <select class="px-2 py-1 border border-gray-200 rounded outline-none cursor-pointer focus:border-[#6BA4C7]"><option>20条/页</option><option>50条/页</option><option>100条/页</option></select>
+                                <div class="flex items-center gap-1">
+                                    <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">&lt;</button>
+                                    <button class="min-w-[28px] h-7 bg-[#6BA4C7] text-white border border-[#6BA4C7] rounded flex justify-center items-center shadow-sm">1</button>
+                                    <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">&gt;</button>
+                                </div>
+                                <div class="flex items-center">前往 <input type="number" value="1" class="w-11 h-7 text-center border border-gray-200 rounded mx-2 outline-none focus:border-[#6BA4C7] transition-colors"> 页</div>
+                            </div>
+                        </div>
+    
+                        <!-- 利润表 (IS) 视图 -->
+                        <div id="view-is" class="flex-1 flex flex-col min-h-0 hidden">
+                            <div class="table-container flex-1 bg-white border border-gray-200 overflow-auto relative custom-scrollbar">
+                                <table class="w-full text-left border-collapse min-w-[1000px] whitespace-nowrap">
+                                    <thead class="sticky top-0 z-10">
+                                        <tr>
+                                            <th width="10%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB]">序号</th>
+                                            <th width="40%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB]">
+                                                <div class="flex items-center gap-1.5 relative cursor-pointer select-none hover:text-gray-900" onclick="toggleIsFilter(event, 'item')">
+                                                    报表项目
+                                                    <svg class="filter-icon w-4 h-4 fill-gray-400 p-0.5 rounded transition-colors" id="icon-is-item" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd"></path></svg>
+                                                    <div class="filter-popover absolute top-[32px] left-0 bg-white border border-gray-200 rounded-lg p-3 shadow-xl z-[130] w-[240px] cursor-default font-normal text-gray-800" id="popover-is-item" onclick="event.stopPropagation()">
+                                                        <input type="text" class="w-full p-2 border border-gray-200 rounded text-xs outline-none mb-2 focus:border-[#6BA4C7] focus:ring-1 focus:ring-[#6BA4C7] transition-all" id="search-is-item" placeholder="搜索报表项目" oninput="renderIsCheckboxList('item')">
+                                                        <div class="max-h-[180px] overflow-y-auto mb-3 pr-1 text-[13px] custom-scrollbar" id="list-is-item"></div>
+                                                        <div class="flex justify-between gap-2 border-t border-gray-100 pt-3">
+                                                            <button class="flex-1 py-1.5 bg-gray-100 text-gray-600 border-none rounded text-xs hover:bg-gray-200 transition-colors font-medium" onclick="resetIsFilter('item')">重置</button>
+                                                            <button class="flex-1 py-1.5 bg-[#6BA4C7] text-white border-none rounded text-xs hover:bg-[#528AAB] transition-colors font-medium" onclick="applyIsFilter('item')">确定</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th width="25%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer select-none hover:text-gray-900 group" onclick="handleIsSort('open')">
+                                                <div class="flex items-center justify-end gap-1">期初余额
+                                                    <div class="sort-icon flex flex-col w-2.5 h-3.5 ml-1" id="sort-is-open">
+                                                        <svg class="up w-2.5 h-1.5 group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
+                                                        <svg class="down w-2.5 h-1.5 mt-[2px] group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th width="25%" class="bg-[#F8FAFC] text-gray-600 font-medium px-4 py-3 border-b border-gray-200 text-[13px] shadow-[0_1px_0_#E5E7EB] text-right cursor-pointer select-none hover:text-gray-900 group" onclick="handleIsSort('close')">
+                                                <div class="flex items-center justify-end gap-1">期末余额
+                                                    <div class="sort-icon flex flex-col w-2.5 h-3.5 ml-1" id="sort-is-close">
+                                                        <svg class="up w-2.5 h-1.5 group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 0L10 6H0L5 0Z" /></svg>
+                                                        <svg class="down w-2.5 h-1.5 mt-[2px] group-hover:fill-gray-400" viewBox="0 0 10 6"><path d="M5 6L0 0H10L5 6Z" /></svg>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="isTableBody" class="text-[13px] text-gray-800"></tbody>
+                                    <tfoot id="isTableFooter" class="sticky bottom-0 z-10 bg-[#F8FAFC] font-semibold text-[13px] shadow-[0_-1px_0_#E5E7EB]"></tfoot>
+                                </table>
+                            </div>
+                            <div class="pagination flex justify-end items-center p-3 px-6 bg-white border border-gray-200 border-t-0 rounded-b-lg text-[13px] text-gray-500 gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+                                <span>共 15 条</span>
+                                <select class="px-2 py-1 border border-gray-200 rounded outline-none cursor-pointer focus:border-[#6BA4C7]"><option>20条/页</option><option>50条/页</option><option>100条/页</option></select>
+                                <div class="flex items-center gap-1">
+                                    <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">&lt;</button>
+                                    <button class="min-w-[28px] h-7 bg-[#6BA4C7] text-white border border-[#6BA4C7] rounded flex justify-center items-center shadow-sm">1</button>
+                                    <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">&gt;</button>
+                                </div>
+                                <div class="flex items-center">前往 <input type="number" value="1" class="w-11 h-7 text-center border border-gray-200 rounded mx-2 outline-none focus:border-[#6BA4C7] transition-colors"> 页</div>
+                            </div>
+                        </div>
+    
                     </div>
                 </div>
             </div>
@@ -1967,9 +2078,15 @@ Error generating stack: `+e.message+`
             <!-- 内嵌 JS 逻辑处理排序、筛选和渲染 -->
             <script>
                 (function() {
-                    // 数据调整：去除了中间级科目，直接挂靠在资产负债权益（大类）下
-                    // 故意修改了金额数据，制造差额，以便演示借贷不平提示
-                    const mockData = [
+                    // 全局视图状态
+                    window.currentView = 'tb';
+        
+                    const formatMoney = (amount) => amount === 0 ? '0.00' : amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    
+                    /* =======================================
+                     * 科目余额表 (TB) 数据与逻辑 
+                     * ======================================= */
+                    const mockDataTb = [
                         { id: '10', parentId: null, code: '10', name: '资产类', open: 12345623.21, inc: 123456712.13, dec: 113456712.27, close: 22345623.07 },
                         { id: '1001.01', parentId: '10', code: '1001.01', name: '库存现金', open: 0, inc: 0, dec: 0, close: 0 },
                         { id: '1002.01', parentId: '10', code: '1002.01', name: '工商银行-基本户', open: 2345623.21, inc: 23456712.13, dec: 13456712.27, close: 12345623.07 },
@@ -1981,12 +2098,9 @@ Error generating stack: `+e.message+`
                         { id: '4001', parentId: '40', code: '4001', name: '实收资本', open: -7300000.00, inc: -123000000.00, dec: -113000000.00, close: -17300000.00 }
                     ];
         
-                    let activeFilters = { code: [], name: [] };
-                    let sortState = { col: null, order: null };
+                    let activeFiltersTb = { code: [], name: [] };
+                    let sortStateTb = { col: null, order: null };
                     
-                    const formatMoney = (amount) => amount === 0 ? '0.00' : amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    
-                    // 暴露全局方法以绑定到 HTML 的 onclick
                     window.toggleTbFilter = (event, colKey) => {
                         event.stopPropagation();
                         const popover = document.getElementById(`popover-${colKey}`);
@@ -2003,16 +2117,16 @@ Error generating stack: `+e.message+`
                     window.renderTbCheckboxList = (colKey) => {
                         const searchVal = document.getElementById(`search-${colKey}`).value.toLowerCase().trim();
                         const listContainer = document.getElementById(`list-${colKey}`);
-                        let uniqueVals = [...new Set(mockData.map(item => item[colKey]))].sort();
+                        let uniqueVals = [...new Set(mockDataTb.map(item => item[colKey]))].sort();
                         if (searchVal) uniqueVals = uniqueVals.filter(v => String(v).toLowerCase().includes(searchVal));
-                        const isAllSelected = uniqueVals.length > 0 && uniqueVals.every(v => activeFilters[colKey].includes(v));
+                        const isAllSelected = uniqueVals.length > 0 && uniqueVals.every(v => activeFiltersTb[colKey].includes(v));
                         
                         let html = `<label class="checkbox-item font-semibold text-gray-800"><input type="checkbox" onchange="toggleTbSelectAll('${colKey}', this.checked)" ${isAllSelected ? 'checked' : ''} class="accent-[#6BA4C7] w-3.5 h-3.5"> 全选</label><div class="h-px bg-gray-200 my-1"></div>`;
                         if (uniqueVals.length === 0) {
                             html += `<div class="text-gray-400 py-2 text-center">无匹配数据</div>`;
                         } else {
                             uniqueVals.forEach(val => {
-                                const isChecked = activeFilters[colKey].includes(val);
+                                const isChecked = activeFiltersTb[colKey].includes(val);
                                 html += `<label class="checkbox-item"><input type="checkbox" value="${val}" class="filter-cb-${colKey} accent-[#6BA4C7] w-3.5 h-3.5" onchange="updateTbCheckedState('${colKey}')" ${isChecked ? 'checked' : ''}> ${val}</label>`;
                             });
                         }
@@ -2025,42 +2139,42 @@ Error generating stack: `+e.message+`
                     };
         
                     window.updateTbCheckedState = (colKey) => {
-                        let newActive = [...activeFilters[colKey]];
+                        let newActive = [...activeFiltersTb[colKey]];
                         document.querySelectorAll(`.filter-cb-${colKey}`).forEach(cb => {
                             if (cb.checked && !newActive.includes(cb.value)) newActive.push(cb.value);
                             if (!cb.checked && newActive.includes(cb.value)) newActive = newActive.filter(v => v !== cb.value);
                         });
-                        activeFilters[colKey] = newActive;
+                        activeFiltersTb[colKey] = newActive;
                         if(!document.getElementById(`search-${colKey}`).value) window.renderTbCheckboxList(colKey); 
                     };
         
                     window.applyTbFilter = (colKey) => {
                         document.getElementById(`popover-${colKey}`).classList.remove('show');
                         const iconEle = document.getElementById(`icon-${colKey}`);
-                        activeFilters[colKey].length > 0 ? iconEle.classList.add('active') : iconEle.classList.remove('active');
+                        activeFiltersTb[colKey].length > 0 ? iconEle.classList.add('active') : iconEle.classList.remove('active');
                         window.renderTbTable();
                     };
         
                     window.resetTbFilter = (colKey) => {
-                        activeFilters[colKey] = [];
+                        activeFiltersTb[colKey] = [];
                         document.getElementById(`search-${colKey}`).value = '';
                         window.applyTbFilter(colKey);
                     };
         
                     window.handleTbSort = (colKey) => {
-                        if (sortState.col === colKey) {
-                            sortState.order = sortState.order === 'desc' ? 'asc' : (sortState.order === 'asc' ? null : 'desc');
+                        if (sortStateTb.col === colKey) {
+                            sortStateTb.order = sortStateTb.order === 'desc' ? 'asc' : (sortStateTb.order === 'asc' ? null : 'desc');
                         } else {
-                            sortState = { col: colKey, order: 'desc' };
+                            sortStateTb = { col: colKey, order: 'desc' };
                         }
-                        document.querySelectorAll('.sort-icon').forEach(el => { el.classList.remove('asc', 'desc'); });
-                        if (sortState.order) {
-                            document.getElementById(`sort-${colKey}`).classList.add(sortState.order);
+                        document.getElementById('view-tb').querySelectorAll('.sort-icon').forEach(el => { el.classList.remove('asc', 'desc'); });
+                        if (sortStateTb.order) {
+                            document.getElementById(`sort-${colKey}`).classList.add(sortStateTb.order);
                         }
                         window.renderTbTable();
                     };
         
-                    const buildAndSortTree = (data) => {
+                    const buildAndSortTreeTb = (data) => {
                         let map = {}, root = [];
                         data.forEach(node => map[node.id] = { ...node, children: [], hasChildren: false });
                         data.forEach(node => {
@@ -2068,8 +2182,8 @@ Error generating stack: `+e.message+`
                             else root.push(map[node.id]);
                         });
                         const sortNodes = (nodes) => {
-                            if (!sortState.col || !sortState.order) return nodes;
-                            nodes.sort((a, b) => sortState.order === 'asc' ? a[sortState.col] - b[sortState.col] : b[sortState.col] - a[sortState.col]);
+                            if (!sortStateTb.col || !sortStateTb.order) return nodes;
+                            nodes.sort((a, b) => sortStateTb.order === 'asc' ? a[sortStateTb.col] - b[sortStateTb.col] : b[sortStateTb.col] - a[sortStateTb.col]);
                             nodes.forEach(node => { if (node.children.length > 0) node.children = sortNodes(node.children); });
                             return nodes;
                         };
@@ -2080,19 +2194,19 @@ Error generating stack: `+e.message+`
                         return flatten(sortNodes(root));
                     };
         
-                    const getProcessedData = () => {
-                        let resultData = [...mockData];
+                    const getProcessedDataTb = () => {
+                        let resultData = [...mockDataTb];
                         const hideZeroChecked = document.getElementById('hideZeroSwitch') ? document.getElementById('hideZeroSwitch').checked : false;
                         
                         if (hideZeroChecked) {
                             resultData = resultData.filter(row => !(row.open === 0 && row.inc === 0 && row.dec === 0 && row.close === 0));
                         }
-                        if (activeFilters.code.length > 0 || activeFilters.name.length > 0) {
+                        if (activeFiltersTb.code.length > 0 || activeFiltersTb.name.length > 0) {
                             const keepIds = new Set();
                             resultData.forEach(row => {
                                 let match = true;
-                                if (activeFilters.code.length > 0 && !activeFilters.code.includes(row.code)) match = false;
-                                if (activeFilters.name.length > 0 && !activeFilters.name.includes(row.name)) match = false;
+                                if (activeFiltersTb.code.length > 0 && !activeFiltersTb.code.includes(row.code)) match = false;
+                                if (activeFiltersTb.name.length > 0 && !activeFiltersTb.name.includes(row.name)) match = false;
                                 if (match) {
                                     keepIds.add(row.id);
                                     let pId = row.parentId;
@@ -2101,17 +2215,17 @@ Error generating stack: `+e.message+`
                             });
                             resultData = resultData.filter(row => keepIds.has(row.id));
                         }
-                        return buildAndSortTree(resultData);
+                        return buildAndSortTreeTb(resultData);
                     };
         
                     window.renderTbTable = () => {
                         const tbody = document.getElementById('tbTableBody');
                         if (!tbody) return;
-                        const dataToRender = getProcessedData();
+                        const dataToRender = getProcessedDataTb();
                         let html = '';
                         if (dataToRender.length === 0) {
                             tbody.innerHTML = `<tr><td colspan="6" class="text-center py-12 text-gray-400">没有找到匹配的科目数据</td></tr>`;
-                            renderFooter(dataToRender); return;
+                            renderTbFooter(dataToRender); return;
                         }
                         dataToRender.forEach(row => {
                             const chevronSvg = row.hasChildren ? `<span class="chevron expanded hover:text-[#6BA4C7]" onclick="toggleTbNode('${row.id}', this)"><svg viewBox="0 0 10 10"><path d="M3 1 L7 5 L3 9" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></span>` : `<span class="chevron hidden"></span>`;
@@ -2125,15 +2239,14 @@ Error generating stack: `+e.message+`
                             </tr>`;
                         });
                         tbody.innerHTML = html;
-                        renderFooter(dataToRender);
+                        renderTbFooter(dataToRender);
                     };
         
-                    const renderFooter = (dataToRender) => {
+                    const renderTbFooter = (dataToRender) => {
                         const tfoot = document.getElementById('tbTableFooter');
                         if (!tfoot) return;
                         let totalOpen = 0, totalInc = 0, totalDec = 0, totalClose = 0;
                         
-                        // 计算一级科目的汇总（即大类），如果是平的，汇总应该是0
                         dataToRender.forEach(row => {
                             if (row.depth === 0) { 
                                 totalOpen += row.open; 
@@ -2143,7 +2256,6 @@ Error generating stack: `+e.message+`
                             }
                         });
                         
-                        // 浮点数精度处理，绝对值大于0.01视为不平
                         const isBalanced = Math.abs(totalOpen) < 0.01 && Math.abs(totalInc) < 0.01 && Math.abs(totalDec) < 0.01 && Math.abs(totalClose) < 0.01;
                         
                         let warningHtml = '';
@@ -2166,36 +2278,433 @@ Error generating stack: `+e.message+`
         
                     window.toggleTbNode = (id, iconElement) => {
                         const isExpanded = iconElement.classList.contains('expanded');
-                        if (isExpanded) { iconElement.classList.remove('expanded'); hideChildren(id); } 
-                        else { iconElement.classList.add('expanded'); showChildren(id); }
+                        if (isExpanded) { iconElement.classList.remove('expanded'); hideTbChildren(id); } 
+                        else { iconElement.classList.add('expanded'); showTbChildren(id); }
                     };
                     
-                    const hideChildren = (parentId) => { 
-                        document.querySelectorAll(`tr[data-parent="${parentId}"]`).forEach(child => { 
+                    const hideTbChildren = (parentId) => { 
+                        document.getElementById('view-tb').querySelectorAll(`tr[data-parent="${parentId}"]`).forEach(child => { 
                             child.style.display = 'none'; 
-                            hideChildren(child.getAttribute('data-id')); 
+                            hideTbChildren(child.getAttribute('data-id')); 
                         }); 
                     };
                     
-                    const showChildren = (parentId) => { 
-                        document.querySelectorAll(`tr[data-parent="${parentId}"]`).forEach(child => { 
+                    const showTbChildren = (parentId) => { 
+                        document.getElementById('view-tb').querySelectorAll(`tr[data-parent="${parentId}"]`).forEach(child => { 
                             child.style.display = 'table-row'; 
                             const childIcon = child.querySelector('.chevron'); 
-                            if (childIcon && childIcon.classList.contains('expanded')) showChildren(child.getAttribute('data-id')); 
+                            if (childIcon && childIcon.classList.contains('expanded')) showTbChildren(child.getAttribute('data-id')); 
                         }); 
                     };
         
-                    // 全局点击关闭弹窗
+    
+                    /* =======================================
+                     * 资产负债表 (BS) 数据与逻辑 
+                     * ======================================= */
+                    const mockDataBs = [
+                        { id: 1, item: '货币资金', open: 2508.55, close: 601729515.35 },
+                        { id: 2, item: '交易性金融资产', open: 8956.09, close: 44691946.14 },
+                        { id: 3, item: '衍生金融资产', open: 3909.66, close: 89385092.28 },
+                        { id: 4, item: '应收票据', open: 9380.66, close: 41534823.21 },
+                        { id: 5, item: '应收账款', open: 5884.82, close: 58882446.28 },
+                        { id: 6, item: '应收款项融资', open: 5952.88, close: 3794.50 },
+                        { id: 7, item: '预付款项', open: 1076.51, close: 1904896421.40 },
+                        { id: 8, item: '应收资金集中管理款', open: 3958.76, close: 9351.39 },
+                        { id: 9, item: '其他应收款', open: 1782.86, close: 7838.12 },
+                        { id: 10, item: '存货', open: 891.40, close: 9819.38 },
+                        { id: 11, item: '合同资产', open: 5715.90, close: 5512.32 },
+                        { id: 12, item: '持有待售资产', open: 5400.96, close: 8406.72 },
+                        { id: 13, item: '一年内到期的非流动资产', open: 5477.82, close: 4576.58 },
+                        { id: 14, item: '其他流动资产', open: 8498.70, close: 7760.58 },
+                        { id: 15, item: '债权投资', open: 3488.77, close: 5264.20 },
+                        { id: 16, item: '其他债权投资', open: 4407.11, close: 2204.47 },
+                        { id: 17, item: '长期应收款', open: 9715.09, close: 3872.71 },
+                        { id: 18, item: '长期股权投资', open: 61.36, close: 2821.06 },
+                        { id: 19, item: '其他权益工具投资', open: 4488.02, close: 7016.87 },
+                        { id: 20, item: '其他非流动金融资产', open: 7089.01, close: 441.07 }
+                    ];
+        
+                    let activeFiltersBs = { item: [] };
+                    let sortStateBs = { col: null, order: null };
+        
+                    window.toggleBsFilter = (event, colKey) => {
+                        event.stopPropagation();
+                        const popover = document.getElementById(`popover-bs-${colKey}`);
+                        const isVisible = popover.classList.contains('show');
+                        document.querySelectorAll('.filter-popover').forEach(p => p.classList.remove('show'));
+                        if (!isVisible) {
+                            popover.classList.add('show');
+                            document.getElementById(`search-bs-${colKey}`).value = ''; 
+                            window.renderBsCheckboxList(colKey);
+                            setTimeout(() => document.getElementById(`search-bs-${colKey}`).focus(), 50);
+                        }
+                    };
+        
+                    window.renderBsCheckboxList = (colKey) => {
+                        const searchVal = document.getElementById(`search-bs-${colKey}`).value.toLowerCase().trim();
+                        const listContainer = document.getElementById(`list-bs-${colKey}`);
+                        let uniqueVals = [...new Set(mockDataBs.map(item => item[colKey]))].sort();
+                        if (searchVal) uniqueVals = uniqueVals.filter(v => String(v).toLowerCase().includes(searchVal));
+                        const isAllSelected = uniqueVals.length > 0 && uniqueVals.every(v => activeFiltersBs[colKey].includes(v));
+                        
+                        let html = `<label class="checkbox-item font-semibold text-gray-800"><input type="checkbox" onchange="toggleBsSelectAll('${colKey}', this.checked)" ${isAllSelected ? 'checked' : ''} class="accent-[#6BA4C7] w-3.5 h-3.5"> 全选</label><div class="h-px bg-gray-200 my-1"></div>`;
+                        if (uniqueVals.length === 0) {
+                            html += `<div class="text-gray-400 py-2 text-center">无匹配数据</div>`;
+                        } else {
+                            uniqueVals.forEach(val => {
+                                const isChecked = activeFiltersBs[colKey].includes(val);
+                                html += `<label class="checkbox-item"><input type="checkbox" value="${val}" class="filter-cb-bs-${colKey} accent-[#6BA4C7] w-3.5 h-3.5" onchange="updateBsCheckedState('${colKey}')" ${isChecked ? 'checked' : ''}> ${val}</label>`;
+                            });
+                        }
+                        listContainer.innerHTML = html;
+                    };
+        
+                    window.toggleBsSelectAll = (colKey, isChecked) => {
+                        document.querySelectorAll(`.filter-cb-bs-${colKey}`).forEach(cb => cb.checked = isChecked);
+                        window.updateBsCheckedState(colKey);
+                    };
+        
+                    window.updateBsCheckedState = (colKey) => {
+                        let newActive = [...activeFiltersBs[colKey]];
+                        document.querySelectorAll(`.filter-cb-bs-${colKey}`).forEach(cb => {
+                            if (cb.checked && !newActive.includes(cb.value)) newActive.push(cb.value);
+                            if (!cb.checked && newActive.includes(cb.value)) newActive = newActive.filter(v => v !== cb.value);
+                        });
+                        activeFiltersBs[colKey] = newActive;
+                        if(!document.getElementById(`search-bs-${colKey}`).value) window.renderBsCheckboxList(colKey); 
+                    };
+        
+                    window.applyBsFilter = (colKey) => {
+                        document.getElementById(`popover-bs-${colKey}`).classList.remove('show');
+                        const iconEle = document.getElementById(`icon-bs-${colKey}`);
+                        activeFiltersBs[colKey].length > 0 ? iconEle.classList.add('active') : iconEle.classList.remove('active');
+                        window.renderBsTable();
+                    };
+        
+                    window.resetBsFilter = (colKey) => {
+                        activeFiltersBs[colKey] = [];
+                        document.getElementById(`search-bs-${colKey}`).value = '';
+                        window.applyBsFilter(colKey);
+                    };
+        
+                    window.handleBsSort = (colKey) => {
+                        if (sortStateBs.col === colKey) {
+                            sortStateBs.order = sortStateBs.order === 'desc' ? 'asc' : (sortStateBs.order === 'asc' ? null : 'desc');
+                        } else {
+                            sortStateBs = { col: colKey, order: 'desc' };
+                        }
+                        document.getElementById('view-bs').querySelectorAll('.sort-icon').forEach(el => { el.classList.remove('asc', 'desc'); });
+                        if (sortStateBs.order) {
+                            document.getElementById(`sort-bs-${colKey}`).classList.add(sortStateBs.order);
+                        }
+                        window.renderBsTable();
+                    };
+        
+                    const getProcessedDataBs = () => {
+                        let resultData = [...mockDataBs];
+                        const hideZeroChecked = document.getElementById('hideZeroSwitch') ? document.getElementById('hideZeroSwitch').checked : false;
+                        
+                        if (hideZeroChecked) {
+                            resultData = resultData.filter(row => !(row.open === 0 && row.close === 0));
+                        }
+                        if (activeFiltersBs.item.length > 0) {
+                            resultData = resultData.filter(row => activeFiltersBs.item.includes(row.item));
+                        }
+                        
+                        if (sortStateBs.col && sortStateBs.order) {
+                            resultData.sort((a, b) => sortStateBs.order === 'asc' ? a[sortStateBs.col] - b[sortStateBs.col] : b[sortStateBs.col] - a[sortStateBs.col]);
+                        }
+                        return resultData;
+                    };
+        
+                    window.renderBsTable = () => {
+                        const tbody = document.getElementById('bsTableBody');
+                        if (!tbody) return;
+                        const dataToRender = getProcessedDataBs();
+                        let html = '';
+                        if (dataToRender.length === 0) {
+                            tbody.innerHTML = `<tr><td colspan="4" class="text-center py-12 text-gray-400">没有找到匹配的报表数据</td></tr>`;
+                            renderBsFooter(dataToRender); return;
+                        }
+                        dataToRender.forEach(row => {
+                            html += `<tr class="border-b border-gray-100 hover:bg-[#F0F6FA]/40 transition-colors">
+                                <td class="px-4 py-2.5 text-gray-500">${row.id}</td>
+                                <td class="px-4 py-2.5">${row.item}</td>
+                                <td class="px-4 py-2.5 text-right tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(row.open)}</td>
+                                <td class="px-4 py-2.5 text-right tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(row.close)}</td>
+                            </tr>`;
+                        });
+                        tbody.innerHTML = html;
+                        renderBsFooter(dataToRender);
+                    };
+        
+                    const renderBsFooter = (dataToRender) => {
+                        const tfoot = document.getElementById('bsTableFooter');
+                        if (!tfoot) return;
+                        let totalOpen = 0, totalClose = 0;
+                        
+                        dataToRender.forEach(row => {
+                            totalOpen += row.open; 
+                            totalClose += row.close; 
+                        });
+                        
+                        tfoot.innerHTML = `<tr>
+                            <td class="px-4 py-3 border-t border-gray-200"></td>
+                            <td class="px-4 py-3 text-left border-t border-gray-200 text-gray-900 font-semibold align-middle">合计</td>
+                            <td class="px-4 py-3 text-right border-t border-gray-200 tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(totalOpen)}</td>
+                            <td class="px-4 py-3 text-right border-t border-gray-200 tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(totalClose)}</td>
+                        </tr>`;
+                    };
+
+
+                    /* =======================================
+                     * 利润表 (IS) 数据与逻辑 
+                     * ======================================= */
+                     const mockDataIs = [
+                        { id: 1, item: '营业收入', open: 1500000.00, close: 1800000.00 },
+                        { id: 2, item: '营业成本', open: 800000.00, close: 950000.00 },
+                        { id: 3, item: '税金及附加', open: 15000.00, close: 18000.00 },
+                        { id: 4, item: '销售费用', open: 120000.00, close: 150000.00 },
+                        { id: 5, item: '管理费用', open: 80000.00, close: 90000.00 },
+                        { id: 6, item: '研发费用', open: 50000.00, close: 60000.00 },
+                        { id: 7, item: '财务费用', open: 10000.00, close: 12000.00 },
+                        { id: 8, item: '其他收益', open: 5000.00, close: 8000.00 },
+                        { id: 9, item: '投资收益', open: 20000.00, close: 25000.00 },
+                        { id: 10, item: '营业利润', open: 450000.00, close: 553000.00 },
+                        { id: 11, item: '营业外收入', open: 2000.00, close: 3000.00 },
+                        { id: 12, item: '营业外支出', open: 1000.00, close: 1500.00 },
+                        { id: 13, item: '利润总额', open: 451000.00, close: 554500.00 },
+                        { id: 14, item: '所得税费用', open: 112750.00, close: 138625.00 },
+                        { id: 15, item: '净利润', open: 338250.00, close: 415875.00 }
+                    ];
+        
+                    let activeFiltersIs = { item: [] };
+                    let sortStateIs = { col: null, order: null };
+        
+                    window.toggleIsFilter = (event, colKey) => {
+                        event.stopPropagation();
+                        const popover = document.getElementById(`popover-is-${colKey}`);
+                        const isVisible = popover.classList.contains('show');
+                        document.querySelectorAll('.filter-popover').forEach(p => p.classList.remove('show'));
+                        if (!isVisible) {
+                            popover.classList.add('show');
+                            document.getElementById(`search-is-${colKey}`).value = ''; 
+                            window.renderIsCheckboxList(colKey);
+                            setTimeout(() => document.getElementById(`search-is-${colKey}`).focus(), 50);
+                        }
+                    };
+        
+                    window.renderIsCheckboxList = (colKey) => {
+                        const searchVal = document.getElementById(`search-is-${colKey}`).value.toLowerCase().trim();
+                        const listContainer = document.getElementById(`list-is-${colKey}`);
+                        let uniqueVals = [...new Set(mockDataIs.map(item => item[colKey]))].sort();
+                        if (searchVal) uniqueVals = uniqueVals.filter(v => String(v).toLowerCase().includes(searchVal));
+                        const isAllSelected = uniqueVals.length > 0 && uniqueVals.every(v => activeFiltersIs[colKey].includes(v));
+                        
+                        let html = `<label class="checkbox-item font-semibold text-gray-800"><input type="checkbox" onchange="toggleIsSelectAll('${colKey}', this.checked)" ${isAllSelected ? 'checked' : ''} class="accent-[#6BA4C7] w-3.5 h-3.5"> 全选</label><div class="h-px bg-gray-200 my-1"></div>`;
+                        if (uniqueVals.length === 0) {
+                            html += `<div class="text-gray-400 py-2 text-center">无匹配数据</div>`;
+                        } else {
+                            uniqueVals.forEach(val => {
+                                const isChecked = activeFiltersIs[colKey].includes(val);
+                                html += `<label class="checkbox-item"><input type="checkbox" value="${val}" class="filter-cb-is-${colKey} accent-[#6BA4C7] w-3.5 h-3.5" onchange="updateIsCheckedState('${colKey}')" ${isChecked ? 'checked' : ''}> ${val}</label>`;
+                            });
+                        }
+                        listContainer.innerHTML = html;
+                    };
+        
+                    window.toggleIsSelectAll = (colKey, isChecked) => {
+                        document.querySelectorAll(`.filter-cb-is-${colKey}`).forEach(cb => cb.checked = isChecked);
+                        window.updateIsCheckedState(colKey);
+                    };
+        
+                    window.updateIsCheckedState = (colKey) => {
+                        let newActive = [...activeFiltersIs[colKey]];
+                        document.querySelectorAll(`.filter-cb-is-${colKey}`).forEach(cb => {
+                            if (cb.checked && !newActive.includes(cb.value)) newActive.push(cb.value);
+                            if (!cb.checked && newActive.includes(cb.value)) newActive = newActive.filter(v => v !== cb.value);
+                        });
+                        activeFiltersIs[colKey] = newActive;
+                        if(!document.getElementById(`search-is-${colKey}`).value) window.renderIsCheckboxList(colKey); 
+                    };
+        
+                    window.applyIsFilter = (colKey) => {
+                        document.getElementById(`popover-is-${colKey}`).classList.remove('show');
+                        const iconEle = document.getElementById(`icon-is-${colKey}`);
+                        activeFiltersIs[colKey].length > 0 ? iconEle.classList.add('active') : iconEle.classList.remove('active');
+                        window.renderIsTable();
+                    };
+        
+                    window.resetIsFilter = (colKey) => {
+                        activeFiltersIs[colKey] = [];
+                        document.getElementById(`search-is-${colKey}`).value = '';
+                        window.applyIsFilter(colKey);
+                    };
+        
+                    window.handleIsSort = (colKey) => {
+                        if (sortStateIs.col === colKey) {
+                            sortStateIs.order = sortStateIs.order === 'desc' ? 'asc' : (sortStateIs.order === 'asc' ? null : 'desc');
+                        } else {
+                            sortStateIs = { col: colKey, order: 'desc' };
+                        }
+                        document.getElementById('view-is').querySelectorAll('.sort-icon').forEach(el => { el.classList.remove('asc', 'desc'); });
+                        if (sortStateIs.order) {
+                            document.getElementById(`sort-is-${colKey}`).classList.add(sortStateIs.order);
+                        }
+                        window.renderIsTable();
+                    };
+        
+                    const getProcessedDataIs = () => {
+                        let resultData = [...mockDataIs];
+                        const hideZeroChecked = document.getElementById('hideZeroSwitch') ? document.getElementById('hideZeroSwitch').checked : false;
+                        
+                        if (hideZeroChecked) {
+                            resultData = resultData.filter(row => !(row.open === 0 && row.close === 0));
+                        }
+                        if (activeFiltersIs.item.length > 0) {
+                            resultData = resultData.filter(row => activeFiltersIs.item.includes(row.item));
+                        }
+                        
+                        if (sortStateIs.col && sortStateIs.order) {
+                            resultData.sort((a, b) => sortStateIs.order === 'asc' ? a[sortStateIs.col] - b[sortStateIs.col] : b[sortStateIs.col] - a[sortStateIs.col]);
+                        }
+                        return resultData;
+                    };
+        
+                    window.renderIsTable = () => {
+                        const tbody = document.getElementById('isTableBody');
+                        if (!tbody) return;
+                        const dataToRender = getProcessedDataIs();
+                        let html = '';
+                        if (dataToRender.length === 0) {
+                            tbody.innerHTML = `<tr><td colspan="4" class="text-center py-12 text-gray-400">没有找到匹配的报表数据</td></tr>`;
+                            renderIsFooter(dataToRender); return;
+                        }
+                        dataToRender.forEach(row => {
+                            html += `<tr class="border-b border-gray-100 hover:bg-[#F0F6FA]/40 transition-colors">
+                                <td class="px-4 py-2.5 text-gray-500">${row.id}</td>
+                                <td class="px-4 py-2.5">${row.item}</td>
+                                <td class="px-4 py-2.5 text-right tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(row.open)}</td>
+                                <td class="px-4 py-2.5 text-right tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(row.close)}</td>
+                            </tr>`;
+                        });
+                        tbody.innerHTML = html;
+                        renderIsFooter(dataToRender);
+                    };
+        
+                    const renderIsFooter = (dataToRender) => {
+                        const tfoot = document.getElementById('isTableFooter');
+                        if (!tfoot) return;
+                        let totalOpen = 0, totalClose = 0;
+                        
+                        dataToRender.forEach(row => {
+                            totalOpen += row.open; 
+                            totalClose += row.close; 
+                        });
+                        
+                        tfoot.innerHTML = `<tr>
+                            <td class="px-4 py-3 border-t border-gray-200"></td>
+                            <td class="px-4 py-3 text-left border-t border-gray-200 text-gray-900 font-semibold align-middle">合计</td>
+                            <td class="px-4 py-3 text-right border-t border-gray-200 tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(totalOpen)}</td>
+                            <td class="px-4 py-3 text-right border-t border-gray-200 tabular-nums font-[ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace]">${formatMoney(totalClose)}</td>
+                        </tr>`;
+                    };
+
+
+                    /* =======================================
+                     * 左侧菜单展开折叠逻辑
+                     * ======================================= */
+                    window.toggleManagementOnly = (e) => {
+                        e.stopPropagation(); // 阻止事件冒泡，使得仅点击箭头时不会触发跳转事件
+                        const submenu = document.getElementById('management-submenu');
+                        const arrow = document.getElementById('management-arrow');
+                        
+                        if (submenu.classList.contains('submenu-collapsed')) {
+                            // 展开
+                            submenu.classList.remove('submenu-collapsed');
+                            submenu.classList.add('submenu-expanded');
+                            arrow.classList.add('rotate-180');
+                        } else {
+                            // 折叠
+                            submenu.classList.add('submenu-collapsed');
+                            submenu.classList.remove('submenu-expanded');
+                            arrow.classList.remove('rotate-180');
+                        }
+                    };
+
+                    window.toggleManagementAndSwitch = (e) => {
+                        // 如果当前是折叠状态，点击文字区域自动展开
+                        const submenu = document.getElementById('management-submenu');
+                        if (submenu.classList.contains('submenu-collapsed')) {
+                            window.toggleManagementOnly(e);
+                        }
+                        // 无论如何，默认切换至资产负债表 (BS)
+                        window.switchView('bs');
+                    };
+        
+    
+                    /* =======================================
+                     * 视图切换控制逻辑 
+                     * ======================================= */
+                    window.switchView = (view) => {
+                        window.currentView = view;
+                        
+                        const menuTb = document.getElementById('menu-tb');
+                        const menuBs = document.getElementById('menu-bs');
+                        const menuIs = document.getElementById('menu-is');
+                        const viewTb = document.getElementById('view-tb');
+                        const viewBs = document.getElementById('view-bs');
+                        const viewIs = document.getElementById('view-is');
+
+                        // 重置侧边栏样式
+                        const defaultTbStyle = "p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 bg-transparent font-normal";
+                        const activeTbStyle = "p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all bg-[#6BA4C7] text-white font-medium shadow-sm";
+                        
+                        const defaultSubStyle = "py-2 pl-6 pr-4 rounded-md cursor-pointer text-[13px] transition-all text-gray-500 hover:bg-gray-50 hover:text-gray-900 block";
+                        const activeSubStyle = "py-2 pl-6 pr-4 rounded-md cursor-pointer text-[13px] transition-all bg-[#6BA4C7] text-white font-medium shadow-sm block";
+        
+                        menuTb.className = defaultTbStyle;
+                        menuBs.className = defaultSubStyle;
+                        menuIs.className = defaultSubStyle;
+
+                        // 隐藏所有视图
+                        viewTb.classList.add('hidden');
+                        viewBs.classList.add('hidden');
+                        viewIs.classList.add('hidden');
+        
+                        // 根据传入参数渲染对应视图与激活样式
+                        if (view === 'tb') {
+                            menuTb.className = activeTbStyle;
+                            viewTb.classList.remove('hidden');
+                            window.renderTbTable();
+                        } else if (view === 'bs') {
+                            menuBs.className = activeSubStyle;
+                            viewBs.classList.remove('hidden');
+                            window.renderBsTable();
+                        } else if (view === 'is') {
+                            menuIs.className = activeSubStyle;
+                            viewIs.classList.remove('hidden');
+                            window.renderIsTable();
+                        }
+                    };
+        
+        
+                    /* =======================================
+                     * 全局事件绑定及初始化 
+                     * ======================================= */
                     document.addEventListener('click', (e) => {
                         if (!e.target.closest('.filter-popover') && !e.target.closest('.relative.cursor-pointer')) {
                             document.querySelectorAll('.filter-popover').forEach(p => p.classList.remove('show'));
                         }
                     });
         
-                    // 初始化渲染
-                    document.addEventListener('DOMContentLoaded', window.renderTbTable);
-                    // 如果是在单页面应用中动态插入，可能需要直接调用一次
-                    setTimeout(window.renderTbTable, 100);
+                    document.addEventListener('DOMContentLoaded', () => {
+                        window.renderTbTable();
+                    });
+                    
+                    setTimeout(() => {
+                        if (window.currentView === 'tb') window.renderTbTable();
+                    }, 100);
                     
                 })();
             </script>
