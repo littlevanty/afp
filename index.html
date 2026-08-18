@@ -1049,7 +1049,7 @@
                                                     <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                                                     <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 opacity-0 invisible tooltip-content px-2 py-1 bg-gray-800 text-white text-[11px] rounded shadow-sm whitespace-nowrap z-50 font-normal transition-all duration-200">上传文件</span>
                                                 </button>
-                                                <button onclick="openModal('tb')" class="relative hover:text-[#00338D] transition-colors tooltip-trigger p-1">
+                                                <button onclick="openModal('financial-other')" class="relative hover:text-[#00338D] transition-colors tooltip-trigger p-1">
                                                     <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                                     <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 opacity-0 invisible tooltip-content px-2 py-1 bg-gray-800 text-white text-[11px] rounded shadow-sm whitespace-nowrap z-50 font-normal transition-all duration-200">查看解析结果</span>
                                                 </button>
@@ -1082,7 +1082,7 @@
                                                     <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                                                     <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 opacity-0 invisible tooltip-content px-2 py-1 bg-gray-800 text-white text-[11px] rounded shadow-sm whitespace-nowrap z-50 font-normal transition-all duration-200">上传文件</span>
                                                 </button>
-                                                <button onclick="openModal('tb')" class="relative hover:text-[#00338D] transition-colors tooltip-trigger p-1">
+                                                <button onclick="openModal('financial-other')" class="relative hover:text-[#00338D] transition-colors tooltip-trigger p-1">
                                                     <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                                     <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 opacity-0 invisible tooltip-content px-2 py-1 bg-gray-800 text-white text-[11px] rounded shadow-sm whitespace-nowrap z-50 font-normal transition-all duration-200">查看解析结果</span>
                                                 </button>
@@ -1724,11 +1724,17 @@ Error generating stack: `+e.message+`
 
         <!-- 弹窗3：其他财务报表数据 (图3) -->
         <div id="modal-financial" class="bg-white rounded-lg shadow-xl w-[600px] flex flex-col overflow-hidden hidden">
+            <!-- 头部 -->
             <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
                 <h3 class="text-[16px] font-medium text-gray-800">上传文件</h3>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
             </div>
+            
+            <!-- 内容区 -->
             <div class="px-10 py-8 flex-1">
+                
                 <div class="flex items-center mb-6">
                     <label class="w-[140px] text-right text-gray-700 mr-4"><span class="text-red-500 mr-1">*</span>数据源文件类型</label>
                     <div class="relative w-[300px]">
@@ -1738,6 +1744,7 @@ Error generating stack: `+e.message+`
                         <svg class="w-4 h-4 absolute right-3 top-[10px] text-gray-300 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
                 </div>
+                
                 <div class="flex items-center mb-6">
                     <label class="w-[140px] text-right text-gray-700 mr-4">是否解析隐藏的工作表</label>
                     <div class="flex items-center space-x-6">
@@ -1745,22 +1752,30 @@ Error generating stack: `+e.message+`
                         <label class="flex items-center space-x-2 cursor-pointer text-gray-700"><input type="radio" name="parse_hidden" checked class="w-4 h-4 text-blue-600 focus:ring-blue-600 border-gray-300" /><span class="text-blue-600 font-medium">否</span></label>
                     </div>
                 </div>
+                
+                <!-- 【已修复】操作类别 -->
                 <div class="flex items-start mb-6">
                     <label class="w-[140px] text-right text-gray-700 mr-4 pt-1">操作类别</label>
-                    <div class="flex items-center space-x-4 pt-1">
-                        <label class="flex items-center space-x-2 cursor-pointer text-gray-700"><input type="radio" name="op_type" checked class="w-4 h-4 text-blue-600 focus:ring-blue-600 border-gray-300" /><span class="text-blue-600 font-medium">仅上传报告数据源文件</span></label>
-                        <label class="flex items-center space-x-1.5 cursor-pointer text-gray-700">
+                    <!-- 1. 将 space-x-4 改为 gap-x-4 gap-y-2，并加入 flex-wrap 允许换行 -->
+                    <div class="flex flex-wrap items-center gap-x-4 gap-y-2 pt-1">
+                        <!-- 2. 给每个 label 追加 whitespace-nowrap 和 shrink-0 -->
+                        <label class="flex items-center space-x-2 cursor-pointer text-gray-700 whitespace-nowrap shrink-0">
+                            <input type="radio" name="op_type" checked class="w-4 h-4 text-blue-600 focus:ring-blue-600 border-gray-300" />
+                            <span class="text-blue-600 font-medium">仅上传报告数据源文件</span>
+                        </label>
+                        <label class="flex items-center space-x-1.5 cursor-pointer text-gray-700 whitespace-nowrap shrink-0">
                             <input type="radio" name="op_type" class="w-4 h-4 text-blue-600 focus:ring-blue-600 border-gray-300" />
                             <span>创建报告</span>
                             <svg class="w-3.5 h-3.5 text-red-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
                         </label>
-                        <label class="flex items-center space-x-1.5 cursor-pointer text-gray-700">
+                        <label class="flex items-center space-x-1.5 cursor-pointer text-gray-700 whitespace-nowrap shrink-0">
                             <input type="radio" name="op_type" class="w-4 h-4 text-blue-600 focus:ring-blue-600 border-gray-300" />
                             <span>更新数据</span>
                             <svg class="w-3.5 h-3.5 text-red-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
                         </label>
                     </div>
                 </div>
+                
                 <div class="flex items-start">
                     <label class="w-[140px] text-right text-gray-700 mr-4 pt-1.5"><span class="text-red-500 mr-1">*</span>上传文件</label>
                     <div class="flex flex-col">
@@ -1775,12 +1790,339 @@ Error generating stack: `+e.message+`
                         </div>
                     </div>
                 </div>
+                
             </div>
+            
+            <!-- 底部按钮 -->
             <div class="px-6 py-4 border-t border-gray-100 flex justify-end space-x-4 bg-white">
                 <button onclick="closeModal()" class="px-5 py-2 rounded text-gray-600 hover:bg-gray-100 transition-colors">取消</button>
                 <button class="px-5 py-2 rounded bg-[#2563eb] hover:bg-blue-700 text-white shadow-sm transition-colors">确认</button>
             </div>
         </div>
+
+<!-- 弹窗：其他财务报表数据源 -->
+<div id="modal-financial-other" class="fixed inset-0 z-[120] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+    
+    <!-- 弹窗内部组件专用样式 -->
+    <style>
+        .tb-modal-ui .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .tb-modal-ui .custom-scrollbar::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+        .tb-modal-ui .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    </style>
+
+    <!-- 弹窗内部容器 -->
+    <div class="w-[95vw] h-[92vh] bg-white rounded-xl shadow-2xl overflow-hidden relative tb-modal-ui flex flex-col">
+        <div class="layout h-full w-full flex relative">
+            
+            <!-- 左侧边栏 -->
+            <aside class="sidebar bg-white border-r border-gray-200 flex flex-col shrink-0 w-[280px] z-20">
+                <div class="sidebar-header p-4 flex items-center gap-3 border-b border-gray-200">
+                    <button onclick="closeModal()" class="back-btn text-[#6BA4C7] flex items-center gap-1 text-sm font-medium hover:text-[#528AAB] transition-colors">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        返回
+                    </button>
+                    <div class="w-px h-3.5 bg-gray-200"></div>
+                    <span class="text-[15px] font-semibold text-gray-900">查看数据</span>
+                </div>
+                
+                <div class="sidebar-menu p-3 flex-1 overflow-y-auto custom-scrollbar">
+                    <!-- 报表列表 -->
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all bg-[#6BA4C7] text-white font-medium shadow-sm">资产负债表</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">利润表</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">现金流量表</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">经营活动现金流量净额与净利润关系</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">不涉及现金收支的重大投资和筹资活动</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">现金及现金等价物变动情况</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">现金和现金等价物构成</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">取得子公司及其他营业单位的有关信息</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">属于供应商融资安排的金融负债</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">金融负债的付款到期日区间</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">股东权益变动情况@当年</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">股东权益变动情况@上年</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal flex items-center">
+                        <svg class="w-3.5 h-3.5 mr-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                        投资性房地产分类
+                    </div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">固定资产分类</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">无形资产分类</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">长期待摊费用分类</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">税项计缴标准</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">应交税费</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">待抵扣税金</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">货币资金</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">交易性金融资产</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">衍生金融资产</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">应收票据</div>
+                    <div class="p-2.5 px-4 rounded-md cursor-pointer text-sm mb-1 transition-all text-gray-900 hover:bg-gray-50 font-normal">应收票据坏账准备变动情况</div>
+                </div>
+            </aside>
+
+            <!-- 右侧主内容 -->
+            <div class="main-content flex-1 flex flex-col p-6 bg-[#F8F9FB] overflow-hidden">
+                
+                <!-- 顶部工具栏 -->
+                <div class="toolbar flex justify-between items-center bg-white p-4 px-6 rounded-t-lg border border-gray-200 border-b-0 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+                    <div class="flex items-center gap-4 text-[13px]">
+                        <span class="text-gray-600 font-medium">套表所属年度</span>
+                        <div class="flex items-center gap-4">
+                            <label class="flex items-center gap-1.5 cursor-pointer text-gray-800">
+                                <input type="radio" name="year_period" class="accent-[#6BA4C7] w-3.5 h-3.5" checked> 当期
+                            </label>
+                            <label class="flex items-center gap-1.5 cursor-pointer text-gray-800">
+                                <input type="radio" name="year_period" class="accent-[#6BA4C7] w-3.5 h-3.5"> 比较期
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 隐藏零余额科目开关 -->
+                    <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                        <span class="relative inline-block w-9 h-5">
+                            <input type="checkbox" id="hideZeroSwitch" class="opacity-0 w-0 h-0 peer">
+                            <span class="absolute cursor-pointer inset-0 bg-gray-300 transition-colors rounded-full peer-checked:bg-[#6BA4C7] before:absolute before:h-4 before:w-4 before:left-[2px] before:bottom-[2px] before:bg-white before:rounded-full before:transition-transform peer-checked:before:translate-x-[16px] shadow-inner"></span>
+                        </span>
+                        隐藏零余额科目
+                    </label>
+                </div>
+
+                <!-- 核心表格区域 -->
+                <div class="flex-1 flex flex-col min-h-0">
+                    <div class="table-container flex-1 bg-white border border-gray-200 overflow-auto relative custom-scrollbar">
+                        <table class="w-full text-[13px] border-collapse whitespace-nowrap min-w-[800px]">
+                            <thead class="sticky top-0 z-10">
+                                <tr>
+                                    <th class="bg-[#F8FAFC] text-gray-600 font-medium py-3 px-6 text-right border-b border-gray-200 w-[35%] shadow-[0_1px_0_#E5E7EB]">资产负债表</th>
+                                    <th class="bg-[#F8FAFC] text-gray-600 font-medium py-3 px-4 text-center border-b border-gray-200 w-[15%] shadow-[0_1px_0_#E5E7EB]">2025</th>
+                                    <th class="bg-[#F8FAFC] text-gray-600 font-medium py-3 px-4 text-center border-b border-gray-200 w-[15%] shadow-[0_1px_0_#E5E7EB]">2024</th>
+                                    <th class="bg-[#F8FAFC] text-gray-600 font-medium py-3 px-4 text-center border-b border-gray-200 w-[20%] shadow-[0_1px_0_#E5E7EB]">2024年1月1日</th>
+                                    <th class="bg-[#F8FAFC] text-gray-600 font-medium py-2 px-4 text-center border-b border-gray-200 w-[15%] leading-tight shadow-[0_1px_0_#E5E7EB]">控制点<br><span class="text-xs text-gray-400 font-normal">(主表=附注?)</span></th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-800">
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">货币资金</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">OK</td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">其中：存放财务公司款项</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted"></td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">交易性金融资产</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">OK</td>
+                                </tr>
+                                <!-- 特殊两行换行文本 -->
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-1.5 px-6 text-right">以公允价值计量且其变动计入</td>
+                                    <td class="py-1.5 px-4 text-center"></td>
+                                    <td class="py-1.5 px-4 text-center"></td>
+                                    <td class="py-1.5 px-4 text-center"></td>
+                                    <td class="py-1.5 px-4 text-center"></td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-1.5 px-6 text-right border-b border-gray-100 border-dotted">当期损益的金融资产</td>
+                                    <td class="py-1.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-1.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-1.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-1.5 px-4 text-center border-b border-gray-100 border-dotted">OK</td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">衍生金融资产</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">OK</td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">应收票据</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">OK</td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">应收账款</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">OK</td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">应收款项融资</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">OK</td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">预付款项</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">OK</td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">应收资金集中管理款</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted"></td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">应收利息</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted"></td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">应收股利</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted"></td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">其他应收款</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">OK</td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">存货</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">OK</td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">合同资产</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">OK</td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">持有待售资产</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">OK</td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">一年内到期的非流动资产</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">OK</td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">待抵扣税金</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted"></td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">其他流动资产</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">OK</td>
+                                </tr>
+                                
+                                <!-- 空行间隔 -->
+                                <tr><td colspan="5" class="py-1"></td></tr>
+
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted font-semibold text-[#528AAB]">流动资产合计</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted"></td>
+                                </tr>
+
+                                <!-- 空行间隔 -->
+                                <tr><td colspan="5" class="py-1"></td></tr>
+
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">债权投资</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">OK</td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">可供出售金融资产</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">OK</td>
+                                </tr>
+                                <tr class="hover:bg-[#F0F6FA]/50 transition-colors">
+                                    <td class="py-2.5 px-6 text-right border-b border-gray-100 border-dotted">其他债权投资</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">0</td>
+                                    <td class="py-2.5 px-4 text-center border-b border-gray-100 border-dotted">OK</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- 底部分页 -->
+                    <div class="pagination flex justify-end items-center p-3 px-6 bg-white border border-gray-200 border-t-0 rounded-b-lg text-[13px] text-gray-500 gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+                        <span>共 436 条</span>
+                        <select class="px-2 py-1 border border-gray-200 rounded outline-none cursor-pointer focus:border-[#6BA4C7]">
+                            <option>20条/页</option>
+                            <option>50条/页</option>
+                            <option>100条/页</option>
+                        </select>
+                        <div class="flex items-center gap-1">
+                            <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">&lt;</button>
+                            <button class="min-w-[28px] h-7 bg-[#6BA4C7] text-white border border-[#6BA4C7] rounded flex justify-center items-center shadow-sm">1</button>
+                            <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">2</button>
+                            <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">3</button>
+                            <span class="px-1 text-gray-400">...</span>
+                            <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">22</button>
+                            <button class="min-w-[28px] h-7 bg-white border border-gray-200 rounded text-gray-500 flex justify-center items-center hover:border-[#6BA4C7] hover:text-[#6BA4C7] transition-colors">&gt;</button>
+                        </div>
+                        <div class="flex items-center">
+                            前往 <input type="number" value="1" class="w-11 h-7 text-center border border-gray-200 rounded mx-2 outline-none focus:border-[#6BA4C7] transition-colors"> 页
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 用于自定义左侧列表和右侧表格滚动条的样式 -->
+<style>
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #e5e7eb;
+        border-radius: 10px;
+    }
+    .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+        background-color: #d1d5db;
+    }
+</style>
 
         <!-- 弹窗4：科目余额表 (TB) -->
 
@@ -2765,7 +3107,7 @@ Error generating stack: `+e.message+`
                 <!-- 工具栏 -->
                 <div class="toolbar flex justify-between items-center bg-white p-4 px-6 border-b border-gray-200 shadow-[0_1px_2px_rgba(0,0,0,0.02)] shrink-0 z-20 relative">
                     <div class="flex items-center gap-4 text-[13px]">
-                        <span class="text-gray-600 font-medium">所属年度</span>
+                        <span class="text-gray-600 font-medium">套表所属年度</span>
                         <div class="flex items-center gap-4">
                             <label class="flex items-center gap-1.5 cursor-pointer text-gray-800">
                                 <input type="radio" name="fc_period" class="w-3.5 h-3.5" checked> 当期
@@ -3343,6 +3685,7 @@ Error generating stack: `+e.message+`
             const basic = document.getElementById('modal-basic');
             const aux = document.getElementById('modal-aux');
             const financial = document.getElementById('modal-financial');
+            const financialOther = document.getElementById('modal-financial-other');
             const tb = document.getElementById('modal-tb');
             const fc = document.getElementById('modal-field-config');
 
@@ -3357,6 +3700,8 @@ Error generating stack: `+e.message+`
             aux.classList.remove('flex');
             financial.classList.add('hidden');
             financial.classList.remove('flex');
+            financialOther.classList.add('hidden');
+            financialOther.classList.remove('flex');
             tb.classList.add('hidden');
             tb.classList.remove('flex');
             // field-config 弹窗使用内联 display 控制，需单独隐藏
