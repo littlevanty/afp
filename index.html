@@ -1045,7 +1045,7 @@
                                         </td>
                                         <td class="py-2.5 px-3 text-center align-middle">
                                             <div class="flex items-center justify-center space-x-5 text-gray-400">
-                                                <button onclick="openModal('financial')" class="relative hover:text-[#00338D] transition-colors tooltip-trigger p-1">
+                                                <button onclick="openModal('word')" class="relative hover:text-[#00338D] transition-colors tooltip-trigger p-1">
                                                     <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                                                     <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 opacity-0 invisible tooltip-content px-2 py-1 bg-gray-800 text-white text-[11px] rounded shadow-sm whitespace-nowrap z-50 font-normal transition-all duration-200">上传文件</span>
                                                 </button>
@@ -1723,70 +1723,179 @@ Error generating stack: `+e.message+`
         </div>
 
         <!-- 弹窗3：其他财务报表数据 (图3) -->
-        <div id="modal-financial" class="bg-white rounded-lg shadow-xl w-[600px] flex flex-col overflow-hidden hidden">
+        <div id="modal-financial" class="bg-white rounded-lg shadow-xl w-[720px] flex flex-col overflow-hidden hidden">
             <!-- 头部 -->
             <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
-                <h3 class="text-[16px] font-medium text-gray-800">上传文件</h3>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                <h3 class="text-[16px] font-medium text-gray-800">导入报告数据</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
             
             <!-- 内容区 -->
-            <div class="px-10 py-8 flex-1">
+            <div class="px-8 py-6 flex-1 overflow-y-auto max-h-[75vh] flex flex-col gap-6">
                 
-                <div class="flex items-center mb-6">
-                    <label class="w-[140px] text-right text-gray-700 mr-4"><span class="text-red-500 mr-1">*</span>数据源文件类型</label>
-                    <div class="relative w-[300px]">
-                        <select disabled class="w-full appearance-none bg-gray-50 border border-gray-200 text-gray-400 rounded-md pl-3 pr-8 py-2 text-sm cursor-not-allowed">
-                            <option>久其</option>
-                        </select>
-                        <svg class="w-4 h-4 absolute right-3 top-[10px] text-gray-300 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <!-- 1. 高级滑动选项卡 -->
+                <div class="relative flex bg-[#eaeff5] rounded-lg p-1">
+                    <div id="tab-bg" class="absolute top-1 bottom-1 left-1 w-[calc(33.33%-2.6px)] rounded-md transition-transform duration-300 shadow-sm z-0" style="background: linear-gradient(135deg, #2b65c3, #1e49e2);"></div>
+                    <button class="relative z-10 flex-1 py-2 text-[14px] font-semibold text-white transition-colors" onclick="switchTab(0, this)">自动创建报告</button>
+                    <button class="relative z-10 flex-1 py-2 text-[14px] font-medium text-gray-500 transition-colors hover:text-[#1e49e2]" onclick="switchTab(1, this)">更新报告</button>
+                    <button class="relative z-10 flex-1 py-2 text-[14px] font-medium text-gray-500 transition-colors hover:text-[#1e49e2]" onclick="switchTab(2, this)">仅上传数据源</button>
+                </div>
+        
+                <!-- 2. 报告基础设置 -->
+                <div class="flex flex-col gap-3">
+                    <div class="border-b border-gray-100 pb-2">
+                        <h3 class="text-[14px] font-semibold text-gray-800">报告基础设置</h3>
+                    </div>
+                    <div class="grid grid-cols-2 gap-x-6 gap-y-4">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-[13px] text-gray-600"><span class="text-red-500 mr-1">*</span>数据源文件类型</label>
+                            <select class="border border-gray-300 rounded-md h-9 px-3 text-[13px] text-gray-800 focus:border-[#1e49e2] outline-none bg-white">
+                                <option>标准单体报表数据</option>
+                                <option>合并报表数据</option>
+                                <option>久其</option>
+                                <option>AFP 数据包</option>
+                            </select>
+                        </div>
+                        
+                        <!-- 以下字段在"更新报告"和"仅上传"时会被隐藏 -->
+                        <div class="flex flex-col gap-1.5 create-only">
+                            <label class="text-[13px] text-gray-600">套表所属年度</label>
+                            <select class="border border-gray-300 rounded-md h-9 px-3 text-[13px] text-gray-800 focus:border-[#1e49e2] outline-none bg-white">
+                                <option>当期</option>
+                                <option>比较期</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-1.5 create-only">
+                            <label class="text-[13px] text-gray-600">报告模板类型</label>
+                            <select class="border border-gray-300 rounded-md h-9 px-3 text-[13px] text-gray-800 focus:border-[#1e49e2] outline-none bg-white">
+                                <option>年报审计</option>
+                                <option>中期审阅</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-1.5 create-only">
+                            <label class="text-[13px] text-gray-600">报告模板</label>
+                            <select class="border border-gray-300 rounded-md h-9 px-3 text-[13px] text-gray-800 focus:border-[#1e49e2] outline-none bg-white">
+                                <option>PRC 新准则模板</option>
+                                <option>IFRS 报告模板</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-1.5 create-only">
+                            <label class="text-[13px] text-gray-600">报告范围</label>
+                            <select class="border border-gray-300 rounded-md h-9 px-3 text-[13px] text-gray-800 focus:border-[#1e49e2] outline-none bg-white">
+                                <option>单体</option>
+                                <option>合并</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-1.5 create-only">
+                            <label class="text-[13px] text-gray-600">会计年度</label>
+                            <select class="border border-gray-300 rounded-md h-9 px-3 text-[13px] text-gray-800 focus:border-[#1e49e2] outline-none bg-white">
+                                <option>2026</option>
+                                <option>2025</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="flex items-center mb-6">
-                    <label class="w-[140px] text-right text-gray-700 mr-4">是否解析隐藏的工作表</label>
-                    <div class="flex items-center space-x-6">
-                        <label class="flex items-center space-x-2 cursor-pointer text-gray-700"><input type="radio" name="parse_hidden" class="w-4 h-4 text-blue-600 focus:ring-blue-600 border-gray-300" /><span>是</span></label>
-                        <label class="flex items-center space-x-2 cursor-pointer text-gray-700"><input type="radio" name="parse_hidden" checked class="w-4 h-4 text-blue-600 focus:ring-blue-600 border-gray-300" /><span class="text-blue-600 font-medium">否</span></label>
+        
+                <!-- 3. 报告生成规则 -->
+                <div class="flex flex-col gap-2 create-only block-display">
+                    <div class="flex justify-between items-center cursor-pointer py-1 hover:opacity-80 transition-opacity" onclick="toggleSection('rules-content', 'rules-icon')">
+                        <div class="flex flex-col">
+                            <h3 class="text-[14px] font-semibold text-gray-800">报告生成规则</h3>
+                            <span class="text-[12px] text-gray-400 mt-0.5" id="rules-summary">自动排版 · FSC 财报校验 · 按金额正负更新描述</span>
+                        </div>
+                        <span class="text-[13px] text-[#1e49e2] flex items-center gap-1">
+                            展开设置 
+                            <svg id="rules-icon" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
                     </div>
-                </div>
-                
-                <!-- 【已修复】操作类别 -->
-                <div class="flex items-start mb-6">
-                    <label class="w-[140px] text-right text-gray-700 mr-4 pt-1">操作类别</label>
-                    <!-- 1. 将 space-x-4 改为 gap-x-4 gap-y-2，并加入 flex-wrap 允许换行 -->
-                    <div class="flex flex-wrap items-center gap-x-4 gap-y-2 pt-1">
-                        <!-- 2. 给每个 label 追加 whitespace-nowrap 和 shrink-0 -->
-                        <label class="flex items-center space-x-2 cursor-pointer text-gray-700 whitespace-nowrap shrink-0">
-                            <input type="radio" name="op_type" checked class="w-4 h-4 text-blue-600 focus:ring-blue-600 border-gray-300" />
-                            <span class="text-blue-600 font-medium">仅上传报告数据源文件</span>
-                        </label>
-                        <label class="flex items-center space-x-1.5 cursor-pointer text-gray-700 whitespace-nowrap shrink-0">
-                            <input type="radio" name="op_type" class="w-4 h-4 text-blue-600 focus:ring-blue-600 border-gray-300" />
-                            <span>创建报告</span>
-                            <svg class="w-3.5 h-3.5 text-red-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                        </label>
-                        <label class="flex items-center space-x-1.5 cursor-pointer text-gray-700 whitespace-nowrap shrink-0">
-                            <input type="radio" name="op_type" class="w-4 h-4 text-blue-600 focus:ring-blue-600 border-gray-300" />
-                            <span>更新数据</span>
-                            <svg class="w-3.5 h-3.5 text-red-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="flex items-start">
-                    <label class="w-[140px] text-right text-gray-700 mr-4 pt-1.5"><span class="text-red-500 mr-1">*</span>上传文件</label>
-                    <div class="flex flex-col">
-                        <button class="bg-[#2563eb] hover:bg-blue-700 text-white px-5 py-2 rounded shadow-sm text-sm transition-colors flex items-center mb-2 w-max">
-                            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>点击上传
-                        </button>
-                        <div class="flex flex-col text-[#ef4444] text-xs">
-                            <div class="flex items-start">
-                                <svg class="w-3.5 h-3.5 mr-1 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                                <span>请上传不超过1500行120列的文件<br>单份文件大小不超过20M!</span>
+                    <div id="rules-content" class="hidden grid-cols-2 gap-x-6 gap-y-4 p-4 bg-gray-50 rounded-lg border border-gray-200 mt-1">
+                        <div class="flex justify-between items-center text-[13px] text-gray-600">
+                            <span>自动排版</span>
+                            <div class="w-9 h-5 bg-[#1e49e2] rounded-full relative cursor-pointer transition-colors duration-200 rule-toggle" data-active="true" data-name="自动排版" onclick="toggleRule(this)">
+                                <div class="w-4 h-4 bg-white rounded-full absolute top-[2px] left-[2px] transition-transform duration-200 shadow-sm translate-x-4"></div>
                             </div>
+                        </div>
+                        <div class="flex justify-between items-center text-[13px] text-gray-600">
+                            <span>FSC 财报校验</span>
+                            <div class="w-9 h-5 bg-[#1e49e2] rounded-full relative cursor-pointer transition-colors duration-200 rule-toggle" data-active="true" data-name="FSC 财报校验" onclick="toggleRule(this)">
+                                <div class="w-4 h-4 bg-white rounded-full absolute top-[2px] left-[2px] transition-transform duration-200 shadow-sm translate-x-4"></div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center text-[13px] text-gray-600">
+                            <span>按金额正负更新描述</span>
+                            <div class="w-9 h-5 bg-[#1e49e2] rounded-full relative cursor-pointer transition-colors duration-200 rule-toggle" data-active="true" data-name="按金额正负更新描述" onclick="toggleRule(this)">
+                                <div class="w-4 h-4 bg-white rounded-full absolute top-[2px] left-[2px] transition-transform duration-200 shadow-sm translate-x-4"></div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center text-[13px] text-gray-600">
+                            <span>添加标题续</span>
+                            <div class="w-9 h-5 bg-gray-300 rounded-full relative cursor-pointer transition-colors duration-200 rule-toggle" data-active="false" data-name="添加标题续" onclick="toggleRule(this)">
+                                <div class="w-4 h-4 bg-white rounded-full absolute top-[2px] left-[2px] transition-transform duration-200 shadow-sm"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- 4. 报告格式 (已补回) -->
+                <div class="flex flex-col gap-2 create-only block-display">
+                    <div class="flex justify-between items-center cursor-pointer py-1 hover:opacity-80 transition-opacity" onclick="toggleSection('format-content', 'format-icon')">
+                        <div class="flex flex-col">
+                            <h3 class="text-[14px] font-semibold text-gray-800">报告格式</h3>
+                            <span class="text-[12px] text-gray-400 mt-0.5" id="format-summary">正数披露 · 人民币千元 · 括号 · 简体中文</span>
+                        </div>
+                        <span class="text-[13px] text-[#1e49e2] flex items-center gap-1">
+                            展开设置 
+                            <svg id="format-icon" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+                    </div>
+                    <div id="format-content" class="hidden grid-cols-2 gap-x-6 gap-y-4 p-4 bg-gray-50 rounded-lg border border-gray-200 mt-1">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-[13px] text-gray-600">金额披露方式</label>
+                            <select class="format-select border border-gray-300 rounded-md h-9 px-3 text-[13px] text-gray-800 focus:border-[#1e49e2] outline-none bg-white" onchange="updateFormatSummary()">
+                                <option>正数披露</option>
+                                <option>绝对值披露</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-[13px] text-gray-600">货币单位</label>
+                            <select class="format-select border border-gray-300 rounded-md h-9 px-3 text-[13px] text-gray-800 focus:border-[#1e49e2] outline-none bg-white" onchange="updateFormatSummary()">
+                                <option>人民币元</option>
+                                <option selected>人民币千元</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-[13px] text-gray-600">负数显示形式</label>
+                            <select class="format-select border border-gray-300 rounded-md h-9 px-3 text-[13px] text-gray-800 focus:border-[#1e49e2] outline-none bg-white" onchange="updateFormatSummary()">
+                                <option>括号</option>
+                                <option>负号</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-1.5">
+                            <label class="text-[13px] text-gray-600">报告语种</label>
+                            <select class="format-select border border-gray-300 rounded-md h-9 px-3 text-[13px] text-gray-800 focus:border-[#1e49e2] outline-none bg-white" onchange="updateFormatSummary()">
+                                <option>简体中文</option>
+                                <option>英文</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- 5. 上传数据文件 -->
+                <div class="flex flex-col gap-2">
+                    <div class="flex flex-col gap-1">
+                        <h3 class="text-[14px] font-semibold text-gray-800"><span class="text-red-500 mr-1">*</span>上传文件</h3>
+                        <span class="text-[12px] text-red-500 leading-snug">请上传不超过1500行120列的文件，单份文件大小不超过20M！<br>批量上传时一次最多可上传20本报告对应的数据文件</span>
+                    </div>
+                    <div class="flex border border-gray-300 rounded-lg h-[180px] overflow-hidden mt-1 bg-gray-50">
+                        <div class="flex-1 border-r border-gray-300 flex flex-col items-center justify-center gap-3 cursor-pointer hover:bg-gray-200 transition-colors" onclick="document.getElementById('file-upload-input').click()">
+                            <svg class="w-8 h-8 text-[#1e49e2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                            <span class="text-[14px] font-medium text-[#1e49e2]">点击或拖拽文件上传</span>
+                            <input type="file" id="file-upload-input" class="hidden" multiple onchange="handleUIFiles(event)">
+                        </div>
+                        <div class="flex-[1.2] bg-white p-3 overflow-y-auto flex flex-col gap-2" id="ui-file-list">
+                            <div class="h-full flex items-center justify-center text-[13px] text-gray-400" id="ui-empty-state">尚未选择文件</div>
                         </div>
                     </div>
                 </div>
@@ -1794,11 +1903,369 @@ Error generating stack: `+e.message+`
             </div>
             
             <!-- 底部按钮 -->
-            <div class="px-6 py-4 border-t border-gray-100 flex justify-end space-x-4 bg-white">
-                <button onclick="closeModal()" class="px-5 py-2 rounded text-gray-600 hover:bg-gray-100 transition-colors">取消</button>
-                <button class="px-5 py-2 rounded bg-[#2563eb] hover:bg-blue-700 text-white shadow-sm transition-colors">确认</button>
+            <div class="px-6 py-4 border-t border-gray-100 flex justify-between items-center bg-white">
+                <span class="text-[13px] text-gray-500" id="ui-file-count">已选择 0 个文件</span>
+                <div class="flex space-x-3">
+                    <button onclick="closeModal()" class="px-5 py-2 rounded text-[14px] text-gray-600 border border-gray-200 hover:bg-gray-50 transition-colors">取消</button>
+                    <button class="px-5 py-2 rounded text-[14px] bg-[#1e49e2] hover:bg-blue-800 text-white shadow-sm transition-colors">确认</button>
+                </div>
+            </div>
+        
+            <script>
+                // 【已修复】选项卡切换逻辑：现在选项卡 1(更新) 和 2(仅上传) 都会准确隐藏 create-only 元素
+                function switchTab(index, btn) {
+                    document.getElementById('tab-bg').style.transform = `translateX(${index * 100}%)`;
+                    
+                    const btns = btn.parentElement.querySelectorAll('button');
+                    btns.forEach(b => {
+                        b.classList.remove('text-white', 'font-semibold');
+                        b.classList.add('text-gray-500', 'font-medium');
+                    });
+                    btn.classList.remove('text-gray-500', 'font-medium');
+                    btn.classList.add('text-white', 'font-semibold');
+        
+                    // 只有当 index === 0 ("自动创建") 时，才显示额外的设置面板
+                    const createOnlyElements = document.querySelectorAll('.create-only');
+                    createOnlyElements.forEach(el => {
+                        if (index === 0) {
+                            el.style.display = el.classList.contains('block-display') ? 'block' : 'flex';
+                        } else {
+                            el.style.display = 'none';
+                        }
+                    });
+                }
+        
+                // 折叠面板切换逻辑
+                function toggleSection(contentId, iconId) {
+                    const content = document.getElementById(contentId);
+                    const icon = document.getElementById(iconId);
+                    if (content.classList.contains('hidden')) {
+                        content.classList.remove('hidden');
+                        content.classList.add('grid');
+                        icon.classList.add('rotate-180');
+                    } else {
+                        content.classList.add('hidden');
+                        content.classList.remove('grid');
+                        icon.classList.remove('rotate-180');
+                    }
+                }
+        
+                // 联动更新：生成规则副标题
+                function toggleRule(btn) {
+                    const isActive = btn.getAttribute('data-active') === 'true';
+                    if (isActive) {
+                        btn.classList.remove('bg-[#1e49e2]');
+                        btn.classList.add('bg-gray-300');
+                        btn.children[0].classList.remove('translate-x-4');
+                        btn.setAttribute('data-active', 'false');
+                    } else {
+                        btn.classList.add('bg-[#1e49e2]');
+                        btn.classList.remove('bg-gray-300');
+                        btn.children[0].classList.add('translate-x-4');
+                        btn.setAttribute('data-active', 'true');
+                    }
+                    
+                    const activeRules = [];
+                    document.querySelectorAll('.rule-toggle').forEach(t => {
+                        if (t.getAttribute('data-active') === 'true') {
+                            activeRules.push(t.getAttribute('data-name'));
+                        }
+                    });
+                    document.getElementById('rules-summary').innerText = activeRules.join(' · ') || '未开启任何规则';
+                }
+        
+                // 联动更新：报告格式副标题
+                function updateFormatSummary() {
+                    const selects = document.querySelectorAll('.format-select');
+                    const vals = Array.from(selects).map(s => s.value);
+                    document.getElementById('format-summary').innerText = vals.join(' · ');
+                }
+        
+                // 文件上传动态列表逻辑
+                function handleUIFiles(event) {
+                    const files = event.target.files;
+                    const list = document.getElementById('ui-file-list');
+                    const empty = document.getElementById('ui-empty-state');
+                    
+                    if (files.length > 0) {
+                        if (empty) empty.style.display = 'none';
+                        Array.from(files).forEach(file => {
+                            const item = document.createElement('div');
+                            item.className = 'flex items-center gap-2 p-2.5 border border-gray-200 rounded-md text-[13px] file-item-row';
+                            item.innerHTML = `
+                                <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                <span class="flex-1 truncate text-gray-700 font-medium">${file.name}</span>
+                                <span class="text-[12px] text-gray-400 shrink-0">等待提交</span>
+                                <button class="text-gray-400 hover:text-red-500 shrink-0 ml-1" onclick="this.parentElement.remove(); updateUICount()"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                            `;
+                            list.appendChild(item);
+                        });
+                        updateUICount();
+                    }
+                }
+        
+                function updateUICount() {
+                    const list = document.getElementById('ui-file-list');
+                    const items = list.querySelectorAll('.file-item-row').length;
+                    document.getElementById('ui-file-count').innerText = `已选择 ${items} 个文件`;
+                    if (items === 0) {
+                        document.getElementById('ui-empty-state').style.display = 'flex';
+                    }
+                }
+            </script>
+        </div>
+
+
+<!-- 上传客户报告弹窗 -->
+<div id="modal-word" class="bg-white rounded-lg shadow-xl w-[720px] flex flex-col overflow-hidden hidden">
+    <!-- 头部 -->
+    <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
+        <h3 class="text-[16px] font-medium text-gray-800">上传客户报告</h3>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+    </div>
+    
+    <!-- 内容区 -->
+    <div class="px-8 py-6 flex-1 overflow-y-auto max-h-[75vh] flex flex-col gap-6">
+        
+        <!-- 1. 报告基础设置 (常驻展开，文字表述与 financial 统一) -->
+        <div class="flex flex-col gap-3">
+            <div class="border-b border-gray-100 pb-2">
+                <h3 class="text-[14px] font-semibold text-gray-800">报告基础设置</h3>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-x-6 gap-y-4">
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-[13px] text-gray-600"><span class="text-red-500 mr-1">*</span>报告模板类型</label>
+                    <select class="border border-[#1e49e2] rounded-md h-9 px-3 text-[13px] text-gray-800 outline-none bg-white focus:ring-1 focus:ring-[#1e49e2]">
+                        <option>From word</option>
+                    </select>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-[13px] text-gray-600">报告范围</label>
+                    <select class="border border-gray-300 rounded-md h-9 px-3 text-[13px] text-gray-800 outline-none bg-white focus:border-[#1e49e2]">
+                        <option>单体</option>
+                        <option>合并</option>
+                    </select>
+                </div>
+                
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-[13px] text-gray-600">会计年度</label>
+                    <select class="border border-gray-300 rounded-md h-9 px-3 text-[13px] text-gray-800 outline-none bg-white focus:border-[#1e49e2]">
+                        <option>2026</option>
+                        <option>2025</option>
+                    </select>
+                </div>
             </div>
         </div>
+
+        <!-- 2. 报告生成规则 (折叠面板，推拉开关) -->
+        <div class="flex flex-col gap-2">
+            <div class="flex justify-between items-center cursor-pointer py-1 hover:opacity-80 transition-opacity" onclick="toggleSection('word-rules-content', 'word-rules-icon')">
+                <div class="flex flex-col">
+                    <h3 class="text-[14px] font-semibold text-gray-800">报告生成规则</h3>
+                    <span class="text-[12px] text-gray-400 mt-0.5" id="word-rules-summary">不删除空列 · 不设置标题 · 不设置字体</span>
+                </div>
+                <span class="text-[13px] text-[#1e49e2] flex items-center gap-1">
+                    展开设置 
+                    <svg id="word-rules-icon" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </div>
+            <div id="word-rules-content" class="hidden grid-cols-2 gap-x-6 gap-y-4 p-4 bg-gray-50 rounded-lg border border-gray-200 mt-1">
+                <div class="flex justify-between items-center text-[13px] text-gray-600">
+                    <span>是否删除空列</span>
+                    <div class="w-11 h-5 bg-gray-200 rounded-full relative cursor-pointer transition-colors duration-200 word-rule-toggle" data-active="false" onclick="toggleWordRule(this)">
+                        <div class="w-4 h-4 bg-white rounded-full absolute top-[2px] left-[2px] transition-transform duration-200 shadow-sm z-10"></div>
+                        <span class="absolute right-1.5 top-0 bottom-0 flex items-center text-[10px] text-gray-400 font-medium select-none">否</span>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center text-[13px] text-gray-600">
+                    <span>设置标题类型</span>
+                    <div class="w-11 h-5 bg-gray-200 rounded-full relative cursor-pointer transition-colors duration-200 word-rule-toggle" data-active="false" onclick="toggleWordRule(this)">
+                        <div class="w-4 h-4 bg-white rounded-full absolute top-[2px] left-[2px] transition-transform duration-200 shadow-sm z-10"></div>
+                        <span class="absolute right-1.5 top-0 bottom-0 flex items-center text-[10px] text-gray-400 font-medium select-none">否</span>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center text-[13px] text-gray-600">
+                    <span>设置字体类型</span>
+                    <div class="w-11 h-5 bg-gray-200 rounded-full relative cursor-pointer transition-colors duration-200 word-rule-toggle" data-active="false" onclick="toggleWordRule(this)">
+                        <div class="w-4 h-4 bg-white rounded-full absolute top-[2px] left-[2px] transition-transform duration-200 shadow-sm z-10"></div>
+                        <span class="absolute right-1.5 top-0 bottom-0 flex items-center text-[10px] text-gray-400 font-medium select-none">否</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 报告格式 (折叠面板，与 financial 一模一样) -->
+        <div class="flex flex-col gap-2">
+            <div class="flex justify-between items-center cursor-pointer py-1 hover:opacity-80 transition-opacity" onclick="toggleSection('word-format-content', 'word-format-icon')">
+                <div class="flex flex-col">
+                    <h3 class="text-[14px] font-semibold text-gray-800">报告格式</h3>
+                    <span class="text-[12px] text-gray-400 mt-0.5" id="word-format-summary">正数披露 · 人民币千元 · 括号 · 简体中文</span>
+                </div>
+                <span class="text-[13px] text-[#1e49e2] flex items-center gap-1">
+                    展开设置 
+                    <svg id="word-format-icon" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </div>
+            <div id="word-format-content" class="hidden grid-cols-2 gap-x-6 gap-y-4 p-4 bg-gray-50 rounded-lg border border-gray-200 mt-1">
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-[13px] text-gray-600">金额披露方式</label>
+                    <select class="word-format-select border border-gray-300 rounded-md h-9 px-3 text-[13px] text-gray-800 focus:border-[#1e49e2] outline-none bg-white" onchange="updateWordFormatSummary()">
+                        <option>正数披露</option>
+                        <option>绝对值披露</option>
+                    </select>
+                </div>
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-[13px] text-gray-600">货币单位</label>
+                    <select class="word-format-select border border-gray-300 rounded-md h-9 px-3 text-[13px] text-gray-800 focus:border-[#1e49e2] outline-none bg-white" onchange="updateWordFormatSummary()">
+                        <option>人民币元</option>
+                        <option selected>人民币千元</option>
+                    </select>
+                </div>
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-[13px] text-gray-600">负数显示形式</label>
+                    <select class="word-format-select border border-gray-300 rounded-md h-9 px-3 text-[13px] text-gray-800 focus:border-[#1e49e2] outline-none bg-white" onchange="updateWordFormatSummary()">
+                        <option>括号</option>
+                        <option>负号</option>
+                    </select>
+                </div>
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-[13px] text-gray-600">报告语种</label>
+                    <select class="word-format-select border border-gray-300 rounded-md h-9 px-3 text-[13px] text-gray-800 focus:border-[#1e49e2] outline-none bg-white" onchange="updateWordFormatSummary()">
+                        <option>简体中文</option>
+                        <option>英文</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. 上传文件区 (置于底部) -->
+        <div class="flex flex-col gap-2 pt-2 border-t border-gray-100 mt-1">
+            <div class="flex justify-between items-end">
+                <h3 class="text-[14px] font-semibold text-gray-800"><span class="text-red-500 mr-1">*</span>上传文件</h3>
+                <span class="text-[12px] text-red-500 flex items-center gap-1 font-medium">
+                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                    上传文件格式：docx！
+                </span>
+            </div>
+            <div class="flex border border-gray-300 rounded-lg h-[140px] overflow-hidden bg-gray-50">
+                <div class="flex-1 border-r border-gray-300 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-gray-200 transition-colors" onclick="document.getElementById('word-upload-input').click()">
+                    <!-- Word Icon -->
+                    <svg class="w-8 h-8 text-[#1e49e2]" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM15 18H9v-2h6v2zm0-4H9v-2h6v2z"/></svg>
+                    <span class="text-[13px] font-medium text-[#1e49e2]">点击或拖拽 Docx 文件上传</span>
+                    <input type="file" id="word-upload-input" accept=".docx" class="hidden" multiple onchange="handleWordFiles(event)">
+                </div>
+                <div class="flex-[1.2] bg-white p-3 overflow-y-auto flex flex-col gap-2" id="word-file-list">
+                    <div class="h-full flex items-center justify-center text-[13px] text-gray-400" id="word-empty-state">尚未选择文件</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <!-- 底部按钮 -->
+    <div class="px-6 py-4 border-t border-gray-100 flex justify-between items-center bg-white">
+        <span class="text-[13px] text-gray-500" id="word-file-count">已选择 0 个文件</span>
+        <div class="flex space-x-3">
+            <button onclick="closeModal()" class="px-5 py-2 rounded text-[14px] text-gray-600 border border-gray-200 hover:bg-gray-50 transition-colors">取消</button>
+            <button class="px-5 py-2 rounded text-[14px] bg-[#1e49e2] hover:bg-blue-800 text-white shadow-sm transition-colors">确认</button>
+        </div>
+    </div>
+
+    <!-- 此弹窗专用的交互逻辑 -->
+    <script>
+        // 1. 折叠面板逻辑 (公用)
+        function toggleSection(contentId, iconId) {
+            const content = document.getElementById(contentId);
+            const icon = document.getElementById(iconId);
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                content.classList.add('grid');
+                icon.classList.add('rotate-180');
+            } else {
+                content.classList.add('hidden');
+                content.classList.remove('grid');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        // 2. 带文字状态的定制 Switch 开关 及 摘要更新
+        function toggleWordRule(btn) {
+            btn.classList.toggle('bg-[#1e49e2]');
+            btn.classList.toggle('bg-gray-200');
+            const knob = btn.children[0];
+            knob.classList.toggle('translate-x-6');
+            const textSpan = btn.children[1];
+            
+            if (btn.getAttribute('data-active') === 'false') {
+                textSpan.innerText = '是';
+                textSpan.classList.remove('right-1.5', 'text-gray-400');
+                textSpan.classList.add('left-1.5', 'text-white');
+                btn.setAttribute('data-active', 'true');
+            } else {
+                textSpan.innerText = '否';
+                textSpan.classList.remove('left-1.5', 'text-white');
+                textSpan.classList.add('right-1.5', 'text-gray-400');
+                btn.setAttribute('data-active', 'false');
+            }
+            
+            // 更新“报告生成规则”摘要文字
+            const toggles = document.querySelectorAll('.word-rule-toggle');
+            const names = ['删除空列', '设置标题', '设置字体'];
+            const summaryArray = Array.from(toggles).map((t, index) => {
+                const isActive = t.getAttribute('data-active') === 'true';
+                return (isActive ? '' : '不') + names[index];
+            });
+            document.getElementById('word-rules-summary').innerText = summaryArray.join(' · ');
+        }
+
+        // 3. 联动更新：报告格式副标题
+        function updateWordFormatSummary() {
+            const selects = document.querySelectorAll('.word-format-select');
+            const vals = Array.from(selects).map(s => s.value);
+            document.getElementById('word-format-summary').innerText = vals.join(' · ');
+        }
+
+        // 4. 动态文件列表处理
+        function handleWordFiles(event) {
+            const files = event.target.files;
+            const list = document.getElementById('word-file-list');
+            const empty = document.getElementById('word-empty-state');
+            
+            if (files.length > 0) {
+                if (empty) empty.style.display = 'none';
+                Array.from(files).forEach(file => {
+                    const item = document.createElement('div');
+                    item.className = 'flex items-center gap-2 p-2.5 border border-gray-200 rounded-md text-[13px] word-file-item bg-white';
+                    item.innerHTML = `
+                        <svg class="w-4 h-4 text-[#1e49e2] shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM15 18H9v-2h6v2zm0-4H9v-2h6v2z"/></svg>
+                        <span class="flex-1 truncate text-gray-700 font-medium">${file.name}</span>
+                        <span class="text-[12px] text-gray-400 shrink-0">等待提交</span>
+                        <button class="text-gray-400 hover:text-red-500 shrink-0 ml-1" onclick="this.parentElement.remove(); updateWordCount()">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    `;
+                    list.appendChild(item);
+                });
+                updateWordCount();
+                event.target.value = ''; 
+            }
+        }
+
+        function updateWordCount() {
+            const list = document.getElementById('word-file-list');
+            const items = list.querySelectorAll('.word-file-item').length;
+            document.getElementById('word-file-count').innerText = `已选择 ${items} 个文件`;
+            if (items === 0) {
+                document.getElementById('word-empty-state').style.display = 'flex';
+            }
+        }
+    </script>
+</div>
+
 
 <!-- 弹窗：其他财务报表数据源 -->
 <div id="modal-financial-other" class="fixed inset-0 z-[120] flex items-center justify-center bg-black/50 backdrop-blur-sm">
@@ -3703,6 +4170,7 @@ Error generating stack: `+e.message+`
             const financialOther = document.getElementById('modal-financial-other');
             const tb = document.getElementById('modal-tb');
             const fc = document.getElementById('modal-field-config');
+            const word = document.getElementById('modal-word');
 
             // 显示遮罩层
             backdrop.classList.remove('hidden');
@@ -3719,6 +4187,10 @@ Error generating stack: `+e.message+`
             financialOther.classList.remove('flex');
             tb.classList.add('hidden');
             tb.classList.remove('flex');
+            if (word) {
+                word.classList.add('hidden');
+                word.classList.remove('flex');
+            }
             // field-config 弹窗使用内联 display 控制，需单独隐藏
             fc.style.display = 'none';
 
